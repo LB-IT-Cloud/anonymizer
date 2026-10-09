@@ -1,0 +1,294 @@
+/* Copyright (c) 2026 LB IT Cloud SAS. All rights reserved.
+   Proprietary source of the LB IT Cloud website. See LICENSE. */
+
+/* ---------------------------------------------------------------------------
+   THE PAGE COLOURS — WRITTEN BY scripts/build-theme.mjs FROM scripts/theme.mjs.
+   DO NOT EDIT BY HAND: change the palettes there and run the script.
+
+   Loaded right after site.css on every page that loads it. The default palette (orange) is
+   also the page's colours with no data-palette at all, so a page shown without scripts still
+   has them. A palette's dark theme is always one selector more specific than its light one,
+   so the order of this file can never let a light value win on the dark theme.
+   --------------------------------------------------------------------------- */
+
+/* Orange — Energy Orange, Coloro 018-57-34 (default) */
+:root {
+  --ink: #271914;
+  --ink-2: #5c4b46;
+  --ground: #fbf5f4;
+  --ground-2: #f4eae7;
+  --panel: #fffdfc;
+  --line: #ded1cc;
+  --plate-soft: #ffe3d9;
+  --ink-3: #75635d;
+  --fill: #f4dbd3;
+  --plate: #e06233;
+  --on-plate: #271914;
+  --plate-dim: #271914;
+  --edge: #e06233;
+  --brand-soft: #fbe2d9;
+  --brand: #873516;
+  --brand-ink: #271914;
+  --brand-line: #e8c0b3;
+  --touch: #979751;
+  --on-touch: #271914;
+  --a1: #873516;
+  --a1-soft: #fbe2d9;
+  --a1-line: #e8c0b3;
+  --logo-dark: #43251a;
+  --logo-light: #e06233;
+  --swatch: #e06233;
+  --p-entris: var(--touch); --on-entris: var(--on-touch);
+  --p-exact: var(--touch); --on-exact: var(--on-touch);
+}
+html[data-theme="dark"] {
+  --ink: #f8f0ed;
+  --ink-2: #c1b0aa;
+  --ground: #150d0a;
+  --ground-2: #1d1310;
+  --panel: #221814;
+  --line: #41312c;
+  --plate-soft: #331c14;
+  --ink-3: #99867f;
+  --fill: #3b2922;
+  --plate: #e06233;
+  --on-plate: #271914;
+  --plate-dim: #271914;
+  --edge: #e06233;
+  --brand-soft: #2e1d17;
+  --brand: #e26435;
+  --brand-ink: #f8f0ed;
+  --brand-line: #543429;
+  --touch: #979751;
+  --on-touch: #271914;
+  --a1: #e26435;
+  --a1-soft: #2e1d17;
+  --a1-line: #543429;
+  --logo-dark: #f8f0ed;
+  --logo-light: #e06233;
+  --swatch: #e06233;
+}
+
+/* Bleu — Luminous Blue, Coloro 125-28-38 */
+html[data-palette="bleu"] {
+  --ink: #181d29;
+  --ink-2: #4a505e;
+  --ground: #f5f7fb;
+  --ground-2: #e9edf5;
+  --panel: #fdfdff;
+  --line: #cfd4df;
+  --plate-soft: #e1e9fe;
+  --ink-3: #616776;
+  --fill: #d8e1f6;
+  --plate: #2f50d8;
+  --on-plate: #ffffff;
+  --plate-dim: #ffffff;
+  --edge: #2f50d8;
+  --brand-soft: #dfe8fd;
+  --brand: #354d94;
+  --brand-ink: #181d29;
+  --brand-line: #bccaec;
+  --touch: #e06233;
+  --on-touch: #181d29;
+  --a1: #354d94;
+  --a1-soft: #dfe8fd;
+  --a1-line: #bccaec;
+  --logo-dark: #232d47;
+  --logo-light: #2f50d8;
+  --swatch: #2f50d8;
+}
+html[data-palette="bleu"][data-theme="dark"] {
+  --ink: #eff2f9;
+  --ink-2: #aeb4c3;
+  --ground: #0c0f16;
+  --ground-2: #12161e;
+  --panel: #171a23;
+  --line: #303543;
+  --plate-soft: #1a2236;
+  --ink-3: #848b9a;
+  --fill: #272d3d;
+  --plate: #2f50d8;
+  --on-plate: #ffffff;
+  --plate-dim: #ffffff;
+  --edge: #3a5fe8;
+  --brand-soft: #1b2130;
+  --brand: #5a83fe;
+  --brand-ink: #eff2f9;
+  --brand-line: #313c58;
+  --touch: #e06233;
+  --on-touch: #181d29;
+  --a1: #5a83fe;
+  --a1-soft: #1b2130;
+  --a1-line: #313c58;
+  --logo-dark: #eff2f9;
+  --logo-light: #3558e1;
+  --swatch: #2f50d8;
+}
+
+/* Rose — Pop Pink, Coloro 151-73-22 */
+html[data-palette="rose"] {
+  --ink: #251821;
+  --ink-2: #5a4b54;
+  --ground: #faf5f8;
+  --ground-2: #f3eaef;
+  --panel: #fefdfe;
+  --line: #dcd0d7;
+  --plate-soft: #fde0f2;
+  --ink-3: #72626c;
+  --fill: #f0dae7;
+  --plate: #e99dcf;
+  --on-plate: #251821;
+  --plate-dim: #251821;
+  --edge: #d086b7;
+  --brand-soft: #f7e1ee;
+  --brand: #793765;
+  --brand-ink: #251821;
+  --brand-line: #e2bed5;
+  --touch: #979751;
+  --on-touch: #251821;
+  --a1: #793765;
+  --a1-soft: #f7e1ee;
+  --a1-line: #e2bed5;
+  --logo-dark: #3f2336;
+  --logo-light: #bf77a7;
+  --swatch: #e99dcf;
+}
+html[data-palette="rose"][data-theme="dark"] {
+  --ink: #f7eff4;
+  --ink-2: #bfafb9;
+  --ground: #140d11;
+  --ground-2: #1c1319;
+  --panel: #20171d;
+  --line: #3f3039;
+  --plate-soft: #301b29;
+  --ink-3: #96858f;
+  --fill: #382832;
+  --plate: #e99dcf;
+  --on-plate: #251821;
+  --plate-dim: #251821;
+  --edge: #e99dcf;
+  --brand-soft: #2c1c26;
+  --brand: #e99dcf;
+  --brand-ink: #f7eff4;
+  --brand-line: #4f3345;
+  --touch: #979751;
+  --on-touch: #251821;
+  --a1: #e99dcf;
+  --a1-soft: #2c1c26;
+  --a1-line: #4f3345;
+  --logo-dark: #f7eff4;
+  --logo-light: #e99dcf;
+  --swatch: #e99dcf;
+}
+
+/* Kaki — Meadowland Green, Coloro 050-61-19 */
+html[data-palette="kaki"] {
+  --ink: #1e1e10;
+  --ink-2: #515141;
+  --ground: #f7f7f3;
+  --ground-2: #edeee5;
+  --panel: #fdfdfc;
+  --line: #d5d5c9;
+  --plate-soft: #ebecce;
+  --ink-3: #686958;
+  --fill: #e2e3cd;
+  --plate: #979751;
+  --on-plate: #1e1e10;
+  --plate-dim: #1e1e10;
+  --edge: #979751;
+  --brand-soft: #e9ead3;
+  --brand: #575606;
+  --brand-ink: #1e1e10;
+  --brand-line: #cdcea8;
+  --touch: #e99dcf;
+  --on-touch: #1e1e10;
+  --a1: #575606;
+  --a1-soft: #e9ead3;
+  --a1-line: #cdcea8;
+  --logo-dark: #30300f;
+  --logo-light: #92924c;
+  --swatch: #979751;
+}
+html[data-palette="kaki"][data-theme="dark"] {
+  --ink: #f2f2eb;
+  --ink-2: #b5b6a6;
+  --ground: #101008;
+  --ground-2: #17170d;
+  --panel: #1b1b12;
+  --line: #363728;
+  --plate-soft: #24240c;
+  --ink-3: #8c8c7b;
+  --fill: #2f2f1d;
+  --plate: #979751;
+  --on-plate: #1e1e10;
+  --plate-dim: #1e1e10;
+  --edge: #979751;
+  --brand-soft: #232311;
+  --brand: #979751;
+  --brand-ink: #f2f2eb;
+  --brand-line: #3f3f1f;
+  --touch: #e99dcf;
+  --on-touch: #1e1e10;
+  --a1: #979751;
+  --a1-soft: #232311;
+  --a1-line: #3f3f1f;
+  --logo-dark: #f2f2eb;
+  --logo-light: #979751;
+  --swatch: #979751;
+}
+
+/* Argile — Clay, Coloro 014-60-13 */
+html[data-palette="argile"] {
+  --ink: #271915;
+  --ink-2: #5d4b47;
+  --ground: #fbf5f4;
+  --ground-2: #f5eae8;
+  --panel: #fffdfc;
+  --line: #ded1cd;
+  --plate-soft: #fee3dc;
+  --ink-3: #75635e;
+  --fill: #f4dbd4;
+  --plate: #bc8375;
+  --on-plate: #271915;
+  --plate-dim: #271915;
+  --edge: #bc8375;
+  --brand-soft: #fbe1db;
+  --brand: #764336;
+  --brand-ink: #271915;
+  --brand-line: #e9c0b5;
+  --touch: #2f50d8;
+  --on-touch: #ffffff;
+  --a1: #764336;
+  --a1-soft: #fbe1db;
+  --a1-line: #e9c0b5;
+  --logo-dark: #43241d;
+  --logo-light: #ba8174;
+  --swatch: #bc8375;
+}
+html[data-palette="argile"][data-theme="dark"] {
+  --ink: #f8f0ed;
+  --ink-2: #c2b0ab;
+  --ground: #150d0b;
+  --ground-2: #1d1311;
+  --panel: #221815;
+  --line: #41312d;
+  --plate-soft: #341b16;
+  --ink-3: #998681;
+  --fill: #3b2824;
+  --plate: #bc8375;
+  --on-plate: #271915;
+  --plate-dim: #271915;
+  --edge: #bc8375;
+  --brand-soft: #2e1c18;
+  --brand: #bc8375;
+  --brand-ink: #f8f0ed;
+  --brand-line: #54332b;
+  --touch: #2f50d8;
+  --on-touch: #ffffff;
+  --a1: #bc8375;
+  --a1-soft: #2e1c18;
+  --a1-line: #54332b;
+  --logo-dark: #f8f0ed;
+  --logo-light: #bc8375;
+  --swatch: #bc8375;
+}

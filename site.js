@@ -26,6 +26,17 @@
      size, with the same options, on every page. */
   var PAGES = window.LB_MENU || [];
 
+  /* THE LOGO, AS IT HAS ALWAYS BEEN DRAWN, IN THE PALETTE'S COLOURS. Julien, 09/10/2026: keep the
+     logo exactly as it is and change only its colours. These are the two shapes of
+     img/brand/lbitcloud-logo.svg, traced from the original artwork: .lbm-d is the L and
+     « ITCloud », .lbm-l is the B; chrome.css fills them from --logo-dark and --logo-light. Inline
+     rather than an <img>, because an image cannot take the page's colours — and inline also
+     means there is nothing left that could fail to load. If the logo is ever redrawn, replace
+     both paths here and in the .svg together. */
+  var LOGO = '<svg class="lbmark" viewBox="0 0 900 217" role="img" aria-label="LB IT Cloud">' +
+    '<path class="lbm-d" fill-rule="evenodd" d="M-0.5 0L0 -0.5L41.8 -0.5L43.7 0L44 0.8L43.5 23L43.6 147L43.9 150.8L45 158.5L46.4 162.2L48.1 165.4L51.1 168.4L54.8 170.7L58.4 172.1L65.1 173.3L70 173.5L118 173.1L133.8 173.2L136 173.5L136.7 174L135.8 176.6L123.3 197.8L117.2 207.7L116 209.5L113.5 212L111.4 214L110.2 214.7L106.6 216.1L104 216.5L56 216.5L52.1 216.3L45.2 215.3L41.2 214.3L35.9 212.6L30.4 210.2L25.2 207.3L21.1 204.4L14.2 198.3L10.1 193.4L8.1 190.4L6.3 187.2L3.7 181.8L1.8 175.7L0.7 170.8L-0.5 162ZM531.6 52.1L534.9 51.9L543.8 52.7L550.2 54.2L556.1 56.3L562.8 59.7L569.3 64.1L571.5 66L577.5 72L577.5 73L575.8 74.6L570.6 78.1L562.5 84.7L561.8 85.1L560 85.5L557.4 83.1L551.8 78.7L548.1 76.4L544.5 75L539.7 73.8L537 73.6L530.1 73.6L525.1 74.7L522.2 75.7L518.9 77.4L514.1 80.6L510.5 84L509.2 85.7L506.8 89.3L505.2 92.7L503.6 97.1L502.6 102.1L502.4 110L502.7 114.9L503.2 117.3L505.1 123.4L508.2 129.3L512.3 134.2L516.7 137.8L521.9 140.6L527.2 142.2L534 143L540.8 142.3L546.2 140.6L551.5 138L553.9 136.4L557.8 133.2L559.6 131.4L561 130.4L562.8 131L563.9 131.7L575.8 140.3L577.7 142L577.5 144L571 150.5L565.4 154.9L560.4 157.9L555.7 160.2L550.6 162.1L545.8 163.3L539 164.5L531 164.5L528.2 164.3L521.4 163.1L515.2 161.3L510.2 159.3L505.6 156.9L500.1 153.4L494.6 148.9L492.6 146.9L487.7 140.8L485 136.5L482.3 131.2L480.2 125.3L478.8 119.7L477.8 110.9L477.7 108.1L478.7 100.2L480 93.5L481.8 87.3L483.7 83.2L486.2 78.7L489.1 74.6L493.7 69.2L499.5 64L503 61.5L507.4 58.9L512.1 56.6L516.4 54.9L521.1 53.6L525.2 52.7ZM589.9 52L592.2 51.5L611 51.5L611.7 52L611.7 96L612.2 126L612.3 153L612 160.5L611.7 162L609.8 162.5L592.2 162.5L590 162.3L589.7 162L589.5 159.8L589.5 54.2ZM877.1 52L879.2 51.5L899 51.5L899.5 52L899.5 162L899 162.5L890 162.5L879.2 162.5L877.2 162L876.6 158.8L876.5 154L876 153.4L871.5 158L868 160.5L864.7 162.2L859.4 163.9L856 164.5L848 164.5L845.4 164.1L840.6 162.9L836.3 161.2L833.1 159.5L830.6 157.9L825.5 154L823.5 152L819.6 146.8L817.7 143.8L815.7 139.8L814 135.5L812.9 131.6L811.5 123L811.7 119.1L812.6 113.2L814.5 106L816.6 101.1L818.7 97.2L822 92.5L825.5 89L830.7 85.2L833.2 83.7L837.2 81.7L842.5 80L851 78.6L853.7 78.8L860.4 80.1L864.8 81.7L867.4 83.1L871.5 86L876 90.4L876.4 90L876.5 54.2ZM348.4 55L349 54.5L368.8 54.5L371 54.6L371.4 55L371.5 149L371.2 157L371.3 159.8L371.2 162L371 162.2L368.8 162.5L350.2 162.5L348.3 162L347.8 160.5L347.5 155L348 142.9L348.1 78L347.7 64L347.8 60.2ZM384.7 55L385 54.7L387.2 54.5L467 54.4L473 54.5L473.5 55L473.5 74L473 74.7L442.7 75L441.8 75L441 75.4L440.5 77.2L440.5 162L440 162.5L418 162.5L417.5 162L417.5 76L417.2 75L417 74.8L409 74.8L386.8 75L385 74.8L384.5 74L384.5 57.2ZM659.4 79.9L663 79.5L672 79.5L674.8 79.7L680.5 81L685 82.5L687.8 83.7L691.7 85.8L697 89.5L701.5 94L702.9 95.7L705.6 99.9L707.7 103.8L709.2 107.4L710.3 111.3L711.5 118L711.4 126.9L710.2 132.7L709.3 135.8L707.6 140.1L705.8 143.3L703.4 146.9L699.3 151.8L693.9 156.4L690.8 158.3L686.2 160.7L682.5 162L678.6 163.1L670.9 164.4L664.1 164.4L657.3 163.2L653.4 162.1L648.4 160.1L643.8 157.7L638.5 154L633.5 149L632.1 147.3L629.7 143.8L627.7 139.8L626 135.5L624.9 131.6L623.8 122L624.7 113.2L625.8 109.3L627.4 104.9L628.7 102.2L630.6 99.1L633.1 95.6L634.5 94L639.5 89L643.6 86.1L647.4 83.9L651.6 82L655.3 80.8ZM722.9 82L725.2 81.5L736 81.3L745 81.4L745.5 82L745.5 125L745.6 129.9L746 132.5L747.1 135.4L748.1 137.4L751.6 140.9L754.1 142.4L756.3 143.2L761 143.6L763.9 143.4L766.4 142.9L769.1 141.6L770.9 140.4L774 137.5L775.2 135.8L776.9 132.4L777.9 129.4L778.3 127.8L778.5 125L778.5 82L779 81.5L800 81.5L800.8 82L800.5 90L800.5 116L800.9 141L800.6 156L800.9 161L800.6 162L800 162.5L779 162.4L778.6 162L778.5 159.8L778.5 154L778 153.5L772.4 159L769.4 160.9L766.7 162.2L763.7 163.3L758.9 164.4L751.1 164.5L745.3 163.2L740.9 161.6L737.7 159.8L733.6 156.9L732 155.5L728.6 150.9L726.8 147.7L724.8 142.6L723.6 136.9L722.6 128.9L722.5 125L722.6 97ZM662.6 100.1L666 99.6L670.8 99.7L675.5 101L679.5 103.1L682.4 105.1L684.1 107.3L686.3 111.2L687.9 115.6L688.4 119L688.3 125.9L687.6 129.1L686.1 132.6L683.9 136.4L680.9 139.4L677.3 141.8L673.7 143.2L668.8 144.1L666.4 144L661.5 143L657.4 141.1L655 139.5L651.1 135.4L649.2 132.3L647.9 128.6L646.8 122.8L646.7 120.1L647.9 114.4L649.7 110.2L651.6 107.1L655.1 103.6L658.2 101.7ZM850.4 100L853 99.6L858.9 99.7L862.9 100.7L866.3 102.2L869.9 104.6L872.4 107.1L874.8 110.7L876.2 114.3L877.3 119.2L877.4 122.9L876.2 128.7L874.8 132.3L872.5 136L868.5 140L865.4 141.9L861.7 143.2L856.8 144.1L854.4 144L849.4 143.1L845.2 141.3L841.7 138.7L839.9 136.7L837.5 133.1L835.8 128.7L834.7 122.9L834.7 120.1L835.9 114.4L837.3 110.8L839.6 107.1L843.1 103.6L846.8 101.3Z"/>' +
+    '<path class="lbm-l" fill-rule="evenodd" d="M110.5 0L111 -0.5L229 -0.5L233.8 -0.2L240.8 0.7L246.6 1.8L253.7 3.8L260.1 6.3L265.5 9L270.4 12.1L275.5 16L281 21.6L284.4 26.1L286.7 29.8L289.7 35.8L291.3 40.2L293.3 48.2L294.4 57L294.2 61.8L293.4 68.9L292 74.5L290.3 79.8L287.4 85.9L284.4 90.9L280.5 96L276.5 100L273.2 102.4L271.5 104L272 104.5L273.7 105L279.4 108.1L286.9 113.5L291.5 118.1L295.3 123.2L298.9 129.6L301.7 136.8L303.3 143.2L304.3 153L303.4 162.9L302.3 167.8L300.9 172.4L298.4 178.9L294.9 185.4L290.4 191.9L285.6 197.1L281 201.5L276.4 204.9L273.9 206.4L270 208.5L265.1 210.7L256.8 213.3L252.7 214.2L245.9 215.4L240.1 215.7L235 216.4L231 216.5L139 216.5L138.5 216L138.5 215L140.9 211.4L151.7 192.2L157.1 183.6L159.1 180.6L161.8 177.3L163.9 175.4L165.8 174.3L167.2 173.7L170 173.5L205 173.1L231 173.3L235.7 173.1L242.6 172L246.9 170.4L248.8 169.3L251.1 167.6L253.1 165.6L254.9 163.4L256.1 161.6L257.3 158.8L258.3 154.9L258.4 147.1L258.2 145.3L257.5 143L256.3 140.2L254.8 137.7L251.5 134L249.8 132.7L247.2 131.3L242.9 129.6L239.8 128.8L236 128.5L134.2 128.4L132.4 128.3L130.9 127L137.7 114.2L148.7 95.2L153.6 88.2L154.6 87.1L155.8 86.3L158.1 85.6L161 85.5L227 85.4L229.7 85.2L234.6 84.1L238.2 82.7L241.4 80.9L244.5 78L246.3 75.8L248.3 71.8L249.2 68.8L249.5 65L249.3 60.2L248.4 57.1L247.2 54.3L244.8 50.7L242.9 48.5L240.1 46.4L236.8 44.7L234.6 43.9L230.6 42.9L226 42.5L162 42.5L159.2 42.7L157.7 43.2L156.5 44L154.6 46.1L151.4 50.9L145.9 61.4L127.1 95.6L112.5 122.8L111.7 124L111 124.5L110.5 124L110.2 106L110.5 71L110.1 20Z"/></svg>';
+
   /* Where the site root is, RELATIVE TO THIS PAGE, declared by the page itself:
      <header id="siteHeader" data-root="../">. NO PAGE NEEDS IT TODAY — every page of
      the site sits at the root, since eXact stopped being a sub-folder on 31/08/2026.
@@ -131,6 +142,30 @@
     }).observe(document.body, { childList: true, subtree: true });
   }
   var theme = store("lbTheme") === "dark" ? "dark" : "light";
+
+  /* THE PALETTE, since 09/10/2026. theme-boot.js has already set data-palette before the first
+     paint, from « lbPalette » or the default; this only reads what it decided. The list comes
+     from the same place — scripts/theme.mjs, through build-theme.mjs — so the button can never
+     offer a palette the stylesheets do not have. The mock-up has no theme-boot.js, hence the
+     fallbacks. */
+  var PALETTE_LIST = (window.LB_PALETTES && window.LB_PALETTES.list) || [];
+  var palette = document.documentElement.getAttribute("data-palette") ||
+    (window.LB_PALETTES && window.LB_PALETTES.fallback) || "";
+  if (palette) document.documentElement.setAttribute("data-palette", palette);
+  /* Whether the reader picked a palette themselves, or got the one drawn for the visit. */
+  var paletteChosen = !!(window.LB_PALETTES && window.LB_PALETTES.chosen);
+  var paletteRandom = !!(window.LB_PALETTES && window.LB_PALETTES.mode === "visite");
+  var PALUI = {
+    label: ["Couleurs du site", "Site colours"],
+    random: ["Au hasard, à chaque visite", "A surprise at each visit"],
+    /* The sentence Julien asked for on 09/10/2026, shown once, beside the button, to a reader who
+       has not chosen: without it the colour changing between visits reads as a fault. */
+    hint: ["Nos couleurs changent à chaque visite. Gardez celle que vous préférez.",
+           "Our colours change with every visit. Keep the one you like best."],
+    close: ["Fermer", "Close"]
+  };
+  /* Once per reader, never on a private page, never to someone who has already chosen. */
+  var paletteHint = paletteRandom && !paletteChosen && !PRIVATE && !store("lbPaletteHint");
   var listeners = [];
 
   var documentWired = false;
@@ -231,13 +266,7 @@
 
   function headerHtml() {
     return '<div class="wrap bar">' +
-      '<a class="logo" href="' + esc(root() + L("fr.html")) + '">' +
-        '<img src="' + esc(root() + "img/brand/lbitcloud-logo.png") + '" alt="LB IT Cloud">' +
-        /* Hidden by chrome.css, not by a style attribute: the Anonymizer's policy has no
-           'unsafe-inline' for styles, and an attribute in this markup would simply be refused
-           there. wire() shows it through element.style, which the policy allows. */
-        '<span class="fallback"><span class="mark">LB</span><span class="word">IT<b>Cloud</b></span></span>' +
-      "</a>" +
+      '<a class="logo" href="' + esc(root() + L("fr.html")) + '">' + LOGO + "</a>" +
       '<button class="ghost burger" id="lbBurger" aria-label="Menu" aria-expanded="false">☰</button>' +
       '<nav class="menu" id="lbMenu">' +
         PAGES.map(function (p, i) { return p.children ? group(p, i) : link(p); }).join("") +
@@ -245,7 +274,71 @@
       '<div class="tools">' +
         '<button class="ghost" id="lbLang">' + (lang === "fr" ? "EN" : "FR") + "</button>" +
         '<button class="ghost" id="lbTheme" aria-label="Thème">' + (theme === "dark" ? "☀" : "☾") + "</button>" +
+        paletteHtml() +
       "</div></div>";
+  }
+
+  /* THE PALETTE BUTTON: a swatch of the current palette, and the list of the others. Whole class
+     strings only, and no style attribute — the swatch colours are classes written by
+     build-theme.mjs into chrome.css, since a style attribute is refused on the Anonymizer. */
+  function paletteHtml() {
+    if (!PALETTE_LIST.length) return "";
+    return '<span class="palpick" id="lbPalPick" data-open="0">' +
+      '<button class="ghost palbtn" id="lbPalette" type="button" aria-haspopup="true" aria-expanded="false"' +
+        ' aria-label="' + esc(pick(PALUI.label)) + '" title="' + esc(pick(PALUI.label)) + '"><span class="palsw"></span></button>' +
+      '<span class="paldrop" role="menu" aria-label="' + esc(pick(PALUI.label)) + '">' +
+        (paletteRandom
+          ? '<button type="button" class="palopt palrand" role="menuitemcheckbox" data-pal="" aria-checked="' + !paletteChosen + '">' +
+              '<span class="palsw palsw-mix"></span>' + esc(pick(PALUI.random)) + "</button>"
+          : "") +
+        PALETTE_LIST.map(function (p) {
+          return '<button type="button" class="palopt" role="menuitemradio" data-pal="' + esc(p.id) + '" aria-checked="' + (p.id === palette) + '">' +
+            '<span class="palsw" data-sw="' + esc(p.id) + '"></span>' + esc(lang === "fr" ? p.fr : p.en) + "</button>";
+        }).join("") +
+      "</span>" +
+      (paletteHint
+        ? '<span class="palhint" role="status"><span>' + esc(pick(PALUI.hint)) + "</span>" +
+            '<button type="button" class="palhintx" aria-label="' + esc(pick(PALUI.close)) + '">×</button></span>'
+        : "") +
+      "</span>";
+  }
+
+  function dropHint() {
+    paletteHint = false;
+    var h = document.querySelector("#lbPalPick .palhint");
+    if (h) h.parentNode.removeChild(h);
+  }
+
+  function closePalette() {
+    var pp = document.getElementById("lbPalPick");
+    if (!pp) return;
+    pp.setAttribute("data-open", "0");
+    var b = document.getElementById("lbPalette");
+    if (b) b.setAttribute("aria-expanded", "false");
+  }
+
+  function setPalette(next) {
+    if (next === "") {
+      /* Back to a colour drawn at each visit: forget the choice, keep the colour on screen. */
+      paletteChosen = false;
+      try { if (!PRIVATE) window.localStorage.removeItem("lbPalette"); } catch (e) { /* nothing to forget */ }
+      /* …and make it this visit's colour, or the next page would bring back the one drawn at the
+         start of the visit. */
+      store("lbPaletteVisit", JSON.stringify({ id: palette, t: Date.now() }));
+    } else {
+      var ok = PALETTE_LIST.some(function (p) { return p.id === next; });
+      if (!ok) return;
+      paletteChosen = true;
+      palette = next; store("lbPalette", palette); LB.palette = palette;
+      document.documentElement.setAttribute("data-palette", palette);
+    }
+    document.querySelectorAll("#lbPalPick .palopt").forEach(function (o) {
+      var id = o.getAttribute("data-pal");
+      o.setAttribute("aria-checked", String(id === "" ? !paletteChosen : id === palette));
+    });
+    /* Colours are custom properties, so the page follows by itself. A page that draws in
+       colours it read once (a chart on a canvas) can listen for this and draw again. */
+    document.dispatchEvent(new CustomEvent("lbpalette", { detail: { palette: palette } }));
   }
 
   function footerHtml() {
@@ -339,18 +432,36 @@
   }
 
   function wire() {
-    /* The logo's fallback used to be an onerror= attribute on the <img>. It is
-       wired here instead, because the site's CSP forbids inline handlers — and
-       an attribute that runs code is exactly what that policy is about. The
-       already-broken case is checked too: a cached failure fires no event. */
-    var logo = document.querySelector("#siteHeader .logo img");
-    if (logo) {
-      var fallback = function () {
-        logo.style.display = "none";
-        if (logo.nextElementSibling) logo.nextElementSibling.style.display = "flex";
-      };
-      logo.addEventListener("error", fallback);
-      if (logo.complete && logo.naturalWidth === 0) fallback();
+    /* The logo needs no fallback any more: it is drawn inline (LOGO), so there is no image that
+       could fail to load. */
+    var pb = document.getElementById("lbPalette");
+    if (pb) {
+      pb.addEventListener("click", function (event) {
+        event.stopPropagation();
+        dropHint();
+        var pp = document.getElementById("lbPalPick");
+        var open = pp.getAttribute("data-open") !== "1";
+        closeGroups(null);
+        pp.setAttribute("data-open", open ? "1" : "0");
+        pb.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open) { var cur = pp.querySelector('.palopt[aria-checked="true"]'); if (cur) cur.focus(); }
+      });
+      var hx = document.querySelector("#lbPalPick .palhintx");
+      if (hx) hx.addEventListener("click", function (event) { event.stopPropagation(); dropHint(); });
+      if (paletteHint) {
+        /* Seen once is enough: the next page will not show it again. It leaves by itself after
+           a while, so it never sits over the menu for the length of a visit. */
+        store("lbPaletteHint", "1");
+        window.setTimeout(dropHint, 12000);
+      }
+      document.querySelectorAll("#lbPalPick .palopt").forEach(function (o) {
+        o.addEventListener("click", function (event) {
+          event.stopPropagation();
+          setPalette(o.getAttribute("data-pal"));
+          closePalette();
+          pb.focus();
+        });
+      });
     }
 
     var b = document.getElementById("lbBurger");
@@ -382,9 +493,9 @@
          also why closeGroups() re-queries the DOM instead of closing over a list — the
          nodes this listener was wired with are detached by the next repaint. */
       documentWired = true;
-      document.addEventListener("click", function () { closeGroups(null); });
+      document.addEventListener("click", function () { closeGroups(null); closePalette(); });
       document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") closeGroups(null);
+        if (event.key === "Escape") { closeGroups(null); closePalette(); }
       });
     }
     var l = document.getElementById("lbLang");
@@ -418,6 +529,9 @@
       if (next === theme) return;
       theme = next; store("lbTheme", theme); LB.theme = theme; paint();
     },
+    palette: palette,
+    /** Same for the palette — one of the ids in scripts/theme.mjs. */
+    setPalette: function (next) { setPalette(next); },
     /** Send one named event to the audience measurement; false when it could not be sent. */
     track: function (name, data) { return track(name, data); },
     /** Register a renderer; it runs now and again on every language or theme change. */

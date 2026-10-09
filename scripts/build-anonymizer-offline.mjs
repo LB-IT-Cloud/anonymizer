@@ -12,7 +12,8 @@
    WHAT THIS DOES
      - takes the tool's <main> from anonymizer-fr.html, minus the block that offers this very file
        (a file cannot carry its own fingerprint) and minus the HTML comments;
-     - inlines site.css, tools.css and anonymizer.css — no font file: user text is in system
+     - inlines site.css, theme.css (the colours, since 09/10/2026: site.css no longer has
+       any), tools.css and anonymizer.css — no font file: user text is in system
        fonts already, and the rest falls back to the system's sans-serif;
      - inlines the code: scripts/anonymizer-offline-shim.js (the little of site.js the tool needs),
        then the engine, the Office reader, the processing and the interface, each wrapped in a
@@ -102,7 +103,7 @@ const CSP = (script, style) =>
 /** Every file this script owns, as { path: content }. Pure: reads, never writes. */
 export function build() {
   const version = /export const VERSION = '([^']+)'/.exec(lire("anonymizer-engine.js"))[1];
-  const style = "\n" + inlinable(["site.css", "tools.css", "anonymizer.css"].map((f) => `/* ===== ${f} ===== */\n${lire(f).trim()}\n`).join("\n"), "style");
+  const style = "\n" + inlinable(["site.css", "theme.css", "tools.css", "anonymizer.css"].map((f) => `/* ===== ${f} ===== */\n${lire(f).trim()}\n`).join("\n"), "style");
 
   const connus = new Map();
   let code = `\n/* Anonymizer ${version}, offline version — built by scripts/build-anonymizer-offline.mjs from the sources\n` +

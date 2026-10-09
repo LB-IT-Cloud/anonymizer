@@ -27,45 +27,210 @@
 
 header.site,
 footer.site {
-  --brand:      #34527e;
-  --brand-ink:  #1d2a44;
-  --brand-soft: #eaeff7;
-  --brand-line: #cfdcee;
-
-  --ground:   #ffffff;
-  --ground-2: #f5f7fb;
-  --panel:    #ffffff;
-  --line:     #e3e9f2;
-  --ink:      #14203a;
-  --ink-2:    #4d5a75;
-  --ink-3:    #66738f;
-  --shadow:   0 10px 30px rgba(20, 32, 58, .08);
-
+  /* The faces and the relief. The colours are below, written by scripts/build-theme.mjs: one
+     block per palette, light and dark, so the bar follows the palette the reader chose. */
+  --shadow:   0 2px 0 rgba(0, 0, 0, .08);
   --display: "Archivo", "Segoe UI", system-ui, sans-serif;
-  --body: "Inter", "Segoe UI", system-ui, sans-serif;
+  --body: "Archivo", "Segoe UI", system-ui, sans-serif;
+  --mono: "Martian Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
 
   font-family: var(--body);
   font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
+html[data-theme="dark"] header.site,
+html[data-theme="dark"] footer.site { --shadow: 0 2px 0 rgba(0, 0, 0, .4); }
 
+/* theme:begin — written by scripts/build-theme.mjs from scripts/theme.mjs, do not edit by hand.
+   The header's and footer's colours for each palette, and the swatch of each one in the
+   header's palette button. */
+header.site,
+footer.site {
+  --brand: #873516;
+  --brand-ink: #271914;
+  --brand-soft: #fbe2d9;
+  --brand-line: #e8c0b3;
+  --ground: #fbf5f4;
+  --ground-2: #f4eae7;
+  --panel: #fffdfc;
+  --line: #ded1cc;
+  --ink: #271914;
+  --ink-2: #5c4b46;
+  --ink-3: #75635d;
+  --touch: #979751;
+  --logo-dark: #43251a;
+  --logo-light: #e06233;
+  --swatch: #e06233;
+}
 html[data-theme="dark"] header.site,
 html[data-theme="dark"] footer.site {
-  --brand:      #5d84ba;
-  --brand-ink:  #eef2f9;
-  --brand-soft: #16233c;
-  --brand-line: #26365a;
-
-  --ground:   #0a1020;
-  --ground-2: #0d1526;
-  --panel:    #111b30;
-  --line:     #23304c;
-  --ink:      #e8edf8;
-  --ink-2:    #a4b3cd;
-  --ink-3:    #8496b5;
-  --shadow:   0 10px 30px rgba(0, 0, 0, .35);
+  --brand: #e26435;
+  --brand-ink: #f8f0ed;
+  --brand-soft: #2e1d17;
+  --brand-line: #543429;
+  --ground: #150d0a;
+  --ground-2: #1d1310;
+  --panel: #221814;
+  --line: #41312c;
+  --ink: #f8f0ed;
+  --ink-2: #c1b0aa;
+  --ink-3: #99867f;
+  --touch: #979751;
+  --logo-dark: #f8f0ed;
+  --logo-light: #e06233;
+  --swatch: #e06233;
 }
+html[data-palette="bleu"] header.site,
+html[data-palette="bleu"] footer.site {
+  --brand: #354d94;
+  --brand-ink: #181d29;
+  --brand-soft: #dfe8fd;
+  --brand-line: #bccaec;
+  --ground: #f5f7fb;
+  --ground-2: #e9edf5;
+  --panel: #fdfdff;
+  --line: #cfd4df;
+  --ink: #181d29;
+  --ink-2: #4a505e;
+  --ink-3: #616776;
+  --touch: #e06233;
+  --logo-dark: #232d47;
+  --logo-light: #2f50d8;
+  --swatch: #2f50d8;
+}
+html[data-palette="bleu"][data-theme="dark"] header.site,
+html[data-palette="bleu"][data-theme="dark"] footer.site {
+  --brand: #5a83fe;
+  --brand-ink: #eff2f9;
+  --brand-soft: #1b2130;
+  --brand-line: #313c58;
+  --ground: #0c0f16;
+  --ground-2: #12161e;
+  --panel: #171a23;
+  --line: #303543;
+  --ink: #eff2f9;
+  --ink-2: #aeb4c3;
+  --ink-3: #848b9a;
+  --touch: #e06233;
+  --logo-dark: #eff2f9;
+  --logo-light: #3558e1;
+  --swatch: #2f50d8;
+}
+html[data-palette="rose"] header.site,
+html[data-palette="rose"] footer.site {
+  --brand: #793765;
+  --brand-ink: #251821;
+  --brand-soft: #f7e1ee;
+  --brand-line: #e2bed5;
+  --ground: #faf5f8;
+  --ground-2: #f3eaef;
+  --panel: #fefdfe;
+  --line: #dcd0d7;
+  --ink: #251821;
+  --ink-2: #5a4b54;
+  --ink-3: #72626c;
+  --touch: #979751;
+  --logo-dark: #3f2336;
+  --logo-light: #bf77a7;
+  --swatch: #e99dcf;
+}
+html[data-palette="rose"][data-theme="dark"] header.site,
+html[data-palette="rose"][data-theme="dark"] footer.site {
+  --brand: #e99dcf;
+  --brand-ink: #f7eff4;
+  --brand-soft: #2c1c26;
+  --brand-line: #4f3345;
+  --ground: #140d11;
+  --ground-2: #1c1319;
+  --panel: #20171d;
+  --line: #3f3039;
+  --ink: #f7eff4;
+  --ink-2: #bfafb9;
+  --ink-3: #96858f;
+  --touch: #979751;
+  --logo-dark: #f7eff4;
+  --logo-light: #e99dcf;
+  --swatch: #e99dcf;
+}
+html[data-palette="kaki"] header.site,
+html[data-palette="kaki"] footer.site {
+  --brand: #575606;
+  --brand-ink: #1e1e10;
+  --brand-soft: #e9ead3;
+  --brand-line: #cdcea8;
+  --ground: #f7f7f3;
+  --ground-2: #edeee5;
+  --panel: #fdfdfc;
+  --line: #d5d5c9;
+  --ink: #1e1e10;
+  --ink-2: #515141;
+  --ink-3: #686958;
+  --touch: #e99dcf;
+  --logo-dark: #30300f;
+  --logo-light: #92924c;
+  --swatch: #979751;
+}
+html[data-palette="kaki"][data-theme="dark"] header.site,
+html[data-palette="kaki"][data-theme="dark"] footer.site {
+  --brand: #979751;
+  --brand-ink: #f2f2eb;
+  --brand-soft: #232311;
+  --brand-line: #3f3f1f;
+  --ground: #101008;
+  --ground-2: #17170d;
+  --panel: #1b1b12;
+  --line: #363728;
+  --ink: #f2f2eb;
+  --ink-2: #b5b6a6;
+  --ink-3: #8c8c7b;
+  --touch: #e99dcf;
+  --logo-dark: #f2f2eb;
+  --logo-light: #979751;
+  --swatch: #979751;
+}
+html[data-palette="argile"] header.site,
+html[data-palette="argile"] footer.site {
+  --brand: #764336;
+  --brand-ink: #271915;
+  --brand-soft: #fbe1db;
+  --brand-line: #e9c0b5;
+  --ground: #fbf5f4;
+  --ground-2: #f5eae8;
+  --panel: #fffdfc;
+  --line: #ded1cd;
+  --ink: #271915;
+  --ink-2: #5d4b47;
+  --ink-3: #75635e;
+  --touch: #2f50d8;
+  --logo-dark: #43241d;
+  --logo-light: #ba8174;
+  --swatch: #bc8375;
+}
+html[data-palette="argile"][data-theme="dark"] header.site,
+html[data-palette="argile"][data-theme="dark"] footer.site {
+  --brand: #bc8375;
+  --brand-ink: #f8f0ed;
+  --brand-soft: #2e1c18;
+  --brand-line: #54332b;
+  --ground: #150d0b;
+  --ground-2: #1d1311;
+  --panel: #221815;
+  --line: #41312d;
+  --ink: #f8f0ed;
+  --ink-2: #c2b0ab;
+  --ink-3: #998681;
+  --touch: #2f50d8;
+  --logo-dark: #f8f0ed;
+  --logo-light: #bc8375;
+  --swatch: #bc8375;
+}
+header.site .palsw[data-sw="orange"] { background: #e06233; }
+header.site .palsw[data-sw="bleu"] { background: #2f50d8; }
+header.site .palsw[data-sw="rose"] { background: #e99dcf; }
+header.site .palsw[data-sw="kaki"] { background: #979751; }
+header.site .palsw[data-sw="argile"] { background: #bc8375; }
+/* theme:end */
 
 /* ---------------------------------------------------------------
    Header — built by site.js, styled here
@@ -81,38 +246,30 @@ header.site * { box-sizing: border-box; }
 header.site .wrap { width: min(1180px, 100% - 40px); margin: 0 auto; }
 header.site .bar { display: flex; align-items: center; gap: 22px; height: 70px; position: relative; }
 header.site .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: none; }
-/* The lockup is 4.1:1, so its HEIGHT is what has to be set — and it is dark ink
-   on nothing, which disappears on the dark theme. There it gets a light chip
-   rather than a recoloured logo: the brand colours reach the screen exactly,
-   and a plate is a frame around the mark, not a change to it. */
-header.site .logo img { height: 34px; width: auto; display: block; }
-html[data-theme="dark"] header.site .logo img {
-  background: #f4f6fb; border-radius: 8px; padding: 5px 9px; height: 40px;
-}
-/* Hidden until the logo fails to load: site.js then sets display to flex on the element itself.
-   It used to be hidden by a style attribute in the markup site.js builds, which a policy without
-   'unsafe-inline' for styles refuses — the Anonymizer's is such a policy. */
-header.site .logo .fallback { display: none; align-items: center; gap: 9px; }
-header.site .logo .mark {
-  width: 34px; height: 34px; border-radius: 9px; background: var(--brand-ink);
-  color: #fff; font-family: var(--display); font-weight: 800; font-size: 15px;
-  display: flex; align-items: center; justify-content: center; letter-spacing: -.02em;
-}
-header.site .logo .word { font-family: var(--display); font-weight: 700; font-size: 18px; letter-spacing: -.01em; }
-header.site .logo .word b { color: var(--brand); font-weight: 700; }
+/* THE LOGO, IN THE PALETTE'S COLOURS. Julien, 09/10/2026: keep the logo exactly as it is and
+   change only its colours. site.js draws it inline from img/brand/lbitcloud-logo.svg — the same
+   two shapes, traced from the original — so the L and « ITCloud » take --logo-dark and the B
+   takes --logo-light, on both themes. The light chip it needed on the dark theme is gone: the
+   letters turn light instead. The lockup is 4.1:1, so its HEIGHT is what is set. */
+header.site .logo .lbmark { height: 34px; width: auto; aspect-ratio: 900 / 217; display: block; }
+header.site .logo .lbm-d { fill: var(--logo-dark); }
+header.site .logo .lbm-l { fill: var(--logo-light); }
 
 header.site nav.menu { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+/* The entries read like the labels on a rack: condensed capitals, spaced. The current page is
+   marked by a bar under its label rather than a tinted pill around it. */
 header.site nav.menu a,
 header.site nav.menu .groupbtn {
-  padding: 9px 13px; border-radius: 9px; font-size: 14px; font-weight: 500;
+  padding: 10px 12px; font: 650 12.5px/1 var(--display); font-stretch: 82%;
+  text-transform: uppercase; letter-spacing: .06em;
   color: var(--ink-2); text-decoration: none; white-space: nowrap;
   display: inline-flex; align-items: center; gap: 6px; border: none; background: none;
-  font-family: inherit; cursor: pointer;
+  cursor: pointer;
 }
 header.site nav.menu a:hover,
 header.site nav.menu .groupbtn:hover { background: var(--ground-2); color: var(--ink); }
 header.site nav.menu a.active,
-header.site nav.menu .group.active > .groupbtn { color: var(--brand); background: var(--brand-soft); font-weight: 600; }
+header.site nav.menu .group.active > .groupbtn { color: var(--ink); background: none; box-shadow: inset 0 -3px 0 var(--touch, var(--brand)); }
 
 /* ---------------------------------------------------------------
    "Outils / Tools" — a menu that opens, asked for on 31/08/2026 so the tools
@@ -132,18 +289,57 @@ header.site nav.menu .group:hover > .caretbtn { background: var(--ground-2); col
 header.site nav.menu .drop {
   display: none; position: absolute; top: calc(100% + 6px); left: 0; z-index: 60;
   min-width: 230px; background: var(--panel); border: 1px solid var(--line);
-  border-radius: 11px; padding: 6px; box-shadow: var(--shadow);
+  padding: 6px; box-shadow: var(--shadow);
 }
 header.site nav.menu .group[data-open="1"] .drop { display: block; }
-header.site nav.menu .drop a { display: block; width: 100%; padding: 10px 12px; }
+/* In the open list the names are read, not scanned: back to the text face, in its own case. */
+header.site nav.menu .drop a {
+  display: block; width: 100%; padding: 10px 12px;
+  font: 500 14px/1.3 var(--body); text-transform: none; letter-spacing: 0;
+}
 
 header.site .tools { display: flex; align-items: center; gap: 8px; margin-left: 10px; }
 header.site .ghost {
-  border: 1px solid var(--line); border-radius: 9px; padding: 7px 11px; font-size: 13px;
-  font-weight: 600; color: var(--ink-2); background: var(--panel);
-  font-family: inherit; cursor: pointer;
+  border: 1px solid var(--line); padding: 7px 11px; font: 500 12px/1.2 var(--mono);
+  color: var(--ink-2); background: var(--panel); cursor: pointer;
 }
 header.site .ghost:hover { color: var(--ink); border-color: var(--brand); }
+/* THE PALETTE BUTTON. Julien, 09/10/2026: « un petit bouton discret dans le menu en haut, à côté du
+   mode sombre, pour changer la palette ». A swatch of the current palette; it opens a short list
+   of the others. The swatches' colours are written into the theme block above, by class, because
+   a style attribute is refused on the pages whose policy forbids inline styles. */
+header.site .palpick { position: relative; display: inline-flex; }
+header.site .palbtn { display: inline-flex; align-items: center; justify-content: center; padding: 7px 9px; }
+header.site .palsw { display: inline-block; width: 13px; height: 13px; flex: none; background: var(--swatch);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .18); clip-path: polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px); }
+header.site .paldrop {
+  display: none; position: absolute; top: calc(100% + 6px); right: 0; z-index: 60; min-width: 172px;
+  background: var(--panel); border: 1px solid var(--line); padding: 6px; box-shadow: var(--shadow);
+}
+header.site .palpick[data-open="1"] .paldrop { display: grid; gap: 2px; }
+header.site .palopt {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px; border: 0; background: none;
+  font: 500 13.5px/1.2 var(--body); color: var(--ink-2); text-align: left; cursor: pointer;
+}
+header.site .palopt:hover { background: var(--ground-2); color: var(--ink); }
+header.site .palopt[aria-checked="true"] { color: var(--ink); font-weight: 650; }
+header.site .palopt[aria-checked="true"]::after { content: "✓"; margin-left: auto; color: var(--ink-2); }
+header.site .palopt .palsw { width: 15px; height: 15px; }
+/* « Au hasard » shows the five colours at once, and sits apart from the list it draws from. */
+header.site .palrand { border-bottom: 1px solid var(--line); margin-bottom: 4px; padding-bottom: 10px; }
+header.site .palsw-mix { background: conic-gradient(#e06233 0 72deg, #2f50d8 0 144deg, #e99dcf 0 216deg, #979751 0 288deg, #bc8375 0); }
+/* The sentence at the first visit: a small label hung under the button, not a banner. */
+header.site .palhint {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 59; width: max-content; max-width: min(280px, calc(100vw - 32px));
+  display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: var(--ink); color: var(--ground);
+  font: 500 12.5px/1.4 var(--body); box-shadow: var(--shadow);
+}
+header.site .palhint::before {
+  content: ""; position: absolute; top: -6px; right: 12px; width: 12px; height: 12px; background: var(--ink);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+header.site .palhintx { flex: none; border: 0; background: none; color: inherit; font: 600 15px/1 var(--body); padding: 0 2px; cursor: pointer; opacity: .75; }
+header.site .palhintx:hover { opacity: 1; }
 header.site .burger { display: none; }
 
 /* ---------------------------------------------------------------
@@ -164,7 +360,7 @@ footer.site .sep { margin-left: auto; }
 .lbthumbq { font-size: 18px; font-weight: 700; color: var(--ink); margin: 0; }
 .lbthumbbtns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
 .lbvb {
-  display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 11px;
+  display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px;
   border: 1px solid var(--line); background: var(--panel); font: inherit; font-weight: 600; font-size: 14.5px;
   color: var(--ink); cursor: pointer;
 }
@@ -179,6 +375,16 @@ footer.site .sep { margin-left: auto; }
    fitting; below it the panel is the menu, and it holds the tools group open
    rather than nesting a second level inside a drawer.
    --------------------------------------------------------------- */
+/* A PHONE HAS ROOM FOR THE LOGO AND FOUR SMALL BUTTONS, NOT FOR THE GAPS OF A DESK. With the
+   palette button (09/10/2026) the bar was 32px wider than a 375px screen, and the whole page could
+   be scrolled sideways on every page of the site. */
+@media (max-width: 480px) {
+  header.site .bar { gap: 10px; }
+  header.site .tools { gap: 4px; margin-left: 6px; }
+  header.site .logo .lbmark { height: 27px; }
+  header.site .ghost { padding: 7px 8px; }
+}
+
 @media (max-width: 900px) {
   header.site nav.menu { display: none; }
   header.site nav.menu.open {

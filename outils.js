@@ -107,8 +107,8 @@
     ]
   };
 
-  /* Un jeu d'icônes local. Deux traits, jamais de remplissage : elles se posent sur le rond
-     de couleur que site.css donne à `.card .ico` et prennent sa teinte par `currentColor`. */
+  /* Un jeu d'icônes local. Deux traits, jamais de remplissage : elles se posent dans le carré
+     cerné que site.css donne à `.card .ico` et prennent sa teinte par `currentColor`. */
   var ICONS = {
     card:    '<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>',
     laptop:  '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/>',

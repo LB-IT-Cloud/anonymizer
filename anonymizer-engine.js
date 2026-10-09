@@ -28,7 +28,9 @@
    chaque nombre du texte par une ligne de minutage. Ils sont écrits ici en \u, exprès.
    --------------------------------------------------------------------------- */
 
-export const VERSION = '1.0.0';
+/* 1.0.1 (09/10/2026) : la même mécanique, dans le modèle « Signalétique » et les palettes du site —
+   une version de plus parce que le fichier hors ligne, qui embarque les styles, a changé d'empreinte. */
+export const VERSION = '1.0.1';
 
 const DOMAINES_PUBLICS = [
   'microsoft.com', 'windows.net', 'office.com', 'office365.com',
