@@ -1,0 +1,364 @@
+/* Copyright (c) 2026 LB IT Cloud SAS. All rights reserved.
+   Proprietary source of the LB IT Cloud website. See LICENSE. */
+
+/* ---------------------------------------------------------------------------
+   LB IT Cloud — the shell every page of the site shares.
+
+   ONE FILE, because four pages carrying their own copy of a header is four
+   headers that drift: the day one gets a menu entry, the others quietly do not.
+   Page-specific rules stay in the page that owns them.
+
+   Brand: the two hexes are the logo's own, reaching the screen exactly and at
+   full opacity. A brand colour "adjusted for contrast" is a different brand
+   colour.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --brand:      #34527e;
+  --brand-ink:  #1d2a44;
+  --brand-soft: #eaeff7;
+  --brand-line: #cfdcee;
+
+  --ground:   #ffffff;
+  --ground-2: #f5f7fb;
+  --panel:    #ffffff;
+  --line:     #e3e9f2;
+  --ink:      #14203a;
+  --ink-2:    #4d5a75;
+  --ink-3:    #66738f;
+  --ok:       #17794b;
+  --ok-bg:    #e6f5ed;
+  --warn:     #a2620a;
+  --warn-bg:  #fdf2e0;
+  --danger:   #b42a2a;
+  --danger-bg:#fceded;
+  --shadow:   0 10px 30px rgba(20, 32, 58, .08);
+  --shadow-lg:0 24px 60px rgba(20, 32, 58, .14);
+
+  --display: "Archivo", "Segoe UI", system-ui, sans-serif;
+  --body: "Inter", "Segoe UI", system-ui, sans-serif;
+
+  /* FOUR ACCENTS, USED LIGHTLY. Julien, 31/08/2026: *« dans tout le site, j'aimerais
+     bien qu'il y ait un petit peu plus de couleurs, même si c'est très léger et
+     nuancé »*. So they colour small things — an icon chip, a figure, a card's edge,
+     the rule down the side of a profile — and never a headline or a large surface.
+     The first accent IS the brand blue, so the palette reads as a family rather than
+     as four unrelated colours, and the logo's own hexes are untouched: a brand colour
+     "adjusted to fit a palette" is a different brand colour. */
+  /* Raised one notch on 31/08/2026 at Julien's word ("monte l'intensité d'un cran"):
+     the tints are deeper and the rules darker, so the same restraint reads from a metre
+     away instead of only up close. The ink stays exactly as it was — what changed is how
+     much colour the surfaces carry, not the hues themselves. */
+  --a1: #34527e; --a1-soft: #dbe5f4; --a1-line: #b6cbe6;   /* brand blue      */
+  --a2: #0e6d78; --a2-soft: #d0eaee; --a2-line: #a5d5db;   /* teal            */
+  --a3: #59489b; --a3-soft: #e2dbf7; --a3-line: #c2b7e9;   /* violet          */
+  --a4: #8f5f14; --a4-soft: #f7e6c8; --a4-line: #e6cb9d;   /* amber           */
+}
+
+html[data-theme="dark"] {
+  --brand:      #5d84ba;
+  --brand-ink:  #eef2f9;
+  --brand-soft: #16233c;
+  --brand-line: #26365a;
+
+  --ground:   #0a1020;
+  --ground-2: #0d1526;
+  --panel:    #111b30;
+  --line:     #23304c;
+  --ink:      #e8edf8;
+  --ink-2:    #a4b3cd;
+  --ink-3:    #8496b5;
+  --ok:       #6ee7a8;
+  --ok-bg:    rgba(74,222,128,.12);
+  --warn:     #f0a132;
+  --warn-bg:  rgba(240,161,50,.14);
+
+  /* Dark: the ink brightens and the tint darkens, so the same four accents keep the
+     same MEANING on both themes rather than becoming four pale smudges. */
+  --a1: #8fb1de; --a1-soft: #1b2c4b; --a1-line: #3a5178;
+  --a2: #6fd4dd; --a2-soft: #123036; --a2-line: #23555d;
+  --a3: #b7abf2; --a3-soft: #241f42; --a3-line: #443c72;
+  --a4: #edb862; --a4-soft: #362a17; --a4-line: #614c24;
+  --danger:   #ef5a63;
+  --danger-bg:rgba(239,90,99,.14);
+  --shadow:   0 10px 30px rgba(0,0,0,.35);
+  --shadow-lg:0 24px 60px rgba(0,0,0,.5);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font-family: var(--body); font-size: 15px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: var(--display); margin: 0; line-height: 1.15; }
+p { margin: 0; }
+a { color: var(--brand); }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: none; padding: 0; }
+.wrap { width: min(1180px, 100% - 40px); margin: 0 auto; }
+
+/* The header and the footer are NOT here: they are in chrome.css, which every page
+   of the site loads — the eXact pages and the deck included. Keeping them here would
+   have meant either a second copy of the chrome for those pages, or shipping this
+   file's `body`/`section`/`a` rules into designs that are not ours to restyle. */
+
+
+.btn {
+  display: inline-flex; align-items: center; gap: 9px; padding: 12px 20px; border-radius: 11px;
+  background: var(--brand); color: #fff; font-weight: 600; font-size: 14.5px; text-decoration: none;
+  border: 1px solid var(--brand); transition: transform .12s, box-shadow .12s;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+.btn.outline { background: transparent; color: var(--brand); }
+.btn.outline:hover { background: var(--brand-soft); }
+/* A third rank, quieter than outline. The hero offers two products and then the free tool,
+   and three buttons of equal weight would say the three are equal offers — which is exactly
+   what Julien asked to stop saying on 01/09/2026. */
+.btn.ghost { background: transparent; color: var(--ink-2); border-color: transparent; padding-left: 8px; padding-right: 8px; }
+.btn.ghost:hover { color: var(--brand); background: var(--brand-soft); }
+.btn.sm { padding: 8px 14px; font-size: 13.5px; border-radius: 9px; }
+.btn.ink { background: var(--brand-ink); border-color: var(--brand-ink); color: #fff; }
+html[data-theme="dark"] .btn.ink { background: var(--brand); border-color: var(--brand); }
+
+/* ---------------------------------------------------------------
+   Sections and common blocks
+   --------------------------------------------------------------- */
+section { padding: 78px 0; }
+/* A tint rather than grey — 55% of the blue wash mixed into the neutral, which reads as
+   "a different band" without reading as "a coloured band". */
+section.alt {
+  background: color-mix(in srgb, var(--a1-soft) 80%, var(--ground-2));
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.kicker {
+  font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--brand); margin-bottom: 12px;
+}
+h2.title { font-size: clamp(26px, 3.2vw, 36px); font-weight: 800; letter-spacing: -.02em; }
+.lead { font-size: 17px; color: var(--ink-2); margin-top: 14px; max-width: 720px; }
+
+/* Home hero */
+/* A WASH, NOT A COLOUR. Two of the accents at very low strength, thrown behind the hero
+   from the top corners: enough that the first screen is not a flat rectangle, faint
+   enough that nothing competes with the headline or the screenshot. */
+.hero {
+  padding: 74px 0 66px; position: relative; overflow: hidden;
+  background:
+    radial-gradient(760px 380px at 88% -8%, color-mix(in srgb, var(--a2) 20%, transparent), transparent 70%),
+    radial-gradient(680px 340px at 4% 8%, color-mix(in srgb, var(--a1) 18%, transparent), transparent 70%);
+}
+html[data-theme="dark"] .hero {
+  background:
+    radial-gradient(760px 380px at 88% -8%, color-mix(in srgb, var(--a2) 26%, transparent), transparent 70%),
+    radial-gradient(680px 340px at 4% 8%, color-mix(in srgb, var(--a1) 30%, transparent), transparent 70%);
+}
+.hero h1 { font-size: clamp(34px, 5vw, 56px); font-weight: 800; letter-spacing: -.03em; max-width: 900px; }
+.hero .sub { font-size: 19px; color: var(--ink-2); margin-top: 20px; max-width: 660px; }
+.hero .cta { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+.hero .note { font-size: 13px; color: var(--ink-3); margin-top: 18px; }
+.heroGrid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+
+/* Inner-page hero: shorter, no screenshot beside it */
+/* The inner pages get the same treatment at half strength: they are read, not admired. */
+.pagehero {
+  padding: 56px 0 44px; border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(620px 300px at 92% -20%, color-mix(in srgb, var(--a3) 16%, transparent), transparent 70%),
+    color-mix(in srgb, var(--a1-soft) 70%, var(--ground-2));
+}
+.pagehero h1 { font-size: clamp(30px, 4vw, 44px); font-weight: 800; letter-spacing: -.025em; max-width: 820px; }
+.pagehero .sub { font-size: 17.5px; color: var(--ink-2); margin-top: 16px; max-width: 720px; }
+.pagehero .cta { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
+
+/* ONE SIZE, ELEVEN CAPTURES — THE BOX NEVER MOVES. Julien, 01/09/2026 : *« Le défilement ne
+   doit pas changer l'organisation de la page à chaque image. »*
+
+   The eleven screens of the tour are not one shape. They run from 0.72 (the KPI editor, a tall
+   dialog) to 2.63 (the rules strip, wide and short) — a 3.6× spread. Left at `height: auto`
+   the box was 255 px tall on one frame and 931 px on the next, and everything below it jumped
+   by the difference every four seconds. The reader was chasing the page.
+
+   So the box is given its ratio and keeps it, and the capture is fitted INSIDE it with
+   `contain` — never `cover`. `cover` would hold the same shape by cropping, which is the exact
+   mistake presentation mode was rewritten to stop making (§4.11): a screenshot that has been
+   cut is a screenshot missing the thing somebody wanted to show.
+
+   Fitting rather than filling means a frame narrower or shorter than the box leaves a margin,
+   and that margin is `--panel` — the same colour and inside the same border as the frame
+   itself, so it reads as a viewer holding a picture rather than as a gap. 16/10 is the
+   compromise across the set: it is within a few per cent of the four widest captures, which
+   are the most common shape here, without flattening the tall ones to nothing.
+
+   `.shot` and `.shotcap` are used on this page only. Kept unscoped so a second tour elsewhere
+   inherits the behaviour rather than rediscovering it. */
+.shot {
+  /* Positioned because the hero's tour hangs its two arrows inside. */
+  position: relative;
+  /* 25/12 — that is 1500x720, the shape every one of the ten recordings is now.
+
+     It was 16/9 for a few hours, as a compromise: nine of them were 2.08 and `dashboards` was
+     1280x914, so nothing fitted everything and the box split the difference. Julien re-recorded
+     that one at 1498x720 on 01/09/2026 and the compromise stopped being necessary — the frame
+     is now filled edge to edge instead of carrying bars top and bottom.
+
+     The box still has to hold ONE size, whatever plays and whether or not anything plays, which
+     is the whole of §4.17 and the reason this page stopped moving under the reader. If a
+     recording of another shape is ever added, it is fitted inside this one with `contain` and
+     the ratio does NOT follow it. */
+  aspect-ratio: 25 / 12;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 14px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-lg);
+  background: var(--panel);
+}
+/* A still in the box fades rather than snaps. 260 ms, matching the pause index.js waits
+   before swapping the file — if either number moves, move both or the swap shows. */
+.shot img {
+  display: block; width: 100%; height: 100%; object-fit: contain;
+  transition: opacity .26s ease;
+}
+@media (prefers-reduced-motion: reduce) { .shot img { transition: none; } }
+
+/* THE PLAYER, TAKEN OUT OF THE FLOW ON PURPOSE. A <video> carries an intrinsic size, and as a
+   flex item that size beats the container's `aspect-ratio`: the box measured 801, 934, 939,
+   940 and 942 pixels tall as the seven tabs were pressed, so the page jumped by up to 141px
+   each time — the very fault §4.17 exists to prevent, walked back in through a different
+   element. Positioned, it cannot influence its container's height at all: the ratio alone
+   decides the box, and each recording is fitted inside whatever shape it happens to be.
+   `contain`, never `cover` — a console recording cropped to fill loses the edges of the
+   interface it was made to show. */
+.shot video {
+  position: absolute; inset: 0;
+  display: block; width: 100%; height: 100%; object-fit: contain;
+}
+/* THE TABS OVER THE PLAYER. Julien, 01/09/2026 : *« pour chaque vidéo un petit bouton, genre
+   des onglets »*. Real buttons in a real tablist, so a keyboard reaches them and a screen
+   reader is told which one is current — `aria-selected` is set by index.js and the styling
+   below hangs off that attribute rather than off a class, so the two cannot disagree.
+
+   They wrap rather than scroll: seven short labels make three tidy rows on a phone, whereas a
+   row that scrolls sideways hides tabs past the edge with nothing to say they are there. */
+/* PLUS PETITS DEPUIS LE 01/09/2026 : « tu réduis les boutons aussi beaucoup pour qu'ils ne
+   prennent pas trop trop de place au-dessus des vidéos ». Ils étaient sept, ils sont treize, et
+   à 12,5px sur 8px de haut la rangée mangeait trois lignes au-dessus du lecteur — l'index d'un
+   catalogue plutôt que la légende d'une démonstration. Le lecteur est ce qu'on regarde ; les
+   onglets ne sont que la façon d'en changer. */
+.vtabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+.vtab {
+  font-size: 11.5px; font-weight: 500; line-height: 1;
+  padding: 5px 10px; border-radius: 999px; cursor: pointer;
+  color: var(--ink-2); background: var(--ground-2);
+  border: 1px solid var(--line);
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.vtab:hover { color: var(--ink); border-color: var(--a1-line); }
+.vtab[aria-selected="true"] { color: #fff; background: var(--brand); border-color: var(--brand); }
+.vtab:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .vtab { transition: none; } }
+
+/* THE CAPTION RESERVES ITS LINES TOO. Same complaint as the box, one element lower: the
+   captions run from 34 to 74 characters, the same column wraps some and not others, and a
+   caption that grows a line pushes everything below it down by that line.
+
+   `line-height` is set here rather than inherited precisely so `min-height` can be counted in
+   lines and stay true: 3em is exactly two lines of 1.5, and 4.5em is three. Narrow screens get
+   the third because a 74-character caption wraps further the narrower the column gets, and a
+   line of reserved whitespace costs nineteen pixels — cheaper than the page moving. */
+.shotcap {
+  font-size: 12.5px; line-height: 1.5; color: var(--ink-3);
+  margin-top: 10px; min-height: 3em;
+}
+@media (max-width: 900px) { .shotcap { min-height: 4.5em; } }
+
+/* THE TOUR'S ARROWS. Julien, 01/09/2026 : *« Ajoute des flèches dans le défilement d'images
+   de l'overview pour forcer le défilement. »*
+
+   LITERAL COLOURS, NOT TOKENS, AND THAT IS DELIBERATE. These sit on top of a screenshot, not
+   on the page: the theme behind them is whatever the capture happens to be — the tour runs
+   through ten light screens and ends on a dark one. A token would follow the site's theme and
+   disappear against half the tour. A dark chip with a white glyph and a white hairline reads
+   on every frame in the set, in both themes.
+
+   Visible at rest rather than on hover: half the readers are on a phone, where there is no
+   hover and a control that only appears on one may as well not exist. Quiet enough at .62 not
+   to compete with the capture. */
+.shotnav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 40px; height: 40px; border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  font: 400 26px/1 var(--display);
+  padding: 0 0 3px;                       /* the chevron glyph sits high in its box */
+  color: #fff; background: rgba(14, 20, 34, .62);
+  border: 1px solid rgba(255, 255, 255, .34);
+  backdrop-filter: blur(3px);
+  cursor: pointer; opacity: .62;
+  transition: opacity .18s ease, background-color .18s ease;
+}
+.shotnav:hover { opacity: 1; background: rgba(14, 20, 34, .82); }
+/* A visible ring for the keyboard, and only for the keyboard — Tab reaches these between the
+   hero's buttons and the rest of the page, and a control you can reach but cannot see is
+   worse than one you cannot reach. */
+.shotnav:focus-visible { opacity: 1; outline: 3px solid #fff; outline-offset: 2px; }
+.shotnav-prev { left: 12px; }
+.shotnav-next { right: 12px; }
+@media (max-width: 720px) {
+  .shotnav { width: 34px; height: 34px; font-size: 22px; }
+  .shotnav-prev { left: 8px; }
+  .shotnav-next { right: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .shotnav { transition: none; } }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 40px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 26px; }
+.card .ico {
+  width: 42px; height: 42px; border-radius: 11px; background: var(--a1-soft); color: var(--a1);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+}
+/* The accents cycle by POSITION, so a row of cards is coloured without a single
+   attribute in the markup: content stays content, and adding a card cannot forget
+   to pick a colour. */
+.cards .card:nth-child(4n+2) .ico { background: var(--a2-soft); color: var(--a2); }
+.cards .card:nth-child(4n+3) .ico { background: var(--a3-soft); color: var(--a3); }
+.cards .card:nth-child(4n+4) .ico { background: var(--a4-soft); color: var(--a4); }
+.cards .card { transition: border-color .15s, box-shadow .15s; }
+.cards .card:nth-child(4n+1):hover { border-color: var(--a1-line); }
+.cards .card:nth-child(4n+2):hover { border-color: var(--a2-line); }
+.cards .card:nth-child(4n+3):hover { border-color: var(--a3-line); }
+.cards .card:nth-child(4n+4):hover { border-color: var(--a4-line); }
+.cards .card:hover { box-shadow: var(--shadow); }
+.card h3 { font-size: 17px; font-weight: 700; margin-bottom: 9px; }
+.card p { font-size: 14.5px; color: var(--ink-2); }
+.card .mores { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 14px; }
+.card a.more { display: inline-block; font-size: 14px; font-weight: 600; text-decoration: none; }
+.card a.more:hover { text-decoration: underline; }
+/* The second link on a card — the Entris card's mock-up. Quieter than the first, because it
+   is the thing to look at after the presentation, not instead of it. */
+.card a.more.alt { color: var(--ink-3); font-weight: 500; }
+.card a.more.alt:hover { color: var(--brand); }
+
+.facts { display: flex; gap: 40px; flex-wrap: wrap; margin-top: 36px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; color: var(--a1); }
+.facts .fact:nth-child(4n+2) b { color: var(--a2); }
+.facts .fact:nth-child(4n+3) b { color: var(--a3); }
+.facts .fact:nth-child(4n+4) b { color: var(--a4); }
+.fact span { font-size: 13.5px; color: var(--ink-2); }
+
+.bullets { display: grid; gap: 11px; margin: 22px 0 26px; }
+.bullets div { display: flex; gap: 11px; font-size: 14.5px; color: var(--ink-2); align-items: flex-start; }
+.bullets svg { flex: none; color: var(--brand); margin-top: 3px; }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; margin-top: 40px; }
+.split.reverse > :first-child { order: 2; }
+
+/* `.callout` and `.mail` lived here for the home page's closing "Parlons-en" band, and went
+   with it on 31/08/2026. Nothing else selected them — `.split` stays, the mock-up uses it.
+   Dead rules are not free: the next person to want a boxed call-out finds a ready-made one,
+   uses it, and inherits a design decision that was reversed. */
+
+@media (max-width: 900px) {
+  .heroGrid, .split, .split.reverse { grid-template-columns: 1fr; }
+  .split.reverse > :first-child { order: 0; }
+  /* The menu's own narrow-screen behaviour moved with it, into chrome.css. */
+  section { padding: 56px 0; }
+}

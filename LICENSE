@@ -1,0 +1,56 @@
+ANONYMIZER — LB IT CLOUD — COPYRIGHT AND TERMS
+
+Copyright (c) 2026 LB IT Cloud SAS, France. All rights reserved.
+
+This repository publishes the source of the Anonymizer, a free tool of the LB IT
+Cloud website (https://www.lbitcloud.com/anonymizer), so that anyone can read the
+code that runs in their browser and check that the offline file is built from
+it. It is not open-source software: it is published to be read and verified.
+
+
+WHAT YOU MAY DO
+
+1. Read, review and audit this source; discuss it, report on it and quote short
+   extracts of it with attribution.
+
+2. Rebuild the offline file from this source and run its tests, in order to
+   verify it.
+
+3. Use the Anonymizer — on the website, or the offline file
+   (anonymizer-offline.html) downloaded from the website or from this
+   repository — unmodified, to anonymize your own texts and documents, including
+   in your work and for your clients; keep copies of the offline file for that
+   use, and make it available, unmodified, to the members of your organisation
+   for the same use, for instance on its intranet.
+
+
+WHAT IS NOT GRANTED
+
+Any other use. In particular, without the written agreement of LB IT Cloud SAS:
+copying, modifying, adapting, merging, publishing, distributing, sublicensing or
+selling this source or the offline file, in whole or in part, or including them
+in another product, service or website.
+
+
+NO WARRANTY
+
+The Anonymizer reduces the risk of sharing confidential data; it does not
+guarantee that a text or a document is anonymous, and it detects only what its
+dictionary and its patterns recognise. Read every result before you share it.
+The source and the offline file are provided "as is", without warranty of any
+kind, express or implied. To the extent permitted by law, LB IT Cloud SAS is not
+liable for any damage arising from their use.
+
+
+THIRD-PARTY COMPONENTS
+
+None. Every file in this repository was written by LB IT Cloud SAS: the tool
+uses no library, and the offline file embeds no third-party code or typeface.
+The test runner (vitest) is installed separately, under its own licence, and is
+not part of this repository.
+
+
+CONTACT
+
+LB IT Cloud SAS, France
+contact@lbitcloud.com

@@ -1,0 +1,258 @@
+/* Copyright (c) 2026 LB IT Cloud SAS. All rights reserved.
+   Proprietary source of the LB IT Cloud website. See LICENSE.
+
+   THE ANONYMIZER — what only this tool needs. Buttons, notices and tables come from
+   tools.css; every colour is a token of site.css, so the dark theme needs nothing here.
+
+   LA FORME D'ABORD SIMPLE (09/10/2026). Julien, sur la première version : « c'est super
+   compliqué […] je colle un truc, je veux voir rapidement ce que ça va donner […] est-ce qu'on
+   peut pas faire plutôt des menus qui s'ouvrent ». Deux cartes côte à côte — le texte, le
+   résultat — et tout le reste replié en dessous, dans des <details> fermés par défaut.
+
+   TROIS COULEURS, ET ELLES NE SE MÉLANGENT PAS : ce qui a été remplacé (bleu-vert), ce qui a
+   été arrondi (violet), ce qui est à vérifier (orange). La légende reprend les mêmes classes.
+
+   TOUT TEXTE QUI VIENT DE L'UTILISATEUR S'AFFICHE EN POLICE SYSTÈME (.an-mono), jamais en
+   Inter. fonts.css découpe ses polices par plages de caractères : un nom polonais ou tchèque
+   collé dans un élément en Inter ferait télécharger le fichier « latin-ext » en cours d'usage,
+   et l'onglet Réseau montrerait une requête après le chargement — sur la seule page dont la
+   promesse est qu'il n'y en a aucune. Avec une police système, il n'y en a pas.
+   --------------------------------------------------------------------------- */
+
+/* An element given a display of its own would otherwise ignore the `hidden` attribute the
+   script sets: author CSS beats the browser's [hidden] rule. */
+main [hidden] { display: none !important; }
+
+.an-mono {
+  font-family: ui-monospace, "Cascadia Mono", "Cascadia Code", Consolas, "SF Mono", Menlo, "Liberation Mono", monospace;
+  font-size: 13px;
+}
+.an-small { font-size: 12px; color: var(--ink-3); line-height: 1.5; }
+.an-h3 { font-family: var(--display); font-size: 18px; font-weight: 800; margin: 30px 0 10px; }
+
+/* A shorter hero than the other tools: the tool is the page. */
+.an-hero { padding-bottom: 34px; }
+.an-section { padding-top: 26px; }
+
+/* The permanent line: information, not proof — the proof is #verifier. */
+.an-local {
+  padding: 10px 14px; border-radius: 11px; font-size: 13px; line-height: 1.5;
+  background: var(--ok-bg); border: 1px solid color-mix(in srgb, var(--ok) 30%, transparent); color: var(--ink-2);
+}
+.an-local a { color: var(--ok); font-weight: 700; }
+.an-compat { margin-top: 14px; }
+
+/* ---- the two cards ---- */
+.an-work { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; margin-top: 16px; align-items: start; }
+@media (max-width: 900px) { .an-work { grid-template-columns: 1fr; } }
+.an-card {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow);
+  padding: 14px 16px 16px; min-width: 0;
+}
+.an-cardhead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; min-height: 34px; }
+.an-cardtitle { font-family: var(--display); font-size: 17px; font-weight: 800; letter-spacing: -.01em; }
+.an-cardtools { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.an-cardhead .an-small { margin-left: auto; }
+label.tbtn { display: inline-block; cursor: pointer; }
+
+.an-area {
+  width: 100%; padding: 11px 12px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--panel); color: var(--ink); line-height: 1.55; resize: vertical;
+}
+.an-area:focus { outline: none; border-color: var(--brand); }
+.an-area::placeholder { color: var(--ink-3); opacity: .85; }
+#anText { min-height: 380px; }
+/* On a phone the two cards stack: each keeps room to read, not a whole screen. */
+@media (max-width: 900px) { #anText, .an-preview, .an-placeholder, .an-officecard { min-height: 240px; } }
+
+/* The file input is visually replaced by its label, but stays in the page and in the tab
+   order: a hidden input cannot be reached from the keyboard. */
+.an-file { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+.tbtn:has(+ .an-file:focus-visible) { outline: 2px solid var(--brand); outline-offset: 1px; }
+
+/* Dropping a file anywhere on the card: the zone says where it will land. */
+.an-drop { position: relative; }
+.an-dropover {
+  display: none; position: absolute; inset: 0; border: 2px dashed var(--brand); border-radius: 10px;
+  background: color-mix(in srgb, var(--brand-soft) 92%, transparent); color: var(--brand);
+  font-weight: 700; align-items: center; justify-content: center; font-size: 15px;
+}
+.an-drop.over .an-dropover { display: flex; }
+.an-officecard {
+  min-height: 380px; border: 1px dashed var(--line); border-radius: 10px; padding: 22px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center;
+}
+.an-officecard .an-mono { font-size: 15px; color: var(--ink); overflow-wrap: anywhere; }
+.an-fileinfo { margin-top: 6px; overflow-wrap: anywhere; }
+.an-fileinfo:empty { display: none; }
+#anSrcLabel { margin-top: 6px; }
+
+.an-warn {
+  margin-top: 10px; padding: 9px 12px; border-radius: 10px; font-size: 12.5px; line-height: 1.5;
+  background: var(--warn-bg); color: var(--warn); border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
+}
+.an-warnlist { margin: 10px 0 0 18px; font-size: 12.5px; color: var(--warn); line-height: 1.5; }
+.an-warnlist li { overflow-wrap: anywhere; }
+
+/* ---- the result ---- */
+.an-resultbox { position: relative; }
+.an-preview {
+  padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--ground-2);
+  color: var(--ink); line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere;
+  min-height: 380px; max-height: 560px; overflow: auto; margin: 0;
+}
+.an-preview:focus-visible { outline: 2px solid var(--brand); }
+.an-placeholder {
+  min-height: 380px; border: 1px dashed var(--line); border-radius: 10px; padding: 22px;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  color: var(--ink-3); font-size: 14px; line-height: 1.6;
+}
+.an-empty { padding: 6px 0; color: var(--ink-3); font-size: 13px; line-height: 1.5; }
+.an-title { color: var(--ink-3); font-weight: 700; }
+.an-resultbox progress { position: absolute; left: 14px; right: 14px; top: 10px; width: calc(100% - 28px); accent-color: var(--brand); }
+.an-error { margin-top: 10px; }
+.an-error p { overflow-wrap: anywhere; }
+
+/* THE THREE COLOURS. Used in the legend and in the preview, by the same classes. */
+.an-legend { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 10px 0 0; font-size: 12px; }
+.an-legend .an-small { flex-basis: 100%; }
+.an-rep, .an-num, .an-doubt { border-radius: 4px; padding: 0 3px; }
+.an-rep { background: var(--a2-soft); color: var(--a2); box-shadow: inset 0 -1px 0 var(--a2-line); }
+.an-num { background: var(--a3-soft); color: var(--a3); box-shadow: inset 0 -1px 0 var(--a3-line); }
+.an-doubt {
+  background: var(--warn-bg); color: var(--warn); box-shadow: inset 0 -2px 0 var(--warn);
+  font-weight: 700; cursor: pointer;
+}
+.an-doubt:focus-visible, .an-doubt.on { outline: 2px solid var(--warn); outline-offset: 1px; }
+.an-legend > span:not(.an-small) { padding: 2px 8px; }
+.an-restored { background: var(--ok-bg); color: var(--ok); border-radius: 4px; padding: 0 3px; }
+
+/* The bubble: a decision, next to the word it is about. Positioned by the script, inside the
+   result's box — never fixed, so it scrolls with what it points at. */
+.an-bubble {
+  position: absolute; z-index: 5; width: min(360px, calc(100% - 16px)); padding: 12px 14px;
+  background: var(--panel); border: 1px solid color-mix(in srgb, var(--warn) 45%, var(--line)); border-radius: 12px;
+  box-shadow: var(--shadow-lg); font-size: 13px; color: var(--ink-2);
+}
+.an-bubble p { margin-bottom: 8px; overflow-wrap: anywhere; }
+.an-bubble b { color: var(--ink); }
+.an-bubblerow { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+.an-inline { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: var(--ink-2); }
+.an-inline select, .an-bubble select, .an-addname select, .an-bar select {
+  padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--ink); font-size: 13px;
+}
+
+.an-go {
+  padding: 9px 18px; border-radius: 10px; border: 1px solid var(--brand); background: var(--brand);
+  color: #fff; font-weight: 700; font-size: 14px;
+}
+.an-go:hover { filter: brightness(1.08); }
+.an-go:focus-visible { outline: 3px solid var(--brand-line); outline-offset: 2px; }
+.an-small-go { padding: 7px 14px; font-size: 13px; }
+a.an-get { display: inline-block; text-decoration: none; }
+
+.an-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+.an-pending { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, var(--line)); }
+.an-resultcard > .an-small { margin-top: 10px; }
+
+/* ---- what folds away ---- */
+.an-folds { display: grid; gap: 10px; margin-top: 22px; }
+.an-fold { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+.an-fold > summary {
+  list-style: none; cursor: pointer; padding: 13px 16px; font-weight: 700; font-size: 14.5px; color: var(--ink);
+  display: flex; align-items: center; gap: 8px;
+}
+.an-fold > summary::-webkit-details-marker { display: none; }
+.an-fold > summary::before { content: "›"; display: inline-block; width: 14px; color: var(--ink-3); transition: transform .15s; }
+.an-fold[open] > summary::before { transform: rotate(90deg); }
+.an-fold > summary:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; border-radius: 12px; }
+.an-foldbody { padding: 2px 18px 18px 38px; }
+.an-count {
+  display: inline-block; min-width: 20px; padding: 0 6px; border-radius: 999px; font-size: 11px;
+  background: var(--brand-soft); color: var(--brand); text-align: center;
+}
+.an-count:empty { display: none; }
+.an-subfold { margin-top: 14px; font-size: 13px; }
+.an-subfold > summary { cursor: pointer; color: var(--brand); font-weight: 700; }
+.an-subfold .an-area { margin-top: 10px; }
+.an-dico { min-height: 160px; }
+.an-subfold code, .an-steps code, .an-limits code {
+  font-family: ui-monospace, Consolas, Menlo, monospace; font-size: 12px; padding: 1px 5px;
+  border-radius: 5px; background: var(--ground-2); border: 1px solid var(--line);
+}
+
+/* The hidden names, as chips: what was hidden, under which token, and a cross to undo it. */
+.an-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; padding: 0; }
+.an-chip {
+  display: inline-flex; align-items: center; gap: 8px; padding: 5px 6px 5px 10px; border-radius: 999px;
+  background: var(--a2-soft); border: 1px solid var(--a2-line); color: var(--ink); max-width: 100%;
+}
+.an-chip .an-mono { font-size: 12.5px; overflow-wrap: anywhere; }
+.an-chiptok { color: var(--a2); }
+.an-chipx {
+  width: 22px; height: 22px; border-radius: 50%; border: 0; background: transparent; color: var(--ink-3);
+  font-size: 15px; line-height: 1; cursor: pointer; flex: none;
+}
+.an-chipx:hover { background: var(--danger-bg); color: var(--danger); }
+.an-addname { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.an-addinput { padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--ink); width: min(280px, 60vw); }
+.an-addinput:focus { outline: none; border-color: var(--brand); }
+.an-bar { margin-top: 10px; }
+
+.an-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; }
+@media (max-width: 900px) { .an-cols { grid-template-columns: 1fr; } }
+.an-col { min-width: 0; }
+.an-set { border: 0; padding: 0; margin: 0 0 16px; min-width: 0; }
+.an-set legend { font-size: 13px; font-weight: 700; color: var(--ink-2); margin-bottom: 6px; padding: 0; }
+.an-check { display: flex; gap: 8px; align-items: flex-start; font-size: 13.5px; color: var(--ink-2); line-height: 1.4; margin: 5px 0; }
+.an-check input { margin-top: 2px; flex: none; accent-color: var(--brand); }
+.an-run { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+
+/* Tabs, inside « Détails ». Plain buttons with aria-selected, wired in anonymizer.js. */
+.an-tabs { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+.an-tab {
+  padding: 8px 13px; font-size: 13px; font-weight: 700; color: var(--ink-3); background: none;
+  border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.an-tab:hover { color: var(--brand); }
+.an-tab[aria-selected="true"] { color: var(--brand); border-bottom-color: var(--brand); }
+.an-tab:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.an-pane { min-width: 0; }
+
+.an-group { margin-top: 14px; }
+.an-group h4 { font-size: 13px; font-weight: 700; color: var(--ink-2); margin-bottom: 6px; }
+.an-item { display: flex; gap: 8px; align-items: center; font-size: 13px; padding: 4px 0; border-bottom: 1px solid var(--line); }
+.an-item input { accent-color: var(--warn); }
+.an-item .an-mono { overflow-wrap: anywhere; }
+.an-item .an-small { margin-left: auto; white-space: nowrap; }
+
+.an-table td.an-mono, .an-table th { white-space: nowrap; }
+.an-table td.an-orig { white-space: normal; overflow-wrap: anywhere; }
+.an-masked { color: var(--ink-3); letter-spacing: .15em; }
+
+.an-report { margin: 4px 0 14px 18px; font-size: 13.5px; color: var(--ink-2); line-height: 1.6; }
+.an-report li { margin-bottom: 6px; overflow-wrap: anywhere; }
+.an-report li.mind { color: var(--warn); }
+
+.an-wipe { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 18px; }
+
+/* ---- how to check ---- */
+.an-steps, .an-limits { margin: 18px 0 0 22px; font-size: 14.5px; color: var(--ink-2); line-height: 1.65; max-width: 80ch; }
+.an-steps li, .an-limits li { margin-bottom: 10px; }
+.an-note { margin-top: 6px; }
+.an-cmd { display: inline-block; margin: 6px 6px 6px 0; padding: 4px 9px; border-radius: 7px; background: var(--panel); border: 1px solid var(--line); }
+
+/* THE OFFLINE VERSION: its block on the page, and the bar that replaces the site's header in the
+   single file (anonymizer-offline.html). */
+.an-offline { margin-top: 30px; padding: 20px 22px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); max-width: 860px; }
+.an-offline .an-h3 { margin-top: 0; }
+.an-offline p + p { margin-top: 10px; }
+.an-offlead { font-size: 14.5px; color: var(--ink-2); line-height: 1.6; }
+.an-hash { overflow-wrap: anywhere; }
+.an-hashcmds { margin: 8px 0 0 20px; font-size: 13.5px; color: var(--ink-2); line-height: 1.6; }
+.an-repo { color: var(--brand); font-weight: 700; }
+.an-offbar { position: sticky; top: 0; z-index: 10; background: var(--panel); border-bottom: 1px solid var(--line); }
+.an-offbar .wrap { display: flex; align-items: center; gap: 12px; height: 58px; }
+.an-offbar b { font-family: var(--display); font-size: 18px; }
+.an-offbar .an-sep { flex: 1; }
+.an-offfoot { padding: 26px 0 40px; font-size: 12.5px; color: var(--ink-3); }

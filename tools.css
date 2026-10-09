@@ -1,0 +1,452 @@
+/* Copyright (c) 2026 LB IT Cloud SAS. All rights reserved.
+   Proprietary source of the LB IT Cloud website. See LICENSE.
+
+   THE FURNITURE EVERY FREE TOOL SHARES.
+
+   The site had one free tool until 17/09/2026 and its stylesheet held two kinds of
+   rule side by side: what a TOOL looks like — a panel, a question, a group of
+   questions, a described group you open and close, a warning box — and what the
+   LICENCE ADVISOR looks like, which is prices, seats and a monthly total. Three more
+   tools arrived that day, and the first kind had to be copied three times or moved
+   once. It is moved: advisor.css keeps only its own, and loads this first.
+
+   So a rule here is one that four pages read the same way. If a rule only ever
+   applies to one tool, it belongs in that tool's own stylesheet, not here.
+
+   Everything is written in the tokens site.css declares, which is the whole reason
+   the dark theme needs no rule of its own below: --panel, --line, --ink, and the four
+   accents are already redefined under html[data-theme="dark"].
+   --------------------------------------------------------------------------- */
+
+/* =========================================================================
+   1. MOVED OUT OF advisor.css, UNCHANGED — the shared half.
+   ========================================================================= */
+
+/* The tagline sits between the name and the explanation: bigger than body copy,
+   smaller than the title, and in the brand blue so the eye takes the three lines in
+   the right order. */
+.tagline {
+  font-family: var(--display); font-size: 21px; font-weight: 700; color: var(--brand);
+  margin-top: 10px; line-height: 1.25;
+}
+@media (max-width: 700px) { .tagline { font-size: 18px; } }
+
+.panel {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow);
+}
+.panel .head {
+  display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+.panel .head h3 { font-size: 16px; font-weight: 700; }
+.panel .body { padding: 18px 20px 22px; }
+.panel .head .right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+/* A DESCRIBED GROUP, OPENED AND CLOSED. In the advisor it is a user profile; in the
+   Autopilot tool it is a population of machines. Same component, same name, one
+   definition: a row you click, a verdict chip on the right, and a tinted drawer of
+   questions underneath.
+
+   Each one carries a coloured rule down its left edge and a tinted name, cycling
+   through the four accents BY POSITION — no attribute in the markup, so a group
+   added at runtime is coloured like the rest. The cycle used to be selected on
+   `#profileList`; it is `.proflist` now, because a second page has a second list. */
+.prof {
+  border: 1px solid var(--line); border-left: 4px solid var(--a1-line);
+  border-radius: 12px; margin-bottom: 12px; background: var(--panel);
+  box-shadow: 0 1px 2px rgba(20, 32, 58, .04);
+}
+.proflist .prof:nth-child(4n+2) { border-left-color: var(--a2-line); }
+.proflist .prof:nth-child(4n+3) { border-left-color: var(--a3-line); }
+.proflist .prof:nth-child(4n+4) { border-left-color: var(--a4-line); }
+.proflist .prof:nth-child(4n+1) .nm { color: var(--a1); }
+.proflist .prof:nth-child(4n+2) .nm { color: var(--a2); }
+.proflist .prof:nth-child(4n+3) .nm { color: var(--a3); }
+.proflist .prof:nth-child(4n+4) .nm { color: var(--a4); }
+.prof.open { border-color: var(--brand); border-left-width: 4px; }
+/* A GRID, NOT A WRAPPING FLEX ROW. As a flex row every group took a different shape:
+   a short description sat on one line while a long one squeezed into a narrow column
+   beside the verdict, and nothing lined up between groups. Three bands, placed by
+   area so the markup order need not change. */
+.prof .row {
+  display: grid; gap: 7px 12px; align-items: center; padding: 14px 16px; cursor: pointer;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas:
+    "nm      heads chev"
+    "who     who   who"
+    "verdict verdict verdict";
+}
+.prof .nm { grid-area: nm; }
+.prof .who { grid-area: who; }
+.prof .heads { grid-area: heads; }
+.prof .chev { grid-area: chev; }
+.prof .verdict { grid-area: verdict; justify-self: start; }
+.prof .row:hover { background: var(--ground-2); }
+.prof .nm { font-weight: 700; font-size: 15.5px; letter-spacing: -.01em; }
+/* ink-2, not ink-3: this line is what the group IS, not a footnote about it. */
+.prof .who { font-size: 13px; color: var(--ink-2); min-width: 0; }
+.prof .heads {
+  display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-2);
+}
+.prof .heads input {
+  width: 78px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--panel); text-align: right; font-variant-numeric: tabular-nums;
+}
+/* The verdict is the ANSWER, so it gets a chip of its own rather than a nowrap label
+   that used to push the description sideways. It wraps: some of these are
+   "Office 365 E5 + Enterprise Mobility + Security E5". */
+.prof .verdict {
+  font-weight: 700; font-size: 14px; color: var(--brand); white-space: normal;
+  background: var(--brand-soft); border: 1px solid var(--brand-line);
+  border-radius: 8px; padding: 5px 10px; line-height: 1.35;
+}
+.proflist .prof:nth-child(4n+1) .verdict { color: var(--a1); background: var(--a1-soft); border-color: var(--a1-line); }
+.proflist .prof:nth-child(4n+2) .verdict { color: var(--a2); background: var(--a2-soft); border-color: var(--a2-line); }
+.proflist .prof:nth-child(4n+3) .verdict { color: var(--a3); background: var(--a3-soft); border-color: var(--a3-line); }
+.proflist .prof:nth-child(4n+4) .verdict { color: var(--a4); background: var(--a4-soft); border-color: var(--a4-line); }
+.prof .chev { font-size: 12px; color: var(--ink-3); white-space: nowrap; }
+.prof:hover .chev { color: var(--brand); }
+/* THE OPEN AREA IS TINTED, and in the group's own accent, so "which one am I
+   editing" is answered by the colour of the surface rather than by remembering which
+   row was clicked. The questions sit on white cards inside it: tint outside, cards
+   inside, which is the whole trick for telling a container from its contents. */
+.prof .qs { display: none; padding: 0 14px 16px; border-top: 1px solid var(--line); }
+.prof.open .qs { display: block; background: var(--a1-soft); }
+.proflist .prof:nth-child(4n+2).open .qs { background: var(--a2-soft); }
+.proflist .prof:nth-child(4n+3).open .qs { background: var(--a3-soft); }
+.proflist .prof:nth-child(4n+4).open .qs { background: var(--a4-soft); }
+
+/* The name, as a header rather than one more field. */
+.qhead {
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  padding: 14px 0 4px;
+}
+.qhead label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--ink-3); }
+.qhead .pname {
+  flex: 1; min-width: 200px; padding: 9px 12px; border: 1px solid var(--line);
+  border-radius: 9px; background: var(--panel); font-weight: 700; font-size: 14.5px;
+}
+.qhead .pname:focus { outline: none; border-color: var(--brand); }
+
+/* Named groups of questions. The rule under the title does the separating; a box
+   around each group as well would be a box inside a tint inside a card. */
+.qgroup { margin-top: 18px; }
+.qgroup h4 {
+  font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em;
+  color: var(--ink-2); padding-bottom: 7px; margin-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+/* 280 rather than 250: at 250 the longest options were cut mid-word, and a choice you
+   cannot read is not a choice. */
+.qgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.q {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px 13px 13px;
+}
+.q label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 7px; line-height: 1.35; }
+.q select {
+  width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 9px;
+  background: var(--panel); font-size: 13.5px; appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%), linear-gradient(135deg, var(--ink-3) 50%, transparent 50%);
+  background-position: calc(100% - 16px) 17px, calc(100% - 11px) 17px;
+  background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 30px;
+}
+.q select:focus { outline: none; border-color: var(--brand); }
+.q .note { font-size: 11.5px; color: var(--ink-3); margin-top: 5px; line-height: 1.45; }
+
+/* The warning is not a footnote. It says what the figures are and what they are not,
+   in the same panel as the figures, because that is where somebody decides to forward
+   them to a board. */
+.notice {
+  margin-top: 16px; padding: 14px 16px; border-radius: 11px;
+  background: var(--warn-bg); border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
+}
+.notice b { display: block; font-size: 13px; color: var(--warn); margin-bottom: 5px; }
+.notice p { font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+
+.disclaim {
+  margin-top: 14px; font-size: 12px; color: var(--ink-3); line-height: 1.5;
+  border-left: 3px solid var(--line); padding-left: 12px;
+}
+
+/* Figures, named. "45 min" alone is ambiguous — per machine? per visit? for the
+   whole campaign? — and a reader who has to guess cannot check the arithmetic, which
+   is the only reason to show it. */
+.figs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+.fig { border-left: 2px solid var(--brand-line); padding-left: 10px; }
+.fig b { display: block; font-weight: 700; font-variant-numeric: tabular-nums; font-size: 15px; }
+.fig span { display: block; font-size: 11px; color: var(--ink-3); line-height: 1.3; margin-top: 2px; }
+@media (max-width: 480px) { .figs { grid-template-columns: 1fr; gap: 6px; } }
+
+@media (max-width: 900px) { .prof .row { gap: 8px; } }
+
+/* =========================================================================
+   2. NEW WITH THE THREE MIGRATION TOOLS.
+   ========================================================================= */
+
+/* One column, always: the questions, then what they produce. Side by side, the
+   answer is a narrow column of figures squeezed next to the panel producing it, and
+   the reading order stops matching the thinking order. */
+.toolwrap { display: grid; grid-template-columns: 1fr; gap: 22px; margin-top: 36px; align-items: start; }
+
+/* A NUMBER THE VISITOR HAS TO SUPPLY. Every tool on this site starts empty — no
+   fleet size, no day rate, no duration is pre-filled, because a figure that arrives
+   already written is read as a figure somebody measured. The placeholder says what
+   shape the answer takes; it never says what the answer is. */
+.q .num {
+  width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 9px;
+  background: var(--panel); font-size: 13.5px; font-variant-numeric: tabular-nums;
+}
+.q .num:focus { outline: none; border-color: var(--brand); }
+.q .num::placeholder { color: var(--ink-3); opacity: .8; font-variant-numeric: normal; }
+.q .row2 { display: flex; align-items: center; gap: 8px; }
+.q .row2 .num { flex: 1; min-width: 0; }
+.q .unit { font-size: 12.5px; color: var(--ink-3); white-space: nowrap; }
+
+/* The questions that describe the whole project rather than one population: how many
+   technicians, how many months, what a day costs. They sit above the populations
+   because they frame them. */
+.setup { margin-bottom: 4px; }
+
+/* WHAT THE TOOL ANSWERS. One card, the colour of its own verdict: green when a
+   scenario comes out, amber when it comes out with a reservation, red when the
+   answers contradict each other — which is the most useful thing this tool does, and
+   the reason it is not a quiz. */
+.outcome {
+  border: 1px solid var(--line); border-left: 5px solid var(--ok);
+  border-radius: 12px; padding: 18px 20px; background: var(--panel);
+}
+.outcome + .outcome { margin-top: 12px; }
+.outcome .rank {
+  font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--ok); margin-bottom: 6px;
+}
+.outcome h3 { font-family: var(--display); font-size: 19px; font-weight: 800; letter-spacing: -.01em; margin-bottom: 8px; }
+.outcome p { font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+.outcome p + p { margin-top: 8px; }
+.outcome.warn { border-left-color: var(--warn); }
+.outcome.warn .rank { color: var(--warn); }
+.outcome.bad { border-left-color: var(--danger); }
+.outcome.bad .rank { color: var(--danger); }
+
+/* NO MARKERS ON THE LISTS THIS FILE DRAWS. site.css resets margins but not lists, so
+   every `ul` below would otherwise carry a bullet AND the dash drawn in `::before`,
+   and `.plan` would carry the browser's numbers next to its own counter. Reset here
+   rather than globally: the prose lists elsewhere on the site keep their markers. */
+.reasons, .plan, .pc ul, .accbody ul { list-style: none; padding-left: 0; margin: 0; }
+
+/* Why it won, and why the others did not. A recommendation with no reasons is an
+   opinion; these are the lines somebody argues with in a meeting, so they are on the
+   screen rather than in a tooltip. */
+.reasons { margin-top: 12px; display: grid; gap: 7px; }
+.reasons li { display: flex; gap: 9px; font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
+.reasons li .mk { flex: none; font-weight: 800; width: 14px; text-align: center; }
+.reasons li.yes .mk { color: var(--ok); }
+.reasons li.no .mk { color: var(--danger); }
+.reasons li.mind .mk { color: var(--warn); }
+
+/* The other scenarios, ranked, so the reader sees what was weighed rather than only
+   what was chosen. An eliminated one keeps its line and says why. */
+.ranking { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 14px; }
+.ranking h4 {
+  font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em;
+  color: var(--ink-3); margin-bottom: 10px;
+}
+.ranked {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--line);
+}
+.ranked:last-child { border-bottom: 0; }
+.ranked .nm { font-weight: 700; font-size: 13.5px; }
+.ranked .st { font-size: 12px; font-weight: 700; color: var(--ok); white-space: nowrap; }
+.ranked .rw { grid-column: 1 / -1; font-size: 12.5px; color: var(--ink-3); line-height: 1.45; }
+.ranked.out .nm { color: var(--ink-3); }
+.ranked.out .st { color: var(--danger); }
+.ranked.mind .st { color: var(--warn); }
+
+/* THE COMPUTED FIGURES. Not decoration: each one is arithmetic the reader could redo
+   on paper, which is why the label under it says what was divided by what. */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 18px; }
+.kpi {
+  background: var(--brand-soft); border: 1px solid var(--brand-line);
+  border-radius: 11px; padding: 12px 14px;
+}
+.kpi b {
+  display: block; font-family: var(--display); font-size: 24px; font-weight: 800;
+  color: var(--brand); font-variant-numeric: tabular-nums; line-height: 1.1;
+}
+.kpi span { display: block; font-size: 11.5px; color: var(--ink-2); line-height: 1.35; margin-top: 4px; }
+.kpi.alert { background: var(--warn-bg); border-color: color-mix(in srgb, var(--warn) 35%, transparent); }
+.kpi.alert b { color: var(--warn); }
+
+/* THE PLAN. The output Julien asked for: not "S1", but "mount a bench, cable it in
+   RJ45, thin the ESP, and measure on thirty machines before you size the team". Each
+   line is an action, numbered, with the answer that produced it underneath. */
+.plan { margin-top: 18px; display: grid; gap: 10px; counter-reset: planstep; }
+.plan li {
+  display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 12px;
+  padding: 12px 14px; border: 1px solid var(--line); border-radius: 11px; background: var(--panel);
+}
+.plan li::before {
+  counter-increment: planstep; content: counter(planstep);
+  width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--brand-soft); color: var(--brand); border: 1px solid var(--brand-line);
+  font-size: 12.5px; font-weight: 800; font-variant-numeric: tabular-nums;
+}
+.plan .act { display: block; font-size: 14px; font-weight: 700; line-height: 1.4; }
+.plan .why { display: block; font-size: 12.5px; color: var(--ink-3); line-height: 1.45; margin-top: 4px; }
+.plan li.mind { border-color: color-mix(in srgb, var(--warn) 40%, transparent); background: var(--warn-bg); }
+.plan li.mind::before { background: var(--warn); color: var(--ground); border-color: var(--warn); }
+
+/* A small tag on a line: which axis an action belongs to, which phase a policy is in. */
+.chip {
+  display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px;
+  border-radius: 999px; background: var(--a1-soft); color: var(--a1); border: 1px solid var(--a1-line);
+  margin-right: 6px; vertical-align: 1px;
+}
+.chip.c2 { background: var(--a2-soft); color: var(--a2); border-color: var(--a2-line); }
+.chip.c3 { background: var(--a3-soft); color: var(--a3); border-color: var(--a3-line); }
+.chip.c4 { background: var(--a4-soft); color: var(--a4); border-color: var(--a4-line); }
+
+/* NOTHING ANSWERED YET is a state, not an error: the tool opens on it every time,
+   because it opens empty. It says which questions are still missing rather than
+   showing a blank rectangle. */
+.empty {
+  border: 1px dashed var(--line); border-radius: 12px; padding: 22px 20px;
+  color: var(--ink-3); font-size: 13.5px; line-height: 1.6; text-align: center;
+}
+.empty b { display: block; color: var(--ink-2); font-weight: 700; margin-bottom: 6px; font-size: 14px; }
+
+.toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+/* A BUTTON INSIDE A TOOL, and not `.ghost`. Outside the header, `.ghost` is styled by
+   nothing at all — chrome.css scopes it to `header.site .ghost` — so it inherits the
+   reset in site.css and renders as bare text. The advisor has lived with that since
+   August; a new class rather than a new rule on the old one, so fixing the look here
+   does not silently restyle a page nobody asked us to touch. */
+.tbtn {
+  padding: 7px 13px; border: 1px solid var(--line); border-radius: 9px;
+  background: var(--panel); color: var(--ink-2); font-size: 13px; font-weight: 600;
+}
+.tbtn:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-soft); }
+.tbtn:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+.tbtn.danger { color: var(--danger); }
+.tbtn.danger:hover { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
+
+/* Whose plan this is, printed at the head of the exported document. Optional, and
+   never sent anywhere: it is written into a file the browser hands back to you. */
+.orgin {
+  width: 150px; padding: 6px 9px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--panel); font-size: 12.5px;
+}
+.orgin:focus { outline: none; border-color: var(--brand); }
+
+/* =========================================================================
+   3. THE REFERENCE HALF OF EACH PAGE — the strategy, explained.
+   ========================================================================= */
+
+.ref { margin-top: 30px; }
+.ref + .ref { margin-top: 38px; }
+.ref h3 {
+  font-family: var(--display); font-size: 20px; font-weight: 800; letter-spacing: -.01em;
+  margin-bottom: 8px;
+}
+.ref > p { font-size: 14.5px; color: var(--ink-2); line-height: 1.6; max-width: 76ch; }
+.ref > p + p { margin-top: 10px; }
+
+.tablewrap { overflow-x: auto; margin-top: 16px; }
+.reftable { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 560px; }
+.reftable th {
+  text-align: left; font-weight: 700; color: var(--ink-2); padding: 10px 12px;
+  border-bottom: 2px solid var(--line); background: var(--ground-2); white-space: nowrap;
+}
+.reftable td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.45; }
+.reftable tr:last-child td { border-bottom: 0; }
+.reftable td b { font-weight: 700; }
+.reftable .num2 { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Advantages and drawbacks, side by side, because that is the only honest way to
+   show them: one under the other, whichever is on top reads as the verdict. */
+.pc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+.pc > div {
+  border: 1px solid var(--line); border-radius: 11px; padding: 14px 16px; background: var(--panel);
+}
+.pc .adv { border-left: 4px solid var(--ok); }
+.pc .dis { border-left: 4px solid var(--danger); }
+.pc h5 {
+  font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em;
+  margin-bottom: 9px;
+}
+.pc .adv h5 { color: var(--ok); }
+.pc .dis h5 { color: var(--danger); }
+.pc ul { display: grid; gap: 7px; }
+.pc li { font-size: 13px; color: var(--ink-2); line-height: 1.5; padding-left: 14px; position: relative; }
+.pc li::before { content: "—"; position: absolute; left: 0; color: var(--ink-3); }
+@media (max-width: 760px) { .pc { grid-template-columns: 1fr; } }
+
+/* The one thing on the page that is a trap rather than a choice. */
+.warnbox {
+  margin-top: 18px; padding: 16px 18px; border-radius: 12px;
+  background: var(--warn-bg); border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
+}
+.warnbox h5 { font-size: 13.5px; font-weight: 800; color: var(--warn); margin-bottom: 6px; }
+.warnbox p { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+.warnbox p + p { margin-top: 8px; }
+
+/* What is still open. Folded, because it is the part a first-time reader skips and
+   the part a project owner opens twice a week. */
+.acc { margin-top: 16px; border: 1px solid var(--line); border-radius: 11px; background: var(--panel); }
+.acc summary {
+  padding: 13px 16px; font-size: 13.5px; font-weight: 700; cursor: pointer;
+  list-style: none; display: flex; align-items: center; gap: 8px;
+}
+.acc summary::-webkit-details-marker { display: none; }
+.acc summary::after { content: "▾"; margin-left: auto; color: var(--ink-3); font-size: 12px; }
+.acc[open] summary::after { content: "▴"; }
+.acc summary:hover { color: var(--brand); }
+.accbody { padding: 0 16px 16px; }
+.accbody ul { display: grid; gap: 9px; }
+.accbody li { font-size: 13px; color: var(--ink-2); line-height: 1.55; padding-left: 14px; position: relative; }
+.accbody li::before { content: "—"; position: absolute; left: 0; color: var(--ink-3); }
+.accbody li b { color: var(--ink); font-weight: 700; }
+
+/* =========================================================================
+   4. THE CONFLICT ANALYSER — only the GPO/CSP tool draws this, but it is built
+      from the same parts, so it stays beside them.
+   ========================================================================= */
+
+.polrow {
+  border: 1px solid var(--line); border-left: 4px solid var(--a3-line); border-radius: 11px;
+  padding: 13px 15px; margin-bottom: 10px; background: var(--panel);
+}
+.polrow .top { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; margin-bottom: 9px; }
+.polrow .pn {
+  flex: 2; min-width: 170px; padding: 8px 11px; border: 1px solid var(--line);
+  border-radius: 9px; background: var(--panel); font-weight: 700; font-size: 13.5px;
+}
+.polrow .pt {
+  flex: 1; min-width: 140px; padding: 8px 11px; border: 1px solid var(--line);
+  border-radius: 9px; background: var(--panel); font-size: 13.5px;
+}
+.polrow .pn:focus, .polrow .pt:focus, .polrow .ps:focus { outline: none; border-color: var(--brand); }
+.polrow .ps {
+  width: 100%; min-height: 84px; resize: vertical; padding: 9px 11px;
+  border: 1px solid var(--line); border-radius: 9px; background: var(--panel);
+  font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace; font-size: 12.5px; line-height: 1.5;
+}
+.polrow .cnt { font-size: 11.5px; color: var(--ink-3); margin-top: 6px; }
+
+.conflict {
+  border: 1px solid color-mix(in srgb, var(--danger) 35%, transparent); background: var(--danger-bg);
+  border-radius: 11px; padding: 12px 14px; margin-bottom: 9px;
+}
+.conflict .set {
+  font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+  font-size: 13px; font-weight: 700; color: var(--danger); word-break: break-word;
+}
+.conflict .pols { font-size: 12.5px; color: var(--ink-2); margin-top: 5px; line-height: 1.5; }
+.clean {
+  border: 1px solid color-mix(in srgb, var(--ok) 30%, transparent); background: var(--ok-bg);
+  border-radius: 11px; padding: 14px 16px; font-size: 13.5px; color: var(--ok); line-height: 1.55;
+}
+.clean b { font-weight: 700; }

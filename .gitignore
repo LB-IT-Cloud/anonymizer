@@ -1,0 +1,6 @@
+# Copyright (c) 2026 LB IT Cloud SAS. All rights reserved.
+# Proprietary source of the LB IT Cloud website. See LICENSE.
+
+# The test runner, installed by `npm ci`, and what it leaves behind.
+node_modules/
+test-results/

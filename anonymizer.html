@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-private>
+<head>
+<meta charset="utf-8">
+<!-- LA SEULE PAGE DU SITE QUI A UNE AUTRE POLITIQUE, ET ELLE EST PLUS STRICTE (09/10/2026).
+     Julien : « tout ça en ne stockant, en n'envoyant rien sur Internet […] et qu'on puisse
+     attester de ça ». Ailleurs, le site permet d'appeler la mesure d'audience ; ici,
+     `connect-src 'none'` interdit au navigateur toute connexion lancée par un script — fetch,
+     XMLHttpRequest, WebSocket, EventSource, sendBeacon — vers n'importe qui, ce site compris.
+     Pas d'`unsafe-inline` pour les styles non plus : le texte collé n'a aucun moyen de devenir
+     du style. Les hébergeurs envoient la même politique en en-tête (staticwebapp.config.json,
+     .htaccess) et le navigateur applique les deux : la plus stricte gagne.
+     siteSecurity.test.ts vérifie qu'elle reste plus stricte que celle du site, pas seulement
+     différente. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'">
+<meta name="referrer" content="no-referrer">
+<!-- La traduction automatique du navigateur enverrait le texte affiché à un service tiers. -->
+<meta name="google" content="notranslate">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anonymizer — anonymize a text before you hand it to an AI | LB IT Cloud</title>
+<meta name="description" content="Paste a text or drop a file — a transcript, a PowerShell or CMD script, a log, a .docx, .pptx or .xlsx — and get it back anonymized: names, e-mails, IP addresses, secrets, paths, rounded amounts. Everything happens in your browser; nothing is sent or kept.">
+<!-- seo:begin — written by scripts/build-english.mjs, do not edit by hand -->
+<link rel="canonical" href="https://www.lbitcloud.com/anonymizer">
+<link rel="alternate" hreflang="fr" href="https://www.lbitcloud.com/anonymizer-fr">
+<link rel="alternate" hreflang="en" href="https://www.lbitcloud.com/anonymizer">
+<link rel="alternate" hreflang="x-default" href="https://www.lbitcloud.com/anonymizer">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LB IT Cloud">
+<meta property="og:title" content="Anonymizer — anonymize a text before you hand it to an AI | LB IT Cloud">
+<meta property="og:description" content="Paste a text or drop a file — a transcript, a PowerShell or CMD script, a log, a .docx, .pptx or .xlsx — and get it back anonymized: names, e-mails, IP addresses, secrets, paths, rounded amounts. Everything happens in your browser; nothing is sent or kept.">
+<meta property="og:url" content="https://www.lbitcloud.com/anonymizer">
+<meta property="og:image" content="https://www.lbitcloud.com/img/brand/lbitcloud-logo.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta name="twitter:card" content="summary">
+<!-- seo:end -->
+<link rel="icon" type="image/svg+xml" href="entris.svg">
+<!-- The reader's theme, before the first paint. It READS the remembered choice; on this page
+     site.js writes nothing (data-private), so the Application tab of the developer tools stays
+     empty — see site.js. -->
+<script src="theme-boot.js"></script>
+
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="chrome.css">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="tools.css">
+<link rel="stylesheet" href="anonymizer.css">
+<script src="menu.js"></script>
+<script src="site.js"></script>
+<!-- PAS DE MESURE D'AUDIENCE ICI, et c'est voulu : le script d'Umami serait le seul code d'un
+     tiers sur la page, et la politique ci-dessus lui interdirait de toute façon d'envoyer quoi
+     que ce soit. Pas de pouce « utile / pas utile » non plus, pour la même raison. -->
+</head>
+<body>
+<header id="siteHeader"></header>
+
+<main>
+  <section class="pagehero an-hero">
+    <div class="wrap">
+      <p class="kicker" data-i="kicker"></p>
+      <h1 data-i="h1"></h1>
+      <p class="tagline" data-i="tagline"></p>
+      <p class="sub" data-i="lead"></p>
+    </div>
+  </section>
+
+  <section class="an-section">
+    <div class="wrap">
+      <!-- LE BANDEAU PERMANENT. Il informe ; il ne prouve rien — une page qui dit d'elle-même
+           qu'elle n'envoie rien ne l'a pas démontré. La preuve est plus bas (#verifier), et
+           elle se fait avec les outils du navigateur, pas avec ceux de la page. -->
+      <p class="an-local"><span data-i="local"></span> <a href="#verifier" data-i="localLink"></a></p>
+      <div class="notice an-compat" id="anCompat" hidden><b data-i="compatT"></b><p data-i="compatP"></p></div>
+
+      <!-- L'ESPACE DE TRAVAIL, SIMPLIFIÉ LE 09/10/2026. Julien, sur la première version : « c'est
+           super compliqué, il faut être ingénieur pour l'utiliser […] je colle un truc, je veux voir
+           rapidement ce que ça va donner ». Le texte à gauche, le résultat à droite, qui se met à
+           jour tout seul ; on décide d'un doute d'un clic, ou on sélectionne soi-même ce qu'on veut
+           masquer. Tout le reste est replié en dessous. -->
+      <div class="an-work">
+        <div class="an-card" id="anSource">
+          <div class="an-cardhead">
+            <h2 class="an-cardtitle" data-i="srcT"></h2>
+            <div class="an-cardtools">
+              <label class="tbtn" for="anFile" data-i="pick"></label>
+              <input class="an-file" type="file" id="anFile">
+              <button class="tbtn" type="button" id="anClearSrc" data-i="clearSrc"></button>
+            </div>
+          </div>
+          <div class="an-drop" id="anDrop">
+            <!-- Les attributs qui suivent ne sont pas de la décoration : un correcteur « amélioré »
+                 (Chrome, Edge), Grammarly ou LanguageTool envoie le contenu d'une zone de texte
+                 à ses serveurs pour la corriger. Ils le lui interdisent. -->
+            <textarea class="an-area an-mono" id="anText" rows="16" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" translate="no" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" data-lt-active="false" data-ms-editor="false" data-i-ph="pastePh" aria-labelledby="anSrcLabel"></textarea>
+            <div class="an-officecard" id="anOfficeCard" hidden>
+              <p class="an-mono" id="anFileName" translate="no"></p>
+              <p class="an-small" id="anFileMeta"></p>
+              <button class="tbtn" type="button" id="anFileRemove" data-i="fileRemove"></button>
+            </div>
+            <p class="an-dropover" data-i="dropOver"></p>
+          </div>
+          <p class="an-small an-fileinfo an-mono" id="anFileInfo" translate="no"></p>
+          <p class="an-small" id="anSrcLabel" data-i="srcHint"></p>
+          <div class="an-warn" id="anSrcWarn" hidden></div>
+        </div>
+
+        <div class="an-card an-resultcard" id="anResult">
+          <div class="an-cardhead">
+            <h2 class="an-cardtitle" data-i="resT"></h2>
+            <span class="an-small" id="anStatus" role="status" aria-live="polite"></span>
+          </div>
+          <div class="an-resultbox">
+            <pre class="an-preview an-mono" id="anPreview" tabindex="0" translate="no"></pre>
+            <p class="an-placeholder" id="anEmpty" data-i="resEmpty"></p>
+            <!-- La bulle de décision : sur un doute cliqué, ou sur un texte sélectionné à la souris. -->
+            <div class="an-bubble" id="anBubble" role="dialog" aria-labelledby="anBubbleText" hidden>
+              <p><b class="an-mono" id="anBubbleText" translate="no"></b> <span class="an-small" id="anBubbleWhy"></span></p>
+              <div class="an-bubblerow">
+                <label class="an-inline" for="anBubbleKind"><span data-i="kindL"></span>
+                  <select id="anBubbleKind"></select>
+                </label>
+                <span class="an-small an-mono" id="anBubbleToken"></span>
+              </div>
+              <div class="an-bubblerow">
+                <button class="an-go an-small-go" type="button" id="anBubbleAnon" data-i="bubbleAnon"></button>
+                <button class="tbtn" type="button" id="anBubbleIgnore" data-i="bubbleIgnore"></button>
+                <button class="tbtn" type="button" id="anBubbleClose" data-i="bubbleClose"></button>
+              </div>
+            </div>
+            <progress id="anProgress" hidden></progress>
+            <div class="notice an-error" id="anError" hidden role="alert"><b data-i="errT"></b><p id="anErrorText"></p></div>
+          </div>
+          <p class="an-legend">
+            <span class="an-rep" data-i="legRep"></span>
+            <span class="an-num" data-i="legNum"></span>
+            <span class="an-doubt" data-i="legDoubt"></span>
+            <span class="an-small" data-i="legHint"></span>
+          </p>
+          <div class="an-actions">
+            <button class="an-go" type="button" id="anDownload"></button>
+            <button class="tbtn" type="button" id="anCopy" data-i="copy"></button>
+            <button class="tbtn" type="button" id="anDownloadMap" data-i="downloadMap"></button>
+            <button class="tbtn an-pending" type="button" id="anPending" hidden></button>
+            <button class="tbtn danger" type="button" id="anCancel" data-i="cancel" hidden></button>
+          </div>
+          <p class="an-small" data-i="resWarn"></p>
+        </div>
+      </div>
+
+      <!-- CE QUI SE RÈGLE, REPLIÉ. Fermé par défaut : on n'en a pas besoin pour un premier essai. -->
+      <div class="an-folds">
+        <details class="an-fold" id="anFoldNames">
+          <summary><span data-i="namesT"></span> <span class="an-count" id="anNamesCount"></span></summary>
+          <div class="an-foldbody">
+            <p class="an-small" data-i="namesLead"></p>
+            <ul class="an-chips" id="anChips" translate="no"></ul>
+            <div class="an-addname">
+              <label class="an-inline" for="anAddText"><span data-i="addL"></span>
+                <input class="an-mono an-addinput" id="anAddText" spellcheck="false" autocomplete="off" data-i-ph="addPh">
+              </label>
+              <select id="anAddKind" aria-label="Type"></select>
+              <button class="tbtn" type="button" id="anAddBtn" data-i="addBtn"></button>
+            </div>
+            <div class="toolbar an-bar">
+              <label class="tbtn" for="anDicoFile" data-i="dicoLoad"></label>
+              <input class="an-file" type="file" id="anDicoFile" accept=".txt,text/plain">
+              <button class="tbtn" type="button" id="anDicoSave" data-i="dicoSave"></button>
+              <button class="tbtn" type="button" id="anDicoExample" data-i="dicoExample"></button>
+            </div>
+            <details class="an-subfold">
+              <summary data-i="rawT"></summary>
+              <textarea class="an-area an-dico an-mono" id="anDico" rows="8" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" translate="no" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" data-lt-active="false" data-ms-editor="false" data-i-ph="dicoPh" aria-labelledby="anRawHelp"></textarea>
+              <p class="an-small" id="anRawHelp" data-i="syntaxBody"></p>
+              <ul class="an-warnlist" id="anDicoWarns" hidden></ul>
+            </details>
+          </div>
+        </details>
+
+        <details class="an-fold">
+          <summary data-i="optT"></summary>
+          <div class="an-foldbody an-cols">
+            <div class="an-col">
+              <fieldset class="an-set">
+                <legend data-i="autoT"></legend>
+                <label class="an-check"><input type="checkbox" id="anGAdresses" checked> <span data-i="gAdresses"></span></label>
+                <label class="an-check"><input type="checkbox" id="anGReseau" checked> <span data-i="gReseau"></span></label>
+                <label class="an-check"><input type="checkbox" id="anGTelephones" checked> <span data-i="gTelephones"></span></label>
+                <label class="an-check"><input type="checkbox" id="anGIdentifiants" checked> <span data-i="gIdentifiants"></span></label>
+                <label class="an-check"><input type="checkbox" id="anGChemins" checked> <span data-i="gChemins"></span></label>
+                <label class="an-check"><input type="checkbox" id="anGSecrets" checked> <span data-i="gSecrets"></span></label>
+              </fieldset>
+              <fieldset class="an-set">
+                <legend data-i="capsT"></legend>
+                <label class="an-check"><input type="radio" name="anCaps" value="signaler" checked> <span data-i="capsSignal"></span></label>
+                <label class="an-check"><input type="radio" name="anCaps" value="anonymiser"> <span data-i="capsAnon"></span></label>
+                <label class="an-check"><input type="radio" name="anCaps" value="ignorer"> <span data-i="capsIgnore"></span></label>
+              </fieldset>
+            </div>
+            <div class="an-col">
+              <fieldset class="an-set">
+                <legend data-i="numT"></legend>
+                <label class="an-check"><input type="checkbox" id="anRound"> <span data-i="numRound"></span></label>
+                <label class="an-inline" for="anDigits"><span data-i="numDigits"></span>
+                  <select id="anDigits">
+                    <option value="1">1</option>
+                    <option value="2" selected>2</option>
+                    <option value="3">3</option>
+                  </select>
+                </label>
+                <p class="an-small" data-i="numNote"></p>
+              </fieldset>
+              <fieldset class="an-set">
+                <legend data-i="officeT"></legend>
+                <label class="an-check"><input type="checkbox" id="anMeta" checked> <span data-i="officeMeta"></span></label>
+                <label class="an-check"><input type="checkbox" id="anImages" checked> <span data-i="officeImages"></span></label>
+                <p class="an-small" data-i="officeNote"></p>
+              </fieldset>
+              <fieldset class="an-set">
+                <legend data-i="readT"></legend>
+                <label class="an-check"><input type="checkbox" id="anCode"> <span data-i="readCode"></span></label>
+              </fieldset>
+              <fieldset class="an-set">
+                <legend data-i="mapT"></legend>
+                <p class="an-small" data-i="mapIn"></p>
+                <div class="toolbar an-bar">
+                  <label class="tbtn" for="anMapIn" data-i="mapLoad"></label>
+                  <input class="an-file" type="file" id="anMapIn" accept=".json,application/json">
+                  <button class="tbtn" type="button" id="anMapForget" data-i="mapForget" hidden></button>
+                  <span class="an-small an-mono" id="anMapStatus" translate="no"></span>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </details>
+
+        <details class="an-fold" id="anFoldRestore">
+          <summary data-i="restT"></summary>
+          <div class="an-foldbody">
+            <p class="an-small" data-i="restLead"></p>
+            <textarea class="an-area an-mono" id="anRestIn" rows="7" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" translate="no" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" data-lt-active="false" data-ms-editor="false" data-i-ph="restPh" aria-labelledby="anRestLabel"></textarea>
+            <p class="an-small" id="anRestLabel" data-i="restLabel"></p>
+            <div class="toolbar an-bar">
+              <label class="tbtn" for="anRestFile" data-i="restLoad"></label>
+              <input class="an-file" type="file" id="anRestFile">
+              <label class="an-check"><input type="radio" name="anRestMap" value="session" checked> <span data-i="restSession"></span></label>
+              <label class="an-check"><input type="radio" name="anRestMap" value="file"> <span data-i="restFileMap"></span></label>
+              <label class="tbtn" for="anRestMapFile" data-i="mapLoad"></label>
+              <input class="an-file" type="file" id="anRestMapFile" accept=".json,application/json">
+              <span class="an-small an-mono" id="anRestMapStatus" translate="no"></span>
+            </div>
+            <div class="an-run">
+              <button class="an-go" type="button" id="anRestGo" data-i="restGo"></button>
+              <span class="an-small" id="anRestStatus" role="status" aria-live="polite"></span>
+            </div>
+            <div id="anRestOut" hidden>
+              <p class="an-small" data-i="restNote"></p>
+              <pre class="an-preview an-mono" id="anRestPreview" tabindex="0" translate="no"></pre>
+              <div class="toolbar">
+                <button class="tbtn" type="button" id="anRestCopy" data-i="copy"></button>
+                <button class="tbtn" type="button" id="anRestDownload" data-i="restDownload"></button>
+              </div>
+            </div>
+            <p class="disclaim" data-i="mapWarn"></p>
+          </div>
+        </details>
+
+        <details class="an-fold" id="anFoldDetails">
+          <summary data-i="detT"></summary>
+          <div class="an-foldbody">
+            <div class="an-tabs" role="tablist">
+              <button class="an-tab" type="button" role="tab" id="anTabReps" aria-controls="anPaneReps" aria-selected="true" data-i="tabReps"></button>
+              <button class="an-tab" type="button" role="tab" id="anTabDoubts" aria-controls="anPaneDoubts" aria-selected="false"><span data-i="tabDoubts"></span> <span class="an-count" id="anDoubtCount"></span></button>
+              <button class="an-tab" type="button" role="tab" id="anTabReport" aria-controls="anPaneReport" aria-selected="false" data-i="tabReport" hidden></button>
+            </div>
+            <div class="an-pane" id="anPaneReps" role="tabpanel" aria-labelledby="anTabReps">
+              <label class="an-check"><input type="checkbox" id="anReveal"> <span data-i="reveal"></span></label>
+              <div class="tablewrap"><table class="reftable an-table" id="anRepTable" translate="no"></table></div>
+              <div class="tablewrap"><table class="reftable an-table" id="anNumTable" translate="no" hidden></table></div>
+            </div>
+            <div class="an-pane" id="anPaneDoubts" role="tabpanel" aria-labelledby="anTabDoubts" hidden>
+              <p class="an-small" data-i="doubtsLead"></p>
+              <div id="anDoubtList" translate="no"></div>
+              <div class="toolbar an-bar">
+                <select id="anListKind" aria-label="Type"></select>
+                <span class="an-mono an-small" id="anListToken"></span>
+                <button class="tbtn" type="button" id="anListAnon" data-i="listAnon"></button>
+                <button class="tbtn" type="button" id="anListIgnore" data-i="listIgnore"></button>
+              </div>
+            </div>
+            <div class="an-pane" id="anPaneReport" role="tabpanel" aria-labelledby="anTabReport" hidden>
+              <ul class="an-report" id="anReport"></ul>
+              <button class="tbtn" type="button" id="anDownloadText" data-i="downloadText"></button>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="an-wipe">
+        <button class="tbtn danger" type="button" id="anWipe" data-i="wipe"></button>
+        <span class="an-small" data-i="wipeNote"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMENT LE VÉRIFIER. La page ne se prouve pas elle-même : on montre au lecteur comment le
+       constater avec son navigateur, et on dit franchement ce qui reste hors de portée. -->
+  <section class="alt" id="verifier">
+    <div class="wrap">
+      <p class="kicker" data-i="vKicker"></p>
+      <h2 class="title" data-i="vTitle"></h2>
+      <p class="lead" data-i="vLead"></p>
+      <ol class="an-steps">
+        <li data-i="v1"></li>
+        <li data-i="v2"></li>
+        <li><span data-i="v3"></span>
+          <code class="an-cmd an-mono" id="anProbe" translate="no">fetch("https://www.lbitcloud.com/")</code>
+          <button class="tbtn" type="button" id="anProbeCopy" data-i="copyCmd"></button>
+          <span class="an-small" id="anProbeStatus" role="status" aria-live="polite"></span>
+          <p class="an-note" data-i="v3b"></p>
+        </li>
+        <li data-i="v4"></li>
+        <li data-i="v5"></li>
+      </ol>
+
+      <!-- offline:begin — LA VERSION HORS LIGNE. scripts/build-anonymizer-offline.mjs fabrique le fichier à
+           partir de cette page et RETIRE ce bloc de sa copie : le fichier ne peut pas contenir sa
+           propre empreinte. Le script écrit ensuite l'empreinte ci-dessous ; ne pas la modifier à la main. -->
+      <div class="an-offline" id="anOffline">
+        <h3 class="an-h3" data-i="offT"></h3>
+        <p class="an-offlead" data-i="offLead"></p>
+        <p><a class="an-go an-get" href="anonymizer-offline.html" download="anonymizer-offline.html" data-i="offGet"></a></p>
+        <p class="an-small" data-i="offHashL"></p>
+        <p>
+          <code class="an-cmd an-mono an-hash" id="anHash" translate="no">68c9e636bca993bfee120fc7dbfa949e4bd41a7433199037668e827b7cb542b4</code>
+          <button class="tbtn" type="button" id="anHashCopy" data-i="offCopy"></button>
+          <span class="an-small" id="anHashStatus" role="status" aria-live="polite"></span>
+        </p>
+        <p class="an-small" data-i="offCheck"></p>
+        <ul class="an-hashcmds">
+          <li><span data-i="offWin"></span> <code class="an-cmd an-mono" translate="no">Get-FileHash .\anonymizer-offline.html -Algorithm SHA256</code></li>
+          <li><span data-i="offMac"></span> <code class="an-cmd an-mono" translate="no">shasum -a 256 anonymizer-offline.html</code></li>
+          <li><span data-i="offLin"></span> <code class="an-cmd an-mono" translate="no">sha256sum anonymizer-offline.html</code></li>
+        </ul>
+        <!-- Le seul lien de la page qui sort du site : là où l'empreinte et le code sont publiés
+             ailleurs que chez nous. anonymizer.test.ts n'en accepte pas d'autre. -->
+        <p><a class="an-repo" href="https://github.com/LB-IT-Cloud/anonymizer" rel="noopener noreferrer" data-i="offRepo"></a></p>
+        <p class="an-small" data-i="offWhy"></p>
+      </div>
+      <!-- offline:end -->
+
+      <h3 class="an-h3" data-i="limT"></h3>
+      <ul class="an-limits">
+        <li data-i="lim1"></li>
+        <li data-i="lim2"></li>
+        <li data-i="lim3"></li>
+        <li data-i="lim4"></li>
+        <li data-i="lim5"></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer id="siteFooter"></footer>
+
+<!-- Un module : il importe le moteur pour la restauration, et confie le reste au Web Worker. -->
+<script type="module" src="anonymizer.js"></script>
+</body>
+</html>

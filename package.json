@@ -1,0 +1,14 @@
+{
+  "name": "anonymizer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The Anonymizer of LB IT Cloud: anonymize a text or an Office file in the browser, before you hand it to an AI. Published to be read and verified; all rights reserved (see LICENSE).",
+  "scripts": {
+    "build": "node scripts/build-anonymizer-offline.mjs",
+    "check": "node scripts/build-anonymizer-offline.mjs --check",
+    "test": "vitest run --dir tests"
+  },
+  "devDependencies": {
+    "vitest": "4.1.11"
+  }
+}

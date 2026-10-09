@@ -1,0 +1,45 @@
+# Copyright (c) 2026 LB IT Cloud SAS. All rights reserved.
+# Proprietary source of the LB IT Cloud website. See LICENSE.
+#
+# THE OFFLINE FILE IS THE BUILD OF THESE SOURCES — checked on every change, by something that
+# is not us. Three things, in the order a reader would check them by hand:
+#   1. rebuilding the offline file from the sources gives the committed file, byte for byte;
+#   2. the committed file has the fingerprint written next to it;
+#   3. the tests of the engine and of the Office reader pass.
+# The build needs Node.js and nothing else: no dependency, no network.
+
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out
+        uses: actions/checkout@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - name: The offline file is the build of these sources
+        run: node scripts/build-anonymizer-offline.mjs --check
+
+      - name: The offline file has the published fingerprint
+        run: sha256sum -c anonymizer-offline.html.sha256
+
+      - name: Install the test runner
+        run: npm ci
+
+      - name: Run the tests
+        run: npm test

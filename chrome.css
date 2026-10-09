@@ -1,0 +1,201 @@
+/* Copyright (c) 2026 LB IT Cloud SAS. All rights reserved.
+   Proprietary source of the LB IT Cloud website. See LICENSE. */
+
+/* ---------------------------------------------------------------------------
+   THE HEADER AND FOOTER, FOR EVERY PAGE OF THE SITE.
+
+   Julien, 31/08/2026: *« toutes les pages du site doivent avoir le même menu en
+   haut, même taille, mêmes options. Si tu dois rajouter des options, tu les
+   rajoutes dans les pages en dessous. »* So this file is the whole chrome, and
+   it loads on all of them — the home page, the two product presentations, the
+   advisor, contact and the clickable mock-up. Whatever a page needs for itself goes BELOW the header,
+   in the page.
+
+   WHY ITS OWN FILE, AND WHY THE PALETTE IS SCOPED TO THE CHROME.
+   The pages it has to serve do not share a stylesheet and never can: site.css
+   styles `body`, `section` and `a` (it would rewrite the eXact design), and the
+   deck and the mock-up each define their OWN `--ground`, `--ink`, `--line` on
+   `:root` with different values and an inverted theme default. A chrome reading
+   `:root` would therefore change colour from page to page — the one thing it
+   must not do. Every token below is declared ON the chrome elements instead, so
+   the header resolves against its own palette wherever it is dropped, and the
+   host page's variables reach it only if they are not defined here.
+
+   Every selector is prefixed with `header.site` / `footer.site` for the same
+   reason: nothing in this file may touch a page's own markup.
+   --------------------------------------------------------------------------- */
+
+header.site,
+footer.site {
+  --brand:      #34527e;
+  --brand-ink:  #1d2a44;
+  --brand-soft: #eaeff7;
+  --brand-line: #cfdcee;
+
+  --ground:   #ffffff;
+  --ground-2: #f5f7fb;
+  --panel:    #ffffff;
+  --line:     #e3e9f2;
+  --ink:      #14203a;
+  --ink-2:    #4d5a75;
+  --ink-3:    #66738f;
+  --shadow:   0 10px 30px rgba(20, 32, 58, .08);
+
+  --display: "Archivo", "Segoe UI", system-ui, sans-serif;
+  --body: "Inter", "Segoe UI", system-ui, sans-serif;
+
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+html[data-theme="dark"] header.site,
+html[data-theme="dark"] footer.site {
+  --brand:      #5d84ba;
+  --brand-ink:  #eef2f9;
+  --brand-soft: #16233c;
+  --brand-line: #26365a;
+
+  --ground:   #0a1020;
+  --ground-2: #0d1526;
+  --panel:    #111b30;
+  --line:     #23304c;
+  --ink:      #e8edf8;
+  --ink-2:    #a4b3cd;
+  --ink-3:    #8496b5;
+  --shadow:   0 10px 30px rgba(0, 0, 0, .35);
+}
+
+/* ---------------------------------------------------------------
+   Header — built by site.js, styled here
+   --------------------------------------------------------------- */
+header.site {
+  position: sticky; top: 0; z-index: 50; background: var(--ground);
+  border-bottom: 1px solid var(--line); color: var(--ink);
+  /* Opaque, not translucent: on the deck and the mock-up the thing scrolling
+     underneath is a full-bleed slide or a fake console, and a blurred bar over
+     either looked like a rendering fault rather than a header. */
+}
+header.site * { box-sizing: border-box; }
+header.site .wrap { width: min(1180px, 100% - 40px); margin: 0 auto; }
+header.site .bar { display: flex; align-items: center; gap: 22px; height: 70px; position: relative; }
+header.site .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: none; }
+/* The lockup is 4.1:1, so its HEIGHT is what has to be set — and it is dark ink
+   on nothing, which disappears on the dark theme. There it gets a light chip
+   rather than a recoloured logo: the brand colours reach the screen exactly,
+   and a plate is a frame around the mark, not a change to it. */
+header.site .logo img { height: 34px; width: auto; display: block; }
+html[data-theme="dark"] header.site .logo img {
+  background: #f4f6fb; border-radius: 8px; padding: 5px 9px; height: 40px;
+}
+/* Hidden until the logo fails to load: site.js then sets display to flex on the element itself.
+   It used to be hidden by a style attribute in the markup site.js builds, which a policy without
+   'unsafe-inline' for styles refuses — the Anonymizer's is such a policy. */
+header.site .logo .fallback { display: none; align-items: center; gap: 9px; }
+header.site .logo .mark {
+  width: 34px; height: 34px; border-radius: 9px; background: var(--brand-ink);
+  color: #fff; font-family: var(--display); font-weight: 800; font-size: 15px;
+  display: flex; align-items: center; justify-content: center; letter-spacing: -.02em;
+}
+header.site .logo .word { font-family: var(--display); font-weight: 700; font-size: 18px; letter-spacing: -.01em; }
+header.site .logo .word b { color: var(--brand); font-weight: 700; }
+
+header.site nav.menu { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+header.site nav.menu a,
+header.site nav.menu .groupbtn {
+  padding: 9px 13px; border-radius: 9px; font-size: 14px; font-weight: 500;
+  color: var(--ink-2); text-decoration: none; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 6px; border: none; background: none;
+  font-family: inherit; cursor: pointer;
+}
+header.site nav.menu a:hover,
+header.site nav.menu .groupbtn:hover { background: var(--ground-2); color: var(--ink); }
+header.site nav.menu a.active,
+header.site nav.menu .group.active > .groupbtn { color: var(--brand); background: var(--brand-soft); font-weight: 600; }
+
+/* ---------------------------------------------------------------
+   "Outils / Tools" — a menu that opens, asked for on 31/08/2026 so the tools
+   have a home of their own. It is a real button, not a hover-only panel: a
+   panel that only exists while the pointer is over it cannot be reached from a
+   keyboard, and it cannot be reached at all on a touch screen.
+   --------------------------------------------------------------- */
+header.site nav.menu .group { position: relative; display: inline-flex; }
+header.site nav.menu .group .caret { font-size: 10px; opacity: .75; }
+/* Quand l'entrée est aussi une page, le libellé et le chevron sont deux éléments : le premier
+   perd la marge qui les séparerait, le second se réduit à sa flèche. Ensemble ils se lisent
+   comme un seul bouton, et se survolent comme un seul — d'où le survol croisé plus bas. */
+header.site nav.menu .grouplink { padding-right: 6px; }
+header.site nav.menu .caretbtn { padding-left: 2px; padding-right: 9px; }
+header.site nav.menu .group:hover > .grouplink,
+header.site nav.menu .group:hover > .caretbtn { background: var(--ground-2); color: var(--ink); }
+header.site nav.menu .drop {
+  display: none; position: absolute; top: calc(100% + 6px); left: 0; z-index: 60;
+  min-width: 230px; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 11px; padding: 6px; box-shadow: var(--shadow);
+}
+header.site nav.menu .group[data-open="1"] .drop { display: block; }
+header.site nav.menu .drop a { display: block; width: 100%; padding: 10px 12px; }
+
+header.site .tools { display: flex; align-items: center; gap: 8px; margin-left: 10px; }
+header.site .ghost {
+  border: 1px solid var(--line); border-radius: 9px; padding: 7px 11px; font-size: 13px;
+  font-weight: 600; color: var(--ink-2); background: var(--panel);
+  font-family: inherit; cursor: pointer;
+}
+header.site .ghost:hover { color: var(--ink); border-color: var(--brand); }
+header.site .burger { display: none; }
+
+/* ---------------------------------------------------------------
+   Footer — the pages that have one share it too
+   --------------------------------------------------------------- */
+footer.site {
+  border-top: 1px solid var(--line); padding: 30px 0; font-size: 13px; color: var(--ink-3);
+  background: var(--ground);
+}
+footer.site .wrap { width: min(1180px, 100% - 40px); margin: 0 auto; display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+footer.site a { color: var(--ink-2); text-decoration: none; }
+footer.site a:hover { color: var(--brand); }
+footer.site .sep { margin-left: auto; }
+
+/* The thumb above the footer (site.js) */
+.lbthumb { border-top: 1px solid var(--line); padding: 34px 0 30px; background: var(--ground-2); }
+.lbthumb .wrap { width: min(1180px, 100% - 40px); margin: 0 auto; }
+.lbthumbq { font-size: 18px; font-weight: 700; color: var(--ink); margin: 0; }
+.lbthumbbtns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
+.lbvb {
+  display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 11px;
+  border: 1px solid var(--line); background: var(--panel); font: inherit; font-weight: 600; font-size: 14.5px;
+  color: var(--ink); cursor: pointer;
+}
+.lbvb:hover:not(:disabled) { border-color: var(--brand); color: var(--brand); }
+.lbvb:disabled { cursor: default; opacity: .55; }
+.lbvb[aria-pressed="true"] { opacity: 1; background: var(--brand-soft); border-color: var(--brand); color: var(--brand); }
+.lbthumbnote { margin: 12px 0 0; font-size: 12.5px; color: var(--ink-3); line-height: 1.5; max-width: 560px; }
+
+/* ---------------------------------------------------------------
+   Narrow screens: the entries move into the panel the burger opens. The
+   breakpoint is 900 px because that is where five entries plus a wordmark stop
+   fitting; below it the panel is the menu, and it holds the tools group open
+   rather than nesting a second level inside a drawer.
+   --------------------------------------------------------------- */
+@media (max-width: 900px) {
+  header.site nav.menu { display: none; }
+  header.site nav.menu.open {
+    display: flex; position: absolute; top: 70px; left: 0; right: 0; flex-direction: column;
+    background: var(--ground); border-bottom: 1px solid var(--line); padding: 10px 20px 16px; gap: 2px;
+    align-items: stretch;
+  }
+  header.site nav.menu.open a { padding: 12px; }
+  header.site nav.menu.open .group { display: block; }
+  header.site nav.menu.open .groupbtn { display: none; }
+  /* …sauf le libellé, quand il mène quelque part. Le chevron ne sert à rien ici — le panneau
+     est déplié en permanence — mais le lien est la seule façon d'atteindre la page depuis un
+     téléphone, et la règle au-dessus l'emporterait sans celle-ci. */
+  header.site nav.menu.open .grouplink { display: flex; padding: 12px; }
+  header.site nav.menu.open .drop {
+    display: block; position: static; min-width: 0; border: none; box-shadow: none;
+    background: none; padding: 0 0 0 10px;
+  }
+  header.site .burger { display: inline-flex; margin-left: auto; }
+}
