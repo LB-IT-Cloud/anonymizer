@@ -600,7 +600,7 @@ describe("the Anonymizer page", () => {
 
   it("is listed with the free tools, under one name in both languages", () => {
     expect(read("menu.js")).toContain('{ file: "anonymizer-fr.html", label: ["Anonymizer", "Anonymizer"] }');
-    expect(read("outils.js")).toMatch(/\{ f: "anonymizer-fr\.html", ic: "mask",\s*t: \["Anonymizer", "Anonymizer"\]/);
+    expect(read("free-tools-list.js")).toMatch(/\{ f: "anonymizer-fr\.html", ic: "mask",\s*t: \["Anonymizer", "Anonymizer"\]/);
   });
 });
 

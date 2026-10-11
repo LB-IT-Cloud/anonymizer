@@ -29,8 +29,10 @@
    --------------------------------------------------------------------------- */
 
 /* 1.0.1 (09/10/2026) : la même mécanique, dans le modèle « Signalétique » et les palettes du site —
-   une version de plus parce que le fichier hors ligne, qui embarque les styles, a changé d'empreinte. */
-export const VERSION = '1.0.1';
+   une version de plus parce que le fichier hors ligne, qui embarque les styles, a changé d'empreinte.
+   1.0.2 (11/10/2026) : la même mécanique encore, pour la même raison — le design d'origine remis
+   par Clément, puis sans l'étiquette à code-barres ni le tirage des couleurs au hasard. */
+export const VERSION = '1.0.2';
 
 const DOMAINES_PUBLICS = [
   'microsoft.com', 'windows.net', 'office.com', 'office365.com',

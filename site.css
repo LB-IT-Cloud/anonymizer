@@ -122,11 +122,11 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
    and the border and the focus ring follow the cut. Elsewhere the shape is clipped instead —
    which is why the elements below carry a fill rather than a border: a clipped border loses
    its diagonal, a clipped fill does not. */
-.btn, .card, .plate, .plateBody, .vtab, .shotnav, .assetTag {
+.btn, .card, .plate, .plateBody, .vtab, .shotnav {
   clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
 }
 @supports (corner-shape: bevel) {
-  .btn, .card, .plate, .plateBody, .vtab, .shotnav, .assetTag {
+  .btn, .card, .plate, .plateBody, .vtab, .shotnav {
     clip-path: none; border-radius: var(--cut) 0 var(--cut) 0; corner-shape: bevel;
   }
 }
@@ -352,30 +352,8 @@ h2.title {
 }
 @media (max-width: 900px) { .shotcap { min-height: 4.5em; } }
 
-/* THE ASSET TAG. Each recording carries the label an inventoried screen would: its reference,
-   what it is, and what it is made of — 1500 × 720, recorded, not drawn. index.js writes the
-   reference and the name with the tab, so the tag and the tab can never disagree. It is stuck
-   on: it overlaps the bottom edge of the player by a few pixels, which is the whole gesture. */
-.shotFoot { display: flex; gap: 20px; align-items: flex-start; justify-content: space-between; }
-.shotFoot .shotcap { flex: 1; min-width: 0; }
-.assetTag {
-  --cut: 10px;
-  position: relative; z-index: 1; flex: none; margin: -16px 18px 0 0;
-  display: grid; grid-template-columns: auto auto; gap: 2px 16px; align-items: center;
-  padding: 10px 14px; background: var(--panel); border: 1px solid var(--line);
-  font: 500 10.5px/1.45 var(--mono); color: var(--ink-2);
-}
-.assetTag b { grid-row: span 2; font: 760 17px/1 var(--display); font-stretch: 88%; color: var(--ink); font-variant-numeric: tabular-nums; }
-.assetTag .barcode {
-  grid-column: 1 / -1; height: 18px; margin-top: 5px;
-  background: repeating-linear-gradient(90deg,
-    var(--ink) 0 2px, transparent 2px 3px, var(--ink) 3px 4px, transparent 4px 7px,
-    var(--ink) 7px 10px, transparent 10px 11px, var(--ink) 11px 12px, transparent 12px 15px);
-}
-@media (max-width: 720px) {
-  .shotFoot { flex-direction: column; gap: 10px; }
-  .assetTag { margin: 0; }
-}
+/* The asset tag stuck under the player — reference, size, barcode — went on 11/10/2026
+   (Julien): the caption says what plays, and the tag only competed with the recording. */
 
 /* THE TOUR'S ARROWS. Julien, 01/09/2026 : *« Ajoute des flèches dans le défilement d'images
    de l'overview pour forcer le défilement. »*
@@ -494,3 +472,33 @@ section.colophon { padding: 0; border-top: 1px solid var(--line); }
   /* The menu's own narrow-screen behaviour moved with it, into chrome.css. */
   section { padding: 56px 0; }
 }
+
+/* ---------------------------------------------------------------
+   Content added on 11/10/2026, in this file's own vocabulary
+   --------------------------------------------------------------- */
+/* WHO IS BEHIND IT: the two partners on the home page, a card each (the cut, the panel), the
+   mark the About page's avatar — a portrait from img/team/ where one exists, the initials in the
+   accent's pastel otherwise, the accent turning by position like everything else. */
+.founders { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 38px; }
+.founder { display: flex; gap: 18px; align-items: flex-start; }
+.fmark {
+  --cut: 10px;
+  flex: none; width: 54px; height: 54px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--a1-soft); color: var(--a1); font: 760 21px/1 var(--display); font-stretch: 80%; letter-spacing: .02em;
+  clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+}
+@supports (corner-shape: bevel) {
+  .fmark { clip-path: none; border-radius: var(--cut) 0 var(--cut) 0; corner-shape: bevel; }
+}
+img.fmark { display: block; object-fit: cover; }
+.founders .founder:nth-child(4n+2) .fmark { background: var(--a2-soft); color: var(--a2); }
+.founder .frole { margin-top: 4px; font: 500 11px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.founder .fline { margin-top: 10px; }
+.tkmore { margin-top: 22px; }
+
+/* THE CONSULTING, one line under the three products of « Ce que nous faisons », leading to the
+   About page's trades. */
+.ovmore { margin-top: 24px; max-width: 72ch; color: var(--ink-2); }
+.ovmore a { font-weight: 600; text-decoration: none; white-space: nowrap; }
+.ovmore a:hover { text-decoration: underline; text-underline-offset: 4px; }

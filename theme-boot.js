@@ -27,7 +27,9 @@
 // page seen), the same on every page of it, and a different one on the next visit.
 // Julien, 09/10/2026: « que la couleur de la palette soit choisie aléatoirement ». Drawn
 // per visit rather than per page because every click here loads a page, and a colour
-// that changed at each one would look like a fault. The list, the default, the mode and
+// that changed at each one would look like a fault. Since 11/10/2026 (Julien) the mode is
+// « fixe »: a reader who has not chosen gets the default, and the draw below waits for the
+// day the mode goes back to « visite ». The list, the default, the mode and
 // the length of a visit are written by scripts/build-theme.mjs from scripts/theme.mjs —
 // that is where they change, not here. On a private page (<html data-private>, the
 // Anonymizer) nothing is written: it shows the visit's palette, or the default.
@@ -37,13 +39,12 @@
     // theme:begin — written by scripts/build-theme.mjs from scripts/theme.mjs, do not edit by hand.
     var PALETTES = [
     { id: "orange", fr: "Orange", en: "Orange" },
-    { id: "bleu", fr: "Bleu", en: "Blue" },
     { id: "rose", fr: "Rose", en: "Pink" },
     { id: "kaki", fr: "Kaki", en: "Khaki" },
     { id: "argile", fr: "Argile", en: "Clay" }
     ];
     var DEFAULT_PALETTE = "orange";
-    var PALETTE_MODE = "visite";
+    var PALETTE_MODE = "fixe";
     var VISIT_MINUTES = 30;
     // theme:end
     var theme = "light";   // the site's default

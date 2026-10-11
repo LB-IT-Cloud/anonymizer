@@ -230,6 +230,7 @@ header.site .palsw[data-sw="bleu"] { background: #2f50d8; }
 header.site .palsw[data-sw="rose"] { background: #e99dcf; }
 header.site .palsw[data-sw="kaki"] { background: #979751; }
 header.site .palsw[data-sw="argile"] { background: #bc8375; }
+header.site .palsw-mix { background: conic-gradient(#e06233 0 90deg, #e99dcf 0 180deg, #979751 0 270deg, #bc8375 0 360deg); }
 /* theme:end */
 
 /* ---------------------------------------------------------------
@@ -325,9 +326,9 @@ header.site .palopt:hover { background: var(--ground-2); color: var(--ink); }
 header.site .palopt[aria-checked="true"] { color: var(--ink); font-weight: 650; }
 header.site .palopt[aria-checked="true"]::after { content: "✓"; margin-left: auto; color: var(--ink-2); }
 header.site .palopt .palsw { width: 15px; height: 15px; }
-/* « Au hasard » shows the five colours at once, and sits apart from the list it draws from. */
+/* « Au hasard » sits apart from the list it draws from; its swatch (.palsw-mix), the colours it
+   draws, is written into the theme block above by build-theme.mjs. */
 header.site .palrand { border-bottom: 1px solid var(--line); margin-bottom: 4px; padding-bottom: 10px; }
-header.site .palsw-mix { background: conic-gradient(#e06233 0 72deg, #2f50d8 0 144deg, #e99dcf 0 216deg, #979751 0 288deg, #bc8375 0); }
 /* The sentence at the first visit: a small label hung under the button, not a banner. */
 header.site .palhint {
   position: absolute; top: calc(100% + 8px); right: 0; z-index: 59; width: max-content; max-width: min(280px, calc(100vw - 32px));

@@ -44,11 +44,20 @@ window.LB_MENU = [
   { file: "fr.html", label: ["Accueil", "Home"] },
   /* SOLUTIONS, depuis le 05/10/2026 : Julien a demandé de regrouper les deux produits sous un
      menu qui s'ouvre, comme les outils, plutôt que de les aligner dans la barre. Un groupe sans
-     `file` : « Solutions » n'est pas une page, c'est la porte vers deux présentations, et chaque
-     enfant ouvre toujours la présentation elle-même (31/08/2026, « Don't need this page »). */
+     `file` : « Solutions » n'est pas une page, c'est la porte vers trois présentations, et chaque
+     enfant ouvre toujours la présentation elle-même (31/08/2026, « Don't need this page »).
+
+     TROIS DEPUIS LE 09/10/2026 : Meti rejoint Entris et eXact, à la demande de Clément.
+     L'ordre n'est ni alphabétique ni chronologique, c'est celui du périmètre : Entris couvre
+     le locataire Microsoft 365, eXact le parc de postes, Meti un chantier — faire passer un
+     parc applicatif de MECM à Intune. Le plus large d'abord, le plus ciblé en dernier.
+
+     Le groupe reste sans `file` : trois enfants ne justifient pas plus qu'avec deux une page
+     « Solutions » qui ne ferait que relister ce que le panneau montre déjà. */
   { label: ["Solutions", "Solutions"], children: [
     { file: "entris-fr.html", label: ["Entris", "Entris"] },
-    { file: "exact-fr.html", label: ["eXact", "eXact"] }
+    { file: "exact-fr.html", label: ["eXact", "eXact"] },
+    { file: "meti-fr.html", label: ["Meti", "Meti"] }
   ] },
   /* A group rather than a page: Julien, 31/08/2026, asked for a menu named Outils /
      Tools that OPENS, with the licence advisor inside it — so a second free tool
@@ -143,6 +152,7 @@ window.LB_EN = {
   "contact-fr.html": "contact.html",
   "entris-fr.html": "entris.html",
   "exact-fr.html": "exact.html",
+  "meti-fr.html": "meti.html",
   "exact-resellers-fr.html": "exact-resellers.html",
   "license-advisor-fr.html": "license-advisor.html",
   "application-advisor-fr.html": "application-advisor.html",

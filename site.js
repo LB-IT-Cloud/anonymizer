@@ -130,15 +130,44 @@
       if (m && window.LB_EN[m[1]]) links[i].setAttribute("href", window.LB_EN[m[1]] + (m[2] || ""));
     }
   }
+  /* FRENCH SPACING, since 11/10/2026 (Clément: on a phone, « Prenez le contrôle ! » left its « ! »
+     alone on the last line). French sets a space before ! ? : ; » and after «, and that space
+     must not break. The dictionaries and the tools write an ordinary one, some three thousand
+     times, in strings, comments and code alike — so rather than editing them, a French page
+     makes the space it SHOWS a no-break one. Text nodes only; never inside code, a field or a
+     <pre> (a PowerShell line copied from the page must stay byte for byte what was written), and
+     never on a private page: the Anonymizer hands back exactly the text it was given. */
+  var FR_SPACE = /(\S) ([!?:;»])|(«) (?=\S)/g;
+  var FR_SKIP = "code, pre, kbd, samp, script, style, textarea, input, select, option";
+  function frenchSpaces(root) {
+    if (lang !== "fr" || PRIVATE || !root || !document.createTreeWalker) return;
+    var walker = document.createTreeWalker(root, 4 /* NodeFilter.SHOW_TEXT */);
+    for (var n = walker.nextNode(); n; n = walker.nextNode()) {
+      var v = n.nodeValue;
+      if (v.indexOf(" ") < 0 || !/[!?:;»«]/.test(v)) continue;
+      if (n.parentElement && n.parentElement.closest(FR_SKIP)) continue;
+      var next = v.replace(FR_SPACE, function (m, before, mark, open) {
+        return open ? open + " " : before + " " + mark;
+      });
+      if (next !== v) n.nodeValue = next;
+    }
+  }
   var watching = false;
   function watchLinks() {
     if (watching || !window.MutationObserver || !document.body) return;
     watching = true;
     var queued = false;
+    /* Watches what the pages draw after the first paint — the tools redraw on every answer —
+       for the links to localise and, on a French page, the spaces to hold. Changing a text
+       node's value is not a childList mutation, so this never wakes itself up. */
     new MutationObserver(function () {
       if (queued) return;
       queued = true;
-      window.requestAnimationFrame(function () { queued = false; localizeLinks(document); });
+      window.requestAnimationFrame(function () {
+        queued = false;
+        localizeLinks(document);
+        frenchSpaces(document.body);
+      });
     }).observe(document.body, { childList: true, subtree: true });
   }
   var theme = store("lbTheme") === "dark" ? "dark" : "light";
@@ -187,6 +216,27 @@
     return String(s).replace(/[&<>"]/g, function (c) {
       return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c];
     });
+  }
+
+  /* UN NOMBRE COMPTÉ, PAS ÉCRIT (10/10/2026). L'accueil disait « sept outils » et « cinq outils
+     de migration » quand le menu en listait neuf : un nombre tapé dans une phrase est faux le
+     jour où la liste grandit, et Julien ne veut plus avoir à le recompter — *« j'ai pas envie de
+     devoir actualiser la page à chaque fois »*. Les pages qui annoncent combien elles listent
+     comptent donc leur liste et l'écrivent avec ceci : en toutes lettres jusqu'à vingt, comme
+     le reste du site, en chiffres au-delà. Masculin, parce que tout ce qu'on compte ici l'est —
+     outils, scripts, articles. */
+  var NUM = [
+    ["zéro", "un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf", "dix", "onze",
+     "douze", "treize", "quatorze", "quinze", "seize", "dix-sept", "dix-huit", "dix-neuf", "vingt"],
+    ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven",
+     "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"]
+  ];
+  function num(n) { return [NUM[0][n] || String(n), NUM[1][n] || String(n)]; }
+  /* Le nombre et le nom, accordés : « sept outils », "one script". Le français met zéro et un au
+     singulier, l'anglais un seul. */
+  function count(n, fr, en) {
+    var w = num(n);
+    return [w[0] + " " + fr[n > 1 ? 1 : 0], w[1] + " " + en[n === 1 ? 0 : 1]];
   }
 
   /* Which entry is this page? Compared as RESOLVED addresses, not as file names.
@@ -273,7 +323,7 @@
       "</nav>" +
       '<div class="tools">' +
         '<button class="ghost" id="lbLang">' + (lang === "fr" ? "EN" : "FR") + "</button>" +
-        '<button class="ghost" id="lbTheme" aria-label="Thème">' + (theme === "dark" ? "☀" : "☾") + "</button>" +
+        '<button class="ghost" id="lbTheme" aria-label="' + esc(pick(["Thème", "Theme"])) + '">' + (theme === "dark" ? "☀" : "☾") + "</button>" +
         paletteHtml() +
       "</div></div>";
   }
@@ -384,8 +434,20 @@
   function thumbKey() { return "lbPageVote:" + thumbPage(); }
   function thumbDone() { try { return window.localStorage.getItem(thumbKey()); } catch (e) { return null; } }
 
+  /* WHERE THE QUESTION IS ASKED, since 11/10/2026 (Clément): on the pages people use — the free
+     tools, their page and Knowledge (the articles ask it themselves, kb-article.js) — and no
+     longer under the home page, a product presentation, About or Contact, where « did this page
+     help? » read as a documentation reflex on a sales page. The list is the menu's own. */
+  function feedbackHere() {
+    return PAGES.some(function (p) {
+      if (p.file === "knowledge-fr.html") return isCurrent(p.file);
+      if (p.file !== "free-tools-fr.html") return false;
+      return isCurrent(p.file) || (p.children || []).some(function (c) { return isCurrent(c.file); });
+    });
+  }
+
   function thumb(footer) {
-    if (!footer || PRIVATE || document.documentElement.hasAttribute("data-kb")) return;
+    if (!footer || PRIVATE || document.documentElement.hasAttribute("data-kb") || !feedbackHere()) return;
     var host = document.getElementById("lbThumb");
     if (!host) {
       host = document.createElement("section");
@@ -417,6 +479,30 @@
       '<p class="lbthumbnote" role="status" aria-live="polite">' + esc(done ? pick(VOTE.thanks) : pick(VOTE.anon)) + "</p></div>";
   }
 
+  /* ONE PAGE'S RENDERER MUST NOT BE ABLE TO TAKE DOWN THE SHELL. Added 11/10/2026, after the
+     home page's new section threw on a reader holding the previous page in cache: the HTML and
+     the script each live 600 s and expire independently, so every release opens a window where
+     one is new and the other is not. The throw did not merely leave that section empty — it
+     came out of `listeners.forEach` and stopped the three calls below it, so the English links
+     were not localized, the French spaces were not inserted, and outbound links were not
+     watched. A page half painted, with nothing on screen to say so.
+
+     A renderer is a PAGE's code, and the shell has no business trusting it. Each one now runs
+     inside this, and the two that follow it run whatever happens.
+
+     IT IS LOUD ON PURPOSE. Swallowing the error would trade a visible failure for an invisible
+     one, which is the exact trade every test in tests/ exists to refuse. The reader gets a page
+     that works; whoever opens the console gets the stack. Nothing is sent anywhere: the audience
+     measurement carries page views, not diagnostics. */
+  function render(fn) {
+    try {
+      fn(lang, theme);
+    } catch (e) {
+      /* Named so a console full of someone else's noise still shows where this came from. */
+      if (window.console && console.error) console.error("LB: a page renderer failed; the page carries on —", e);
+    }
+  }
+
   function paint() {
     document.documentElement.lang = lang;
     document.documentElement.setAttribute("data-theme", theme);
@@ -426,8 +512,11 @@
     if (f) { f.className = "site"; f.innerHTML = footerHtml(); }
     thumb(f);
     wire();
-    listeners.forEach(function (fn) { fn(lang, theme); });
+    /* Not `listeners.forEach(render)`: forEach would hand render the index and the array as a
+       second and third argument. Harmless today, a trap the day render takes an option. */
+    listeners.forEach(function (fn) { render(fn); });
     localizeLinks(document);
+    frenchSpaces(document.body);
     watchLinks();
   }
 
@@ -515,6 +604,10 @@
     theme: theme,
     pick: pick,
     esc: esc,
+    /** A count as a [fr, en] pair of words — « sept », "seven" — up to twenty, figures beyond. */
+    num: num,
+    /** The count and its noun, agreed: count(7, ["outil", "outils"], ["tool", "tools"]). */
+    count: count,
     /** Set the language from a page's own control (the mock-up has one, because the
         console it imitates has one). Repaints the chrome and tells every listener. */
     setLang: function (next) {
@@ -534,8 +627,11 @@
     setPalette: function (next) { setPalette(next); },
     /** Send one named event to the audience measurement; false when it could not be sent. */
     track: function (name, data) { return track(name, data); },
-    /** Register a renderer; it runs now and again on every language or theme change. */
-    onChange: function (fn) { listeners.push(fn); fn(lang, theme); },
+    /** Register a renderer; it runs now and again on every language or theme change.
+        The first run is the one that used to be the worst: it happens here, outside paint(),
+        so a throw went back up into the page's own script and stopped whatever it had left
+        to do after registering. Netted like the others. */
+    onChange: function (fn) { listeners.push(fn); render(fn); },
     /** Fill every [data-i] node from a page's own dictionary of [fr, en] pairs. */
     fill: function (dict, root) {
       var scope = root || document;
