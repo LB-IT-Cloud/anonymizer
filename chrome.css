@@ -47,190 +47,42 @@ html[data-theme="dark"] footer.site { --shadow: 0 2px 0 rgba(0, 0, 0, .4); }
    header's palette button. */
 header.site,
 footer.site {
-  --brand: #873516;
-  --brand-ink: #271914;
-  --brand-soft: #fbe2d9;
-  --brand-line: #e8c0b3;
-  --ground: #fbf5f4;
-  --ground-2: #f4eae7;
-  --panel: #fffdfc;
-  --line: #ded1cc;
-  --ink: #271914;
-  --ink-2: #5c4b46;
-  --ink-3: #75635d;
-  --touch: #979751;
-  --logo-dark: #43251a;
-  --logo-light: #e06233;
-  --swatch: #e06233;
-}
-html[data-theme="dark"] header.site,
-html[data-theme="dark"] footer.site {
-  --brand: #e26435;
-  --brand-ink: #f8f0ed;
-  --brand-soft: #2e1d17;
-  --brand-line: #543429;
-  --ground: #150d0a;
-  --ground-2: #1d1310;
-  --panel: #221814;
-  --line: #41312c;
-  --ink: #f8f0ed;
-  --ink-2: #c1b0aa;
-  --ink-3: #99867f;
-  --touch: #979751;
-  --logo-dark: #f8f0ed;
-  --logo-light: #e06233;
-  --swatch: #e06233;
-}
-html[data-palette="bleu"] header.site,
-html[data-palette="bleu"] footer.site {
-  --brand: #354d94;
-  --brand-ink: #181d29;
-  --brand-soft: #dfe8fd;
-  --brand-line: #bccaec;
+  --brand: #3c5083;
+  --brand-ink: #171d29;
+  --brand-soft: #dee8fd;
+  --brand-line: #bbcbec;
   --ground: #f5f7fb;
   --ground-2: #e9edf5;
   --panel: #fdfdff;
   --line: #cfd4df;
-  --ink: #181d29;
-  --ink-2: #4a505e;
-  --ink-3: #616776;
-  --touch: #e06233;
-  --logo-dark: #232d47;
-  --logo-light: #2f50d8;
-  --swatch: #2f50d8;
+  --ink: #171d29;
+  --ink-2: #49505e;
+  --ink-3: #626978;
+  --touch: #d15c32;
+  --logo-dark: #4e6498;
+  --logo-light: #d15c32;
+  --swatch: #4e6498;
 }
-html[data-palette="bleu"][data-theme="dark"] header.site,
-html[data-palette="bleu"][data-theme="dark"] footer.site {
-  --brand: #5a83fe;
+html[data-theme="dark"] header.site,
+html[data-theme="dark"] footer.site {
+  --brand: #738bc1;
   --brand-ink: #eff2f9;
   --brand-soft: #1b2130;
   --brand-line: #313c58;
   --ground: #0c0f16;
   --ground-2: #12161e;
-  --panel: #171a23;
-  --line: #303543;
+  --panel: #171b23;
+  --line: #2f3543;
   --ink: #eff2f9;
   --ink-2: #aeb4c3;
-  --ink-3: #848b9a;
-  --touch: #e06233;
-  --logo-dark: #eff2f9;
-  --logo-light: #3558e1;
-  --swatch: #2f50d8;
+  --ink-3: #858c9c;
+  --touch: #d15c32;
+  --logo-dark: #4e6498;
+  --logo-light: #d15c32;
+  --swatch: #4e6498;
 }
-html[data-palette="rose"] header.site,
-html[data-palette="rose"] footer.site {
-  --brand: #793765;
-  --brand-ink: #251821;
-  --brand-soft: #f7e1ee;
-  --brand-line: #e2bed5;
-  --ground: #faf5f8;
-  --ground-2: #f3eaef;
-  --panel: #fefdfe;
-  --line: #dcd0d7;
-  --ink: #251821;
-  --ink-2: #5a4b54;
-  --ink-3: #72626c;
-  --touch: #979751;
-  --logo-dark: #3f2336;
-  --logo-light: #bf77a7;
-  --swatch: #e99dcf;
-}
-html[data-palette="rose"][data-theme="dark"] header.site,
-html[data-palette="rose"][data-theme="dark"] footer.site {
-  --brand: #e99dcf;
-  --brand-ink: #f7eff4;
-  --brand-soft: #2c1c26;
-  --brand-line: #4f3345;
-  --ground: #140d11;
-  --ground-2: #1c1319;
-  --panel: #20171d;
-  --line: #3f3039;
-  --ink: #f7eff4;
-  --ink-2: #bfafb9;
-  --ink-3: #96858f;
-  --touch: #979751;
-  --logo-dark: #f7eff4;
-  --logo-light: #e99dcf;
-  --swatch: #e99dcf;
-}
-html[data-palette="kaki"] header.site,
-html[data-palette="kaki"] footer.site {
-  --brand: #575606;
-  --brand-ink: #1e1e10;
-  --brand-soft: #e9ead3;
-  --brand-line: #cdcea8;
-  --ground: #f7f7f3;
-  --ground-2: #edeee5;
-  --panel: #fdfdfc;
-  --line: #d5d5c9;
-  --ink: #1e1e10;
-  --ink-2: #515141;
-  --ink-3: #686958;
-  --touch: #e99dcf;
-  --logo-dark: #30300f;
-  --logo-light: #92924c;
-  --swatch: #979751;
-}
-html[data-palette="kaki"][data-theme="dark"] header.site,
-html[data-palette="kaki"][data-theme="dark"] footer.site {
-  --brand: #979751;
-  --brand-ink: #f2f2eb;
-  --brand-soft: #232311;
-  --brand-line: #3f3f1f;
-  --ground: #101008;
-  --ground-2: #17170d;
-  --panel: #1b1b12;
-  --line: #363728;
-  --ink: #f2f2eb;
-  --ink-2: #b5b6a6;
-  --ink-3: #8c8c7b;
-  --touch: #e99dcf;
-  --logo-dark: #f2f2eb;
-  --logo-light: #979751;
-  --swatch: #979751;
-}
-html[data-palette="argile"] header.site,
-html[data-palette="argile"] footer.site {
-  --brand: #764336;
-  --brand-ink: #271915;
-  --brand-soft: #fbe1db;
-  --brand-line: #e9c0b5;
-  --ground: #fbf5f4;
-  --ground-2: #f5eae8;
-  --panel: #fffdfc;
-  --line: #ded1cd;
-  --ink: #271915;
-  --ink-2: #5d4b47;
-  --ink-3: #75635e;
-  --touch: #2f50d8;
-  --logo-dark: #43241d;
-  --logo-light: #ba8174;
-  --swatch: #bc8375;
-}
-html[data-palette="argile"][data-theme="dark"] header.site,
-html[data-palette="argile"][data-theme="dark"] footer.site {
-  --brand: #bc8375;
-  --brand-ink: #f8f0ed;
-  --brand-soft: #2e1c18;
-  --brand-line: #54332b;
-  --ground: #150d0b;
-  --ground-2: #1d1311;
-  --panel: #221815;
-  --line: #41312d;
-  --ink: #f8f0ed;
-  --ink-2: #c2b0ab;
-  --ink-3: #998681;
-  --touch: #2f50d8;
-  --logo-dark: #f8f0ed;
-  --logo-light: #bc8375;
-  --swatch: #bc8375;
-}
-header.site .palsw[data-sw="orange"] { background: #e06233; }
-header.site .palsw[data-sw="bleu"] { background: #2f50d8; }
-header.site .palsw[data-sw="rose"] { background: #e99dcf; }
-header.site .palsw[data-sw="kaki"] { background: #979751; }
-header.site .palsw[data-sw="argile"] { background: #bc8375; }
-header.site .palsw-mix { background: conic-gradient(#e06233 0 90deg, #e99dcf 0 180deg, #979751 0 270deg, #bc8375 0 360deg); }
+header.site .palsw[data-sw="outremer"] { background: #4e6498; }
+header.site .palsw-mix { background: conic-gradient(#4e6498 0 360deg); }
 /* theme:end */
 
 /* ---------------------------------------------------------------
@@ -246,6 +98,9 @@ header.site {
 header.site * { box-sizing: border-box; }
 header.site .wrap { width: min(1180px, 100% - 40px); margin: 0 auto; }
 header.site .bar { display: flex; align-items: center; gap: 22px; height: 70px; position: relative; }
+/* The touch under the logo, on the header's own rule — the same mark as the orange segment under
+   Entris's top bar (12/10/2026). */
+header.site .bar::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 141px; height: 3px; background: var(--touch); }
 header.site .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: none; }
 /* THE LOGO, IN THE PALETTE'S COLOURS. Julien, 09/10/2026: keep the logo exactly as it is and
    change only its colours. site.js draws it inline from img/brand/lbitcloud-logo.svg — the same
@@ -257,11 +112,12 @@ header.site .logo .lbm-d { fill: var(--logo-dark); }
 header.site .logo .lbm-l { fill: var(--logo-light); }
 
 header.site nav.menu { display: flex; align-items: center; gap: 4px; margin-left: auto; }
-/* The entries read like the labels on a rack: condensed capitals, spaced. The current page is
+/* The entries read like the labels on a rack: capitals, spaced — the buttons' voice, at its
+   normal width since 12/10/2026. The current page is
    marked by a bar under its label rather than a tinted pill around it. */
 header.site nav.menu a,
 header.site nav.menu .groupbtn {
-  padding: 10px 12px; font: 650 12.5px/1 var(--display); font-stretch: 82%;
+  padding: 10px 12px; font: 650 12px/1 var(--display);
   text-transform: uppercase; letter-spacing: .06em;
   color: var(--ink-2); text-decoration: none; white-space: nowrap;
   display: inline-flex; align-items: center; gap: 6px; border: none; background: none;

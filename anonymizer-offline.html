@@ -2,12 +2,12 @@
 <html lang="fr" data-theme="light">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-TuLqD/8/vTFXGSZdm4Cx6zGggr6Ur45Sf/PHDO36zhw='; style-src 'sha256-/07LYxFKG9ejnG4UvhTGXuNnQwhf3p/dV8uEqSPnPHE='; img-src 'none'; font-src 'none'; connect-src 'none'; worker-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-feBPTq/hNuZB8vmR3aed7kih1/xzyGS4HBedew8Zn6I='; style-src 'sha256-qoLq0wGg064v/Ooj2NRP9N/BibavgD9Dn1xRzwt69kE='; img-src 'none'; font-src 'none'; connect-src 'none'; worker-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="google" content="notranslate">
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="generator" content="Anonymizer 1.0.2 — LB IT Cloud">
+<meta name="generator" content="Anonymizer 1.0.3 — LB IT Cloud">
 <title>Anonymizer</title>
 <style>
 /* ===== site.css ===== */
@@ -44,9 +44,11 @@
    LES PALETTES, 09/10/2026. Julien trouve le bleu, le sombre et le gris tristes, et un collègue
    a sorti avec Claude un site aux couleurs exactes des nôtres. Le site prend donc les couleurs
    clés 2027 de WGSN — Energy Orange par défaut, et Luminous Blue, Pop Pink, Meadowland Green et
-   Clay au choix, depuis le bouton à côté du thème. Toutes les couleurs sont dans theme.css,
-   écrit par scripts/build-theme.mjs depuis scripts/theme.mjs : c'est là qu'on les change. Les
-   plaques sont un cadre de couleur et un intérieur pastel, texte sombre. */
+   Clay au choix, depuis le bouton à côté du thème. Depuis le 12/10/2026, une seule palette : le
+   bleu outremer de Le Corbusier et sa seconde couleur (voir scripts/theme.mjs), sans bouton.
+   Toutes les couleurs sont dans theme.css, écrit par scripts/build-theme.mjs depuis
+   scripts/theme.mjs : c'est là qu'on les change. Les plaques sont un cadre de couleur et un
+   intérieur à peine teinté, texte sombre. */
 :root {
   /* THE COLOURS ARE NOT HERE ANY MORE. Since 09/10/2026 every colour token — grounds, inks,
      lines, the plate and its pastel, the touch, the logo's two tones — is written per palette
@@ -74,20 +76,30 @@
   /* References, revisions, measurements: Martian Mono, hosted in fonts/. The system's own
      monospace is only the fallback while it loads. */
   --mono: "Martian Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
+  /* FOUR VOICES, NOT NINE (12/10/2026). Julien's partner found too many faces on the home page:
+     there were two families, but Archivo in six widths and Martian Mono for labels, values, a
+     sentence and a link, which the eye counts as nine. Since then:
+       titles    Archivo condensed — 68 % for the home plate, 72 % for every other title of
+                 20 px or more; a smaller heading stays at the normal width;
+       text      Archivo at its normal width, values and links included;
+       buttons   Archivo at its normal width, capitals, 650, spaced .08em;
+       marks     Martian Mono, which Julien likes (« ajoute-la sans exagérer »): small capitals
+                 labels — the plate's top line, the kickers, the plate's field names — and data:
+                 code, figures, measurements. Never a sentence, a value in running text or a link. */
 
   /* FOUR ACCENTS, USED LIGHTLY. Julien, 31/08/2026: *« dans tout le site, j'aimerais
      bien qu'il y ait un petit peu plus de couleurs, même si c'est très léger et
      nuancé »*. So they colour small things — an icon chip, a figure, a card's edge,
      the rule down the side of a profile — and never a headline or a large surface.
      The first accent, --a1, is the palette's own colour and is written into theme.css with
-     the rest of the palette; the other three stay the same whatever the palette. */
+     the rest of the palette. The other three were a teal, a violet and an amber, the same
+     whatever the palette, until 12/10/2026; since then the site is two-coloured (Julien: « on
+     est parti sur un truc bicolore ») and scripts/build-theme.mjs writes them too, from the
+     palette's two colours — see derive() there. */
   /* Raised one notch on 31/08/2026 at Julien's word ("monte l'intensité d'un cran"):
      the tints are deeper and the rules darker, so the same restraint reads from a metre
      away instead of only up close. The ink stays exactly as it was — what changed is how
      much colour the surfaces carry, not the hues themselves. */
-  --a2: #0e6d78; --a2-soft: #d0eaee; --a2-line: #a5d5db;   /* teal            */
-  --a3: #59489b; --a3-soft: #e2dbf7; --a3-line: #c2b7e9;   /* violet          */
-  --a4: #8f5f14; --a4-soft: #f7e6c8; --a4-line: #e6cb9d;   /* amber           */
 }
 
 html[data-theme="dark"] {
@@ -97,11 +109,6 @@ html[data-theme="dark"] {
   --warn:     #f0a132;
   --warn-bg:  rgba(240,161,50,.14);
 
-  /* Dark: the ink brightens and the tint darkens, so the same four accents keep the
-     same MEANING on both themes rather than becoming four pale smudges. */
-  --a2: #6fd4dd; --a2-soft: #123036; --a2-line: #23555d;
-  --a3: #b7abf2; --a3-soft: #241f42; --a3-line: #443c72;
-  --a4: #edb862; --a4-soft: #362a17; --a4-line: #614c24;
   --danger:   #ef5a63;
   --danger-bg:rgba(239,90,99,.14);
   --shadow:   0 2px 0 rgba(0,0,0,.4);
@@ -148,7 +155,7 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
   --cut: 9px;
   display: inline-flex; align-items: center; gap: 9px; padding: 13px 20px;
   background: var(--plate); color: var(--on-plate); border: 0; text-decoration: none;
-  font: 720 13px/1.1 var(--display); font-stretch: 84%; text-transform: uppercase; letter-spacing: .07em;
+  font: 650 12.5px/1.1 var(--display); text-transform: uppercase; letter-spacing: .08em;
   transition: background-color .12s;
 }
 .btn:hover { background: color-mix(in srgb, var(--plate) 88%, var(--on-plate)); }
@@ -159,11 +166,13 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
 /* A third rank, quieter than outline. The hero offers two products and then the free tool,
    and three buttons of equal weight would say the three are equal offers — which is exactly
    what Julien asked to stop saying on 01/09/2026. In this direction the third rank is not a
-   button at all: an underlined line in the reference face, like a note on a drawing. */
+   button at all: an underlined line, like a note on a drawing — in the text face since
+   12/10/2026 (a link is never in Martian Mono), underlined in the touch colour. */
 .btn.ghost {
   background: transparent; color: var(--ink); clip-path: none; border-radius: 0; padding-left: 4px; padding-right: 4px;
-  font: 500 13px/1.1 var(--mono); text-transform: none; letter-spacing: 0;
-  text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px;
+  font: 500 14px/1.1 var(--body); text-transform: none; letter-spacing: 0;
+  text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 2px;
+  text-decoration-color: var(--touch);
 }
 .btn.ghost:hover { background: transparent; color: var(--brand); }
 .btn.sm { --cut: 7px; padding: 9px 14px; font-size: 12px; }
@@ -186,15 +195,28 @@ section.alt {
    the plate's blue ahead of it, where a drawing puts its datum mark. */
 .kicker {
   display: flex; align-items: center; gap: 10px;
-  font: 500 11.5px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+  font: 500 11px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase;
   color: var(--ink-2); margin-bottom: 14px;
 }
-.kicker::before { content: ""; width: 22px; height: 3px; background: var(--touch); flex: none; }
+.kicker::before { content: ""; width: 26px; height: 4px; background: var(--touch); flex: none; }
 h2.title {
   font-size: clamp(30px, 4.2vw, 48px); font-weight: 760; font-stretch: 72%;
   letter-spacing: -.005em; line-height: 1; max-width: 22ch; text-wrap: balance;
 }
 .lead { font-size: 17px; color: var(--ink-2); margin-top: 16px; max-width: 64ch; }
+/* THE SAME ORANGE MARKS AS ENTRIS (Julien, 12/10/2026: « applique les mêmes rappels sur le
+   site »). In the console, the title of a section is underlined in the touch colour and the title
+   of a tile has a short rule before it. Here: the section titles of the tools, the articles and
+   the Anonymizer (each page's stylesheet underlines its own), and the title of a card
+   that has neither an icon nor a punched hole — those already carry the orange. Never a rule
+   stuck to something selected: Julien turned down both the edge of the chosen menu entry and the
+   underline of the chosen tab. */
+.card:not(.tagged):not(:has(> .ico)) > h3::before {
+  content: ""; display: inline-block; width: 10px; height: 3px; background: var(--touch);
+  vertical-align: middle; margin: 0 8px 0 0; position: relative; top: -2px;
+}
+/* The bullets of a plain list in the touch colour: a mark, never the words. */
+ul:not([class]) > li::marker { color: var(--touch); }
 
 /* ---------------------------------------------------------------
    Home hero: a plate, then the console
@@ -226,10 +248,10 @@ h2.title {
   --cut: calc(24px - var(--pl-frame) * .586);
   position: relative; background: var(--pl-bg); color: var(--pl-fg); padding: 22px 28px 24px;
 }
-/* Two fixings, in the corners the cut leaves square. */
+/* Two fixings, in the corners the cut leaves square — in the touch colour since 12/10/2026. */
 .plateBody::before, .plateBody::after {
   content: ""; position: absolute; width: 7px; height: 7px; border-radius: 50%;
-  background: color-mix(in srgb, var(--pl-fg) 22%, transparent); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--pl-fg) 16%, transparent);
+  background: var(--touch); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pl-fg) 25%, transparent);
 }
 .plateBody::before { top: 11px; right: 11px; }
 .plateBody::after { bottom: 11px; left: 11px; }
@@ -238,6 +260,10 @@ h2.title {
   font: 500 11px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--pl-label);
   border-bottom: 1px solid color-mix(in srgb, var(--pl-fg) 20%, transparent); padding: 0 18px 11px 0; margin-bottom: 18px;
 }
+/* The plate's datum mark, the same short rule in the touch colour as the kickers'. The plate's
+   top line carried ENT · EXA · MET on its right until 12/10/2026; Julien had every code removed. */
+.plateTop > span:first-child { display: inline-flex; align-items: center; gap: 10px; }
+.plateTop > span:first-child::before { content: ""; width: 16px; height: 3px; background: var(--touch); flex: none; }
 /* Condensed, so larger than the old 56px — but no longer the 92px it reached on a full plate of
    colour: in dark ink the claim needs less size to carry. */
 .hero h1 {
@@ -247,11 +273,11 @@ h2.title {
 .spec { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 24px 0 0; border-top: 1px solid color-mix(in srgb, var(--pl-fg) 20%, transparent); }
 .spec div { padding: 10px 10px 0 0; min-width: 0; }
 .spec div + div { border-left: 1px solid color-mix(in srgb, var(--pl-fg) 14%, transparent); padding-left: 12px; }
-.spec dt { font: 650 10.5px/1.3 var(--display); font-stretch: 80%; text-transform: uppercase; letter-spacing: .08em; color: var(--pl-label); }
-.spec dd { margin: 3px 0 0; font: 500 12.5px/1.35 var(--mono); color: var(--pl-fg); }
+.spec dt { font: 500 10.5px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--pl-label); }
+.spec dd { margin: 3px 0 0; font: 500 14px/1.35 var(--body); color: var(--pl-fg); }
 .hero .sub { font-size: 18px; color: var(--ink-2); max-width: 36ch; }
 .hero .cta { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; align-items: center; }
-.hero .note { font: 500 12px/1.55 var(--mono); color: var(--ink-3); margin-top: 16px; max-width: 46ch; }
+.hero .note { font: 400 13.5px/1.55 var(--body); color: var(--ink-3); margin-top: 16px; max-width: 46ch; }
 .heroShow { margin-top: 40px; }
 
 /* Inner-page hero: shorter, no screenshot beside it */
@@ -260,7 +286,7 @@ h2.title {
 .pagehero { padding: 52px 0 42px; border-bottom: 1px solid var(--line); background: var(--ground-2); }
 /* overflow-wrap: a Knowledge title carries setting names like UseCloudTrustForOnPremAuth, one
    word wider than a phone, which pushed the whole page sideways. */
-.pagehero h1 { font-size: clamp(34px, 4.6vw, 54px); font-weight: 760; font-stretch: 74%; line-height: 1; letter-spacing: -.005em; max-width: 820px; overflow-wrap: anywhere; }
+.pagehero h1 { font-size: clamp(34px, 4.6vw, 54px); font-weight: 760; font-stretch: 72%; line-height: 1; letter-spacing: -.005em; max-width: 820px; overflow-wrap: anywhere; }
 .pagehero .sub { font-size: 17.5px; color: var(--ink-2); margin-top: 16px; max-width: 720px; }
 .pagehero .cta { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
 
@@ -341,12 +367,13 @@ h2.title {
 /* Small cut tags rather than pills: the same shape as everything else that can be picked. */
 .vtab {
   --cut: 6px;
-  font: 600 12px/1 var(--display); font-stretch: 86%; letter-spacing: .02em;
+  font: 600 12.5px/1 var(--display); letter-spacing: .01em;
   padding: 7px 11px; cursor: pointer;
   color: var(--ink-2); background: var(--fill);
   transition: background-color .15s ease, color .15s ease;
 }
 .vtab:hover { color: var(--ink); background: var(--brand-line); }
+/* The chosen tab in the palette's colour, white text — the touch carries no text (12/10/2026). */
 .vtab[aria-selected="true"] { color: var(--on-entris); background: var(--p-entris); }
 .vtab:focus-visible { outline: 2px solid currentColor; outline-offset: -4px; }
 @media (prefers-reduced-motion: reduce) { .vtab { transition: none; } }
@@ -411,33 +438,25 @@ h2.title {
 /* AN INVENTORY TAG, NOT A CARD. A fill cut out of the ground at two corners, no border and no
    shadow — and, where the card names something we publish, a reference and a punched hole. */
 .card { --cut: 16px; position: relative; background: var(--panel); padding: 22px 24px 24px; }
+/* The icons in the touch colour, all of them (12/10/2026): a drawn mark is the brand's to carry,
+   and Julien wanted more of the orange (« que l'orange soit plus utilisé dans les icônes »). */
 .card .ico {
-  width: 38px; height: 38px; color: var(--a1); box-shadow: inset 0 0 0 1.5px currentColor;
+  width: 38px; height: 38px; color: var(--touch); box-shadow: inset 0 0 0 1.5px currentColor;
   display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
 }
-/* The accents still cycle by POSITION, so a row of cards is coloured without a single
-   attribute in the markup — but they colour the outline of the mark now, never a pastel
-   chip behind it. */
-.cards .card:nth-child(4n+2) .ico { color: var(--a2); }
-.cards .card:nth-child(4n+3) .ico { color: var(--a3); }
-.cards .card:nth-child(4n+4) .ico { color: var(--a4); }
 .cards .card { transition: background-color .15s; }
 .cards .card:hover { background: color-mix(in srgb, var(--panel) 90%, var(--plate)); }
 @media (prefers-reduced-motion: reduce) { .cards .card { transition: none; } }
-/* The reference line, and the hole the tag would hang from. The hole shows whatever ground
-   the card sits on — section.alt sets --hole to its own. */
-.card .ref {
-  display: flex; gap: 14px; align-items: center; margin-bottom: 14px; padding-right: 26px;
-  font: 500 11px/1.3 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2);
-}
-.card .ref b { color: var(--on-touch); background: var(--touch); font-weight: 700; padding: 4px 7px; }
-.card[data-ref="ENT"] .ref b { color: var(--on-entris); background: var(--p-entris); }
-.card[data-ref="EXA"] .ref b { color: var(--on-exact); background: var(--p-exact); }
+/* The hole the tag would hang from, ringed in the touch colour like an eyelet. The hole shows
+   whatever ground the card sits on — section.alt sets --hole to its own. Until 12/10/2026 a
+   reference stood beside it (ENT, EXA, MET, OUT-01 → 07…), on a chip of the touch colour;
+   Julien had every code removed, and the eyelet now carries the colour the chip carried. */
 .card.tagged::after {
   content: ""; position: absolute; top: 19px; right: 20px; width: 12px; height: 12px; border-radius: 50%;
-  background: var(--hole, var(--ground)); box-shadow: inset 0 0 0 1px var(--line);
+  background: var(--hole, var(--ground)); box-shadow: inset 0 0 0 2.5px var(--touch);
 }
-.card h3 { font-size: 21px; font-weight: 760; font-stretch: 94%; letter-spacing: -.005em; margin-bottom: 9px; }
+.card.tagged h3 { padding-right: 24px; }
+.card h3 { font-size: 23px; font-weight: 760; font-stretch: 72%; letter-spacing: -.005em; margin-bottom: 9px; }
 .card p { font-size: 14.5px; color: var(--ink-2); }
 .card .mores { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 14px; }
 .card a.more { display: inline-block; font-size: 14px; font-weight: 600; text-decoration: none; }
@@ -474,7 +493,7 @@ html[data-theme="dark"] .card a.more:not(.alt) { color: var(--a1); }
    Home page only: the Anonymizer's page runs a stricter policy, and one line written for every
    page would be untrue on that one. */
 section.colophon { padding: 0; border-top: 1px solid var(--line); }
-.colo { display: flex; flex-wrap: wrap; gap: 4px 26px; padding: 14px 0; font: 500 11.5px/1.5 var(--mono); color: var(--ink-2); }
+.colo { display: flex; flex-wrap: wrap; gap: 4px 26px; padding: 14px 0; font: 400 13px/1.5 var(--body); color: var(--ink-2); }
 .colo b { color: var(--ink); font-weight: 650; }
 
 @media (max-width: 900px) {
@@ -498,7 +517,7 @@ section.colophon { padding: 0; border-top: 1px solid var(--line); }
   --cut: 10px;
   flex: none; width: 54px; height: 54px;
   display: flex; align-items: center; justify-content: center;
-  background: var(--a1-soft); color: var(--a1); font: 760 21px/1 var(--display); font-stretch: 80%; letter-spacing: .02em;
+  background: var(--a1-soft); color: var(--a1); font: 760 22px/1 var(--display); font-stretch: 72%; letter-spacing: .02em;
   clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
 }
 @supports (corner-shape: bevel) {
@@ -524,292 +543,95 @@ img.fmark { display: block; object-fit: cover; }
    THE PAGE COLOURS — WRITTEN BY scripts/build-theme.mjs FROM scripts/theme.mjs.
    DO NOT EDIT BY HAND: change the palettes there and run the script.
 
-   Loaded right after site.css on every page that loads it. The default palette (orange) is
+   Loaded right after site.css on every page that loads it. The default palette (outremer) is
    also the page's colours with no data-palette at all, so a page shown without scripts still
    has them. A palette's dark theme is always one selector more specific than its light one,
    so the order of this file can never let a light value win on the dark theme.
    --------------------------------------------------------------------------- */
 
-/* Orange — Energy Orange, Coloro 018-57-34 (default) */
+/* Outremer — Le Corbusier, bleu outremer 31 (32020), touche orange vif (4320S) (default) */
 :root {
-  --ink: #271914;
-  --ink-2: #5c4b46;
-  --ground: #fbf5f4;
-  --ground-2: #f4eae7;
-  --panel: #fffdfc;
-  --line: #ded1cc;
-  --plate-soft: #ffe3d9;
-  --ink-3: #75635d;
-  --fill: #f4dbd3;
-  --plate: #e06233;
-  --on-plate: #271914;
-  --plate-dim: #271914;
-  --edge: #e06233;
-  --brand-soft: #fbe2d9;
-  --brand: #873516;
-  --brand-ink: #271914;
-  --brand-line: #e8c0b3;
-  --touch: #979751;
-  --on-touch: #271914;
-  --a1: #873516;
-  --a1-soft: #fbe2d9;
-  --a1-line: #e8c0b3;
-  --logo-dark: #43251a;
-  --logo-light: #e06233;
-  --swatch: #e06233;
-  --p-entris: var(--touch); --on-entris: var(--on-touch);
-  --p-exact: var(--touch); --on-exact: var(--on-touch);
-}
-html[data-theme="dark"] {
-  --ink: #f8f0ed;
-  --ink-2: #c1b0aa;
-  --ground: #150d0a;
-  --ground-2: #1d1310;
-  --panel: #221814;
-  --line: #41312c;
-  --plate-soft: #331c14;
-  --ink-3: #99867f;
-  --fill: #3b2922;
-  --plate: #e06233;
-  --on-plate: #271914;
-  --plate-dim: #271914;
-  --edge: #e06233;
-  --brand-soft: #2e1d17;
-  --brand: #e26435;
-  --brand-ink: #f8f0ed;
-  --brand-line: #543429;
-  --touch: #979751;
-  --on-touch: #271914;
-  --a1: #e26435;
-  --a1-soft: #2e1d17;
-  --a1-line: #543429;
-  --logo-dark: #f8f0ed;
-  --logo-light: #e06233;
-  --swatch: #e06233;
-}
-
-/* Bleu — Luminous Blue, Coloro 125-28-38 */
-html[data-palette="bleu"] {
-  --ink: #181d29;
-  --ink-2: #4a505e;
+  --ink: #171d29;
+  --ink-2: #49505e;
   --ground: #f5f7fb;
   --ground-2: #e9edf5;
   --panel: #fdfdff;
   --line: #cfd4df;
-  --plate-soft: #e1e9fe;
-  --ink-3: #616776;
-  --fill: #d8e1f6;
-  --plate: #2f50d8;
+  --plate-soft: #e5ebf8;
+  --ink-3: #626978;
+  --fill: #dee3ee;
+  --plate: #4e6498;
   --on-plate: #ffffff;
   --plate-dim: #ffffff;
-  --edge: #2f50d8;
-  --brand-soft: #dfe8fd;
-  --brand: #354d94;
-  --brand-ink: #181d29;
-  --brand-line: #bccaec;
-  --touch: #e06233;
-  --on-touch: #181d29;
-  --a1: #354d94;
-  --a1-soft: #dfe8fd;
-  --a1-line: #bccaec;
-  --logo-dark: #232d47;
-  --logo-light: #2f50d8;
-  --swatch: #2f50d8;
+  --edge: #4e6498;
+  --brand-soft: #dee8fd;
+  --brand: #3c5083;
+  --brand-ink: #171d29;
+  --brand-line: #bbcbec;
+  --touch: #d15c32;
+  --on-touch: #111723;
+  --a1: #3c5083;
+  --a1-soft: #dee8fd;
+  --a1-line: #bbcbec;
+  --touch-soft: #fee5dd;
+  --touch-line: #f7bfac;
+  --touch-ink: #b54314;
+  --a2: #b54314;
+  --a2-soft: #fee5dd;
+  --a2-line: #f7bfac;
+  --a3: #3c5083;
+  --a3-soft: #dee8fd;
+  --a3-line: #bbcbec;
+  --a4: #b54314;
+  --a4-soft: #fee5dd;
+  --a4-line: #f7bfac;
+  --logo-dark: #4e6498;
+  --logo-light: #d15c32;
+  --swatch: #4e6498;
+  /* The chosen tab takes the palette's colour, as the main button does — not the touch: Julien,
+     12/10/2026, of dark text on the orange vif, « ça ne me semble pas très pertinent ». The
+     touch carries no text anywhere. */
+  --p-entris: var(--plate); --on-entris: var(--on-plate);
+  --p-exact: var(--plate); --on-exact: var(--on-plate);
 }
-html[data-palette="bleu"][data-theme="dark"] {
+html[data-theme="dark"] {
   --ink: #eff2f9;
   --ink-2: #aeb4c3;
   --ground: #0c0f16;
   --ground-2: #12161e;
-  --panel: #171a23;
-  --line: #303543;
-  --plate-soft: #1a2236;
-  --ink-3: #848b9a;
-  --fill: #272d3d;
-  --plate: #2f50d8;
+  --panel: #171b23;
+  --line: #2f3543;
+  --plate-soft: #1d232f;
+  --ink-3: #858c9c;
+  --fill: #292e38;
+  --plate: #4e6498;
   --on-plate: #ffffff;
   --plate-dim: #ffffff;
-  --edge: #3a5fe8;
+  --edge: #566da1;
   --brand-soft: #1b2130;
-  --brand: #5a83fe;
+  --brand: #738bc1;
   --brand-ink: #eff2f9;
   --brand-line: #313c58;
-  --touch: #e06233;
-  --on-touch: #181d29;
-  --a1: #5a83fe;
+  --touch: #d15c32;
+  --on-touch: #111723;
+  --a1: #738bc1;
   --a1-soft: #1b2130;
   --a1-line: #313c58;
-  --logo-dark: #eff2f9;
-  --logo-light: #3558e1;
-  --swatch: #2f50d8;
-}
-
-/* Rose — Pop Pink, Coloro 151-73-22 */
-html[data-palette="rose"] {
-  --ink: #251821;
-  --ink-2: #5a4b54;
-  --ground: #faf5f8;
-  --ground-2: #f3eaef;
-  --panel: #fefdfe;
-  --line: #dcd0d7;
-  --plate-soft: #fde0f2;
-  --ink-3: #72626c;
-  --fill: #f0dae7;
-  --plate: #e99dcf;
-  --on-plate: #251821;
-  --plate-dim: #251821;
-  --edge: #d086b7;
-  --brand-soft: #f7e1ee;
-  --brand: #793765;
-  --brand-ink: #251821;
-  --brand-line: #e2bed5;
-  --touch: #979751;
-  --on-touch: #251821;
-  --a1: #793765;
-  --a1-soft: #f7e1ee;
-  --a1-line: #e2bed5;
-  --logo-dark: #3f2336;
-  --logo-light: #bf77a7;
-  --swatch: #e99dcf;
-}
-html[data-palette="rose"][data-theme="dark"] {
-  --ink: #f7eff4;
-  --ink-2: #bfafb9;
-  --ground: #140d11;
-  --ground-2: #1c1319;
-  --panel: #20171d;
-  --line: #3f3039;
-  --plate-soft: #301b29;
-  --ink-3: #96858f;
-  --fill: #382832;
-  --plate: #e99dcf;
-  --on-plate: #251821;
-  --plate-dim: #251821;
-  --edge: #e99dcf;
-  --brand-soft: #2c1c26;
-  --brand: #e99dcf;
-  --brand-ink: #f7eff4;
-  --brand-line: #4f3345;
-  --touch: #979751;
-  --on-touch: #251821;
-  --a1: #e99dcf;
-  --a1-soft: #2c1c26;
-  --a1-line: #4f3345;
-  --logo-dark: #f7eff4;
-  --logo-light: #e99dcf;
-  --swatch: #e99dcf;
-}
-
-/* Kaki — Meadowland Green, Coloro 050-61-19 */
-html[data-palette="kaki"] {
-  --ink: #1e1e10;
-  --ink-2: #515141;
-  --ground: #f7f7f3;
-  --ground-2: #edeee5;
-  --panel: #fdfdfc;
-  --line: #d5d5c9;
-  --plate-soft: #ebecce;
-  --ink-3: #686958;
-  --fill: #e2e3cd;
-  --plate: #979751;
-  --on-plate: #1e1e10;
-  --plate-dim: #1e1e10;
-  --edge: #979751;
-  --brand-soft: #e9ead3;
-  --brand: #575606;
-  --brand-ink: #1e1e10;
-  --brand-line: #cdcea8;
-  --touch: #e99dcf;
-  --on-touch: #1e1e10;
-  --a1: #575606;
-  --a1-soft: #e9ead3;
-  --a1-line: #cdcea8;
-  --logo-dark: #30300f;
-  --logo-light: #92924c;
-  --swatch: #979751;
-}
-html[data-palette="kaki"][data-theme="dark"] {
-  --ink: #f2f2eb;
-  --ink-2: #b5b6a6;
-  --ground: #101008;
-  --ground-2: #17170d;
-  --panel: #1b1b12;
-  --line: #363728;
-  --plate-soft: #24240c;
-  --ink-3: #8c8c7b;
-  --fill: #2f2f1d;
-  --plate: #979751;
-  --on-plate: #1e1e10;
-  --plate-dim: #1e1e10;
-  --edge: #979751;
-  --brand-soft: #232311;
-  --brand: #979751;
-  --brand-ink: #f2f2eb;
-  --brand-line: #3f3f1f;
-  --touch: #e99dcf;
-  --on-touch: #1e1e10;
-  --a1: #979751;
-  --a1-soft: #232311;
-  --a1-line: #3f3f1f;
-  --logo-dark: #f2f2eb;
-  --logo-light: #979751;
-  --swatch: #979751;
-}
-
-/* Argile — Clay, Coloro 014-60-13 */
-html[data-palette="argile"] {
-  --ink: #271915;
-  --ink-2: #5d4b47;
-  --ground: #fbf5f4;
-  --ground-2: #f5eae8;
-  --panel: #fffdfc;
-  --line: #ded1cd;
-  --plate-soft: #fee3dc;
-  --ink-3: #75635e;
-  --fill: #f4dbd4;
-  --plate: #bc8375;
-  --on-plate: #271915;
-  --plate-dim: #271915;
-  --edge: #bc8375;
-  --brand-soft: #fbe1db;
-  --brand: #764336;
-  --brand-ink: #271915;
-  --brand-line: #e9c0b5;
-  --touch: #2f50d8;
-  --on-touch: #ffffff;
-  --a1: #764336;
-  --a1-soft: #fbe1db;
-  --a1-line: #e9c0b5;
-  --logo-dark: #43241d;
-  --logo-light: #ba8174;
-  --swatch: #bc8375;
-}
-html[data-palette="argile"][data-theme="dark"] {
-  --ink: #f8f0ed;
-  --ink-2: #c2b0ab;
-  --ground: #150d0b;
-  --ground-2: #1d1311;
-  --panel: #221815;
-  --line: #41312d;
-  --plate-soft: #341b16;
-  --ink-3: #998681;
-  --fill: #3b2824;
-  --plate: #bc8375;
-  --on-plate: #271915;
-  --plate-dim: #271915;
-  --edge: #bc8375;
-  --brand-soft: #2e1c18;
-  --brand: #bc8375;
-  --brand-ink: #f8f0ed;
-  --brand-line: #54332b;
-  --touch: #2f50d8;
-  --on-touch: #ffffff;
-  --a1: #bc8375;
-  --a1-soft: #2e1c18;
-  --a1-line: #54332b;
-  --logo-dark: #f8f0ed;
-  --logo-light: #bc8375;
-  --swatch: #bc8375;
+  --touch-soft: #331e17;
+  --touch-line: #633c2f;
+  --touch-ink: #df693f;
+  --a2: #df693f;
+  --a2-soft: #331e17;
+  --a2-line: #633c2f;
+  --a3: #738bc1;
+  --a3-soft: #1b2130;
+  --a3-line: #313c58;
+  --a4: #df693f;
+  --a4-soft: #331e17;
+  --a4-line: #633c2f;
+  --logo-dark: #4e6498;
+  --logo-light: #d15c32;
+  --swatch: #4e6498;
 }
 
 /* ===== tools.css ===== */
@@ -860,7 +682,7 @@ html[data-palette="argile"][data-theme="dark"] {
    smaller than the title, and in the brand colour so the eye takes the three lines in
    the right order. */
 .tagline {
-  font-family: var(--display); font-size: 22px; font-weight: 700; font-stretch: 84%; color: var(--brand);
+  font-family: var(--display); font-size: 24px; font-weight: 700; font-stretch: 72%; color: var(--brand);
   margin-top: 12px; line-height: 1.2;
 }
 @media (max-width: 700px) { .tagline { font-size: 19px; } }
@@ -873,7 +695,7 @@ html[data-palette="argile"][data-theme="dark"] {
   display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--line);
   flex-wrap: wrap;
 }
-.panel .head h3 { font-size: 18px; font-weight: 760; font-stretch: 80%; letter-spacing: 0; }
+.panel .head h3 { font-size: 18px; font-weight: 700; letter-spacing: 0; width: fit-content; border-bottom: 2px solid var(--touch); padding-bottom: 3px; }
 .panel .body { padding: 18px 20px 22px; }
 .panel .head .right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
 
@@ -916,7 +738,7 @@ html[data-palette="argile"][data-theme="dark"] {
 .prof .chev { grid-area: chev; }
 .prof .verdict { grid-area: verdict; justify-self: start; }
 .prof .row:hover { background: var(--ground-2); }
-.prof .nm { font-family: var(--display); font-weight: 760; font-stretch: 86%; font-size: 17px; letter-spacing: 0; }
+.prof .nm { font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: 0; }
 /* ink-2, not ink-3: this line is what the group IS, not a footnote about it. */
 .prof .who { font-size: 13px; color: var(--ink-2); min-width: 0; }
 .prof .heads {
@@ -999,7 +821,7 @@ html[data-palette="argile"][data-theme="dark"] {
   margin-top: 16px; padding: 14px 18px;
   background: var(--warn-bg);
 }
-.notice b { display: block; font: 760 14px/1.3 var(--display); font-stretch: 86%; color: var(--warn); margin-bottom: 5px; }
+.notice b { display: block; font: 700 14px/1.3 var(--display); color: var(--warn); margin-bottom: 5px; }
 .notice p { font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
 
 .disclaim {
@@ -1062,7 +884,7 @@ html[data-palette="argile"][data-theme="dark"] {
   font: 500 11px/1.45 var(--mono); text-transform: uppercase; letter-spacing: .08em;
   color: var(--ok); margin-bottom: 8px;
 }
-.outcome h3 { font-family: var(--display); font-size: 24px; font-weight: 760; font-stretch: 78%; letter-spacing: 0; line-height: 1.05; margin-bottom: 10px; }
+.outcome h3 { width: fit-content; border-bottom: 2px solid var(--touch); padding-bottom: 3px; font-family: var(--display); font-size: 24px; font-weight: 760; font-stretch: 72%; letter-spacing: 0; line-height: 1.05; margin-bottom: 10px; }
 .outcome p { font-size: 14px; color: var(--ink-2); line-height: 1.55; }
 .outcome p + p { margin-top: 8px; }
 .outcome.warn { box-shadow: inset 5px 0 0 var(--warn); }
@@ -1113,7 +935,7 @@ html[data-palette="argile"][data-theme="dark"] {
   background: var(--brand-soft); padding: 12px 14px 13px;
 }
 .kpi b {
-  display: block; font-family: var(--display); font-size: 28px; font-weight: 760; font-stretch: 80%;
+  display: block; font-family: var(--display); font-size: 28px; font-weight: 760; font-stretch: 72%;
   color: var(--brand); font-variant-numeric: tabular-nums; line-height: 1.05;
 }
 .kpi span { display: block; font-size: 11.5px; color: var(--ink-2); line-height: 1.35; margin-top: 4px; }
@@ -1133,7 +955,7 @@ html[data-palette="argile"][data-theme="dark"] {
   --cut: 6px;
   counter-increment: planstep; content: counter(planstep);
   width: 26px; height: 26px; display: grid; place-items: center;
-  background: var(--touch); color: var(--on-touch);
+  background: var(--plate); color: var(--on-plate);
   font: 600 11.5px/1 var(--mono); font-variant-numeric: tabular-nums;
 }
 .plan .act { display: block; font-size: 14px; font-weight: 700; line-height: 1.4; }
@@ -1175,7 +997,7 @@ html[data-palette="argile"][data-theme="dark"] {
   --cut: 6px;
   padding: 8px 13px; border: 0;
   background: var(--fill); color: var(--ink);
-  font: 600 12.5px/1.2 var(--display); font-stretch: 88%; letter-spacing: .02em;
+  font: 600 12.5px/1.2 var(--display); letter-spacing: .01em;
   transition: background-color .15s ease;
 }
 .tbtn:hover { background: var(--brand-line); color: var(--ink); }
@@ -1199,7 +1021,8 @@ html[data-palette="argile"][data-theme="dark"] {
 .ref { margin-top: 30px; }
 .ref + .ref { margin-top: 38px; }
 .ref h3 {
-  font-family: var(--display); font-size: 24px; font-weight: 760; font-stretch: 78%; letter-spacing: 0;
+  width: fit-content; border-bottom: 2px solid var(--touch); padding-bottom: 3px;
+  font-family: var(--display); font-size: 24px; font-weight: 760; font-stretch: 72%; letter-spacing: 0;
   line-height: 1.05; margin-bottom: 10px;
 }
 .ref > p { font-size: 14.5px; color: var(--ink-2); line-height: 1.6; max-width: 76ch; }
@@ -1242,7 +1065,7 @@ html[data-palette="argile"][data-theme="dark"] {
   margin-top: 18px; padding: 16px 20px;
   background: var(--warn-bg);
 }
-.warnbox h5 { font: 760 15px/1.3 var(--display); font-stretch: 86%; color: var(--warn); margin-bottom: 6px; }
+.warnbox h5 { font: 700 15px/1.3 var(--display); color: var(--warn); margin-bottom: 6px; }
 .warnbox p { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
 .warnbox p + p { margin-top: 8px; }
 
@@ -1349,7 +1172,7 @@ main [hidden] { display: none !important; }
   font-size: 13px;
 }
 .an-small { font-size: 12px; color: var(--ink-3); line-height: 1.5; }
-.an-h3 { font-family: var(--display); font-size: 22px; font-weight: 760; font-stretch: 78%; line-height: 1.1; margin: 30px 0 10px; }
+.an-h3 { width: fit-content; border-bottom: 2px solid var(--touch); padding-bottom: 3px; font-family: var(--display); font-size: 22px; font-weight: 760; font-stretch: 72%; line-height: 1.1; margin: 30px 0 10px; }
 
 /* A shorter hero than the other tools: the tool is the page. */
 .an-hero { padding-bottom: 34px; }
@@ -1371,7 +1194,7 @@ main [hidden] { display: none !important; }
   padding: 14px 16px 16px; min-width: 0;
 }
 .an-cardhead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; min-height: 34px; }
-.an-cardtitle { font-family: var(--display); font-size: 20px; font-weight: 760; font-stretch: 80%; }
+.an-cardtitle { font-family: var(--display); font-size: 20px; font-weight: 760; font-stretch: 72%; width: fit-content; border-bottom: 2px solid var(--touch); padding-bottom: 3px; }
 .an-cardtools { margin-left: auto; display: flex; gap: 8px; align-items: center; }
 .an-cardhead .an-small { margin-left: auto; }
 label.tbtn { display: inline-block; cursor: pointer; }
@@ -1469,7 +1292,7 @@ label.tbtn { display: inline-block; cursor: pointer; }
 .an-go {
   --cut: 9px;
   padding: 11px 18px; border: 0; background: var(--plate); color: var(--on-plate);
-  font: 720 13px/1.1 var(--display); font-stretch: 84%; text-transform: uppercase; letter-spacing: .07em;
+  font: 650 12.5px/1.1 var(--display); text-transform: uppercase; letter-spacing: .08em;
 }
 .an-go:hover { background: color-mix(in srgb, var(--plate) 88%, var(--on-plate)); }
 .an-go:focus-visible { outline: 2px solid currentColor; outline-offset: -5px; }
@@ -1484,7 +1307,7 @@ a.an-get { display: inline-block; text-decoration: none; }
 .an-folds { display: grid; gap: 10px; margin-top: 22px; }
 .an-fold { background: var(--panel); border: 1px solid var(--line); }
 .an-fold > summary {
-  list-style: none; cursor: pointer; padding: 13px 16px; font: 700 16px/1.2 var(--display); font-stretch: 86%; color: var(--ink);
+  list-style: none; cursor: pointer; padding: 13px 16px; font: 700 16px/1.2 var(--display); color: var(--ink);
   display: flex; align-items: center; gap: 8px;
 }
 .an-fold > summary::-webkit-details-marker { display: none; }
@@ -1538,7 +1361,7 @@ a.an-get { display: inline-block; text-decoration: none; }
    colour, the way the header marks the current page. */
 .an-tabs { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
 .an-tab {
-  padding: 9px 12px; font: 650 12.5px/1.2 var(--display); font-stretch: 82%; text-transform: uppercase; letter-spacing: .06em;
+  padding: 9px 12px; font: 650 12.5px/1.2 var(--display); text-transform: uppercase; letter-spacing: .08em;
   color: var(--ink-3); background: none;
   border: 0; border-bottom: 3px solid transparent; margin-bottom: -1px;
 }
@@ -1581,14 +1404,14 @@ a.an-get { display: inline-block; text-decoration: none; }
 .an-repo { color: var(--brand); font-weight: 700; }
 .an-offbar { position: sticky; top: 0; z-index: 10; background: var(--panel); border-bottom: 1px solid var(--line); }
 .an-offbar .wrap { display: flex; align-items: center; gap: 12px; height: 58px; }
-.an-offbar b { font-family: var(--display); font-size: 20px; font-weight: 760; font-stretch: 80%; }
+.an-offbar b { font-family: var(--display); font-size: 20px; font-weight: 760; font-stretch: 72%; }
 .an-offbar .an-sep { flex: 1; }
 .an-offfoot { padding: 26px 0 40px; font-size: 12.5px; color: var(--ink-3); }
 </style>
 </head>
 <body>
 <div class="an-offbar"><div class="wrap">
-  <b>Anonymizer</b> <span class="an-small">1.0.2 · <span id="anOffSub"></span></span>
+  <b>Anonymizer</b> <span class="an-small">1.0.3 · <span id="anOffSub"></span></span>
   <span class="an-sep"></span>
   <button class="tbtn" type="button" id="anLangBtn"></button>
   <button class="tbtn" type="button" id="anThemeBtn"></button>
@@ -1859,7 +1682,7 @@ a.an-get { display: inline-block; text-decoration: none; }
 </main>
 <footer class="an-offfoot"><div class="wrap">© 2026 LB IT Cloud SAS · <span id="anOffFoot"></span></div></footer>
 <script type="module">
-/* Anonymizer 1.0.2, offline version — built by scripts/build-anonymizer-offline.mjs from the sources
+/* Anonymizer 1.0.3, offline version — built by scripts/build-anonymizer-offline.mjs from the sources
    published at https://github.com/LB-IT-Cloud/anonymizer. Rebuild it there and compare the SHA-256. */
 
 /* ===== scripts/anonymizer-offline-shim.js ===== */
@@ -1980,8 +1803,10 @@ const __moteur = (() => {
 /* 1.0.1 (09/10/2026) : la même mécanique, dans le modèle « Signalétique » et les palettes du site —
    une version de plus parce que le fichier hors ligne, qui embarque les styles, a changé d'empreinte.
    1.0.2 (11/10/2026) : la même mécanique encore, pour la même raison — le design d'origine remis
-   par Clément, puis sans l'étiquette à code-barres ni le tirage des couleurs au hasard. */
-const VERSION = '1.0.2';
+   par Clément, puis sans l'étiquette à code-barres ni le tirage des couleurs au hasard.
+   1.0.3 (12/10/2026) : la même mécanique toujours — le bleu outremer seul et l'orange vif de
+   Le Corbusier à la place des palettes WGSN, et quatre usages de police au lieu de neuf. */
+const VERSION = '1.0.3';
 
 const DOMAINES_PUBLICS = [
   'microsoft.com', 'windows.net', 'office.com', 'office365.com',

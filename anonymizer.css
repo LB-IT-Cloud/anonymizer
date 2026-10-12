@@ -40,7 +40,7 @@ main [hidden] { display: none !important; }
   font-size: 13px;
 }
 .an-small { font-size: 12px; color: var(--ink-3); line-height: 1.5; }
-.an-h3 { font-family: var(--display); font-size: 22px; font-weight: 760; font-stretch: 78%; line-height: 1.1; margin: 30px 0 10px; }
+.an-h3 { width: fit-content; border-bottom: 2px solid var(--touch); padding-bottom: 3px; font-family: var(--display); font-size: 22px; font-weight: 760; font-stretch: 72%; line-height: 1.1; margin: 30px 0 10px; }
 
 /* A shorter hero than the other tools: the tool is the page. */
 .an-hero { padding-bottom: 34px; }
@@ -62,7 +62,7 @@ main [hidden] { display: none !important; }
   padding: 14px 16px 16px; min-width: 0;
 }
 .an-cardhead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; min-height: 34px; }
-.an-cardtitle { font-family: var(--display); font-size: 20px; font-weight: 760; font-stretch: 80%; }
+.an-cardtitle { font-family: var(--display); font-size: 20px; font-weight: 760; font-stretch: 72%; width: fit-content; border-bottom: 2px solid var(--touch); padding-bottom: 3px; }
 .an-cardtools { margin-left: auto; display: flex; gap: 8px; align-items: center; }
 .an-cardhead .an-small { margin-left: auto; }
 label.tbtn { display: inline-block; cursor: pointer; }
@@ -160,7 +160,7 @@ label.tbtn { display: inline-block; cursor: pointer; }
 .an-go {
   --cut: 9px;
   padding: 11px 18px; border: 0; background: var(--plate); color: var(--on-plate);
-  font: 720 13px/1.1 var(--display); font-stretch: 84%; text-transform: uppercase; letter-spacing: .07em;
+  font: 650 12.5px/1.1 var(--display); text-transform: uppercase; letter-spacing: .08em;
 }
 .an-go:hover { background: color-mix(in srgb, var(--plate) 88%, var(--on-plate)); }
 .an-go:focus-visible { outline: 2px solid currentColor; outline-offset: -5px; }
@@ -175,7 +175,7 @@ a.an-get { display: inline-block; text-decoration: none; }
 .an-folds { display: grid; gap: 10px; margin-top: 22px; }
 .an-fold { background: var(--panel); border: 1px solid var(--line); }
 .an-fold > summary {
-  list-style: none; cursor: pointer; padding: 13px 16px; font: 700 16px/1.2 var(--display); font-stretch: 86%; color: var(--ink);
+  list-style: none; cursor: pointer; padding: 13px 16px; font: 700 16px/1.2 var(--display); color: var(--ink);
   display: flex; align-items: center; gap: 8px;
 }
 .an-fold > summary::-webkit-details-marker { display: none; }
@@ -229,7 +229,7 @@ a.an-get { display: inline-block; text-decoration: none; }
    colour, the way the header marks the current page. */
 .an-tabs { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
 .an-tab {
-  padding: 9px 12px; font: 650 12.5px/1.2 var(--display); font-stretch: 82%; text-transform: uppercase; letter-spacing: .06em;
+  padding: 9px 12px; font: 650 12.5px/1.2 var(--display); text-transform: uppercase; letter-spacing: .08em;
   color: var(--ink-3); background: none;
   border: 0; border-bottom: 3px solid transparent; margin-bottom: -1px;
 }
@@ -272,6 +272,6 @@ a.an-get { display: inline-block; text-decoration: none; }
 .an-repo { color: var(--brand); font-weight: 700; }
 .an-offbar { position: sticky; top: 0; z-index: 10; background: var(--panel); border-bottom: 1px solid var(--line); }
 .an-offbar .wrap { display: flex; align-items: center; gap: 12px; height: 58px; }
-.an-offbar b { font-family: var(--display); font-size: 20px; font-weight: 760; font-stretch: 80%; }
+.an-offbar b { font-family: var(--display); font-size: 20px; font-weight: 760; font-stretch: 72%; }
 .an-offbar .an-sep { flex: 1; }
 .an-offfoot { padding: 26px 0 40px; font-size: 12.5px; color: var(--ink-3); }

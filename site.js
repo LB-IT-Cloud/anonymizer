@@ -94,13 +94,51 @@
      (/outils, /free-tools), and the address decides: a search result in English must open
      English whatever this browser remembered, and a link shared in French must stay French.
      A page declares its twin with <link rel="alternate" hreflang>, written by
-     scripts/build-english.mjs. Pages without one (the mock-up) keep the old behaviour: the
-     reader's remembered choice, repainted in place. */
+     scripts/build-english.mjs. Pages without one (the mock-up) take the reader's language,
+     below, repainted in place. */
   var twin = !!document.querySelector('link[rel="alternate"][hreflang="en"]') &&
              !!document.querySelector('link[rel="alternate"][hreflang="fr"]');
   var pageLang = document.documentElement.getAttribute("lang");
-  var lang = twin && (pageLang === "fr" || pageLang === "en") ? pageLang
-           : store("lbLang") === "en" ? "en" : "fr";
+
+  /* THE READER'S LANGUAGE, WHERE THE ADDRESS DOES NOT SAY. Julien, 11/10/2026: on a computer
+     whose Windows or browser is in French, the site opens in French; in any other language, in
+     English. A page cannot see Windows, only the browser's list of preferred languages — which
+     follows Windows unless the reader changed it — so the FIRST entry decides: fr, fr-FR, fr-CA,
+     fr-BE all count, and a French reader who merely added English further down stays French.
+     A choice made with the FR/EN button (« lbLang ») outranks the browser: the button is the
+     reader's word, the browser's list only a guess. Until that day a page with no twin opened in
+     French for everyone who had never clicked. */
+  function readerLang() {
+    var chosen = store("lbLang");
+    if (chosen === "fr" || chosen === "en") return chosen;
+    var nav = window.navigator || {};
+    return /^fr\b/i.test((nav.languages && nav.languages[0]) || nav.language || "") ? "fr" : "en";
+  }
+  var lang = twin && (pageLang === "fr" || pageLang === "en") ? pageLang : readerLang();
+
+  /* THE FRONT DOOR. www.lbitcloud.com/ is the English home — the address a crawler is given,
+     and the x-default of every hreflang. A reader whose language is French and who comes in by
+     that door (typed, bookmarked, a search, a mail) is sent to /fr before anything is drawn:
+     this file is loaded in the <head>, without defer, so the body has not been parsed yet.
+     ONLY THERE, and on purpose: every other address keeps choosing its own language, as above,
+     so an English link sent to a French reader still opens English — and a crawler, whose
+     browser speaks English, is never redirected anywhere.
+     NOT WHEN THE READER COMES FROM A PAGE OF THIS SITE: the one who clicks EN on /fr lands here
+     and must stay, even in a browser that could not remember the click. replace(), so that Back
+     does not return to a page that would only send them forward again. Hidden while it goes, so
+     the English home does not flash; shown again if the French one has not come within three
+     seconds, because a blank page is worse than the wrong language. */
+  if (twin && pageLang === "en" && /^\/(?:index(?:\.html)?)?$/.test(location.pathname)) {
+    var fromHere = false;
+    try { fromHere = !!document.referrer && new URL(document.referrer).origin === location.origin; } catch (e) { /* no referrer we can read */ }
+    var frHome = document.querySelector('link[rel="alternate"][hreflang="fr"]');
+    if (!fromHere && frHome && readerLang() === "fr") {
+      var rootStyle = document.documentElement.style;
+      rootStyle.visibility = "hidden";
+      setTimeout(function () { rootStyle.visibility = ""; }, 3000);
+      location.replace(location.origin + new URL(frHome.href).pathname + location.search + location.hash);
+    }
+  }
 
   /** A file's address in the current language: its English twin when we are reading English. */
   function L(file) {
@@ -332,7 +370,9 @@
      strings only, and no style attribute — the swatch colours are classes written by
      build-theme.mjs into chrome.css, since a style attribute is refused on the Anonymizer. */
   function paletteHtml() {
-    if (!PALETTE_LIST.length) return "";
+    /* Nothing to choose, no button: one palette only since 12/10/2026 (Julien: « le bleu
+       outremer sera la seule couleur »). Adding a second to scripts/theme.mjs brings it back. */
+    if (PALETTE_LIST.length < 2) return "";
     return '<span class="palpick" id="lbPalPick" data-open="0">' +
       '<button class="ghost palbtn" id="lbPalette" type="button" aria-haspopup="true" aria-expanded="false"' +
         ' aria-label="' + esc(pick(PALUI.label)) + '" title="' + esc(pick(PALUI.label)) + '"><span class="palsw"></span></button>' +

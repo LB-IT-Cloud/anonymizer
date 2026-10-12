@@ -38,12 +38,9 @@
     "use strict";
     // theme:begin — written by scripts/build-theme.mjs from scripts/theme.mjs, do not edit by hand.
     var PALETTES = [
-    { id: "orange", fr: "Orange", en: "Orange" },
-    { id: "rose", fr: "Rose", en: "Pink" },
-    { id: "kaki", fr: "Kaki", en: "Khaki" },
-    { id: "argile", fr: "Argile", en: "Clay" }
+    { id: "outremer", fr: "Outremer", en: "Ultramarine" }
     ];
-    var DEFAULT_PALETTE = "orange";
+    var DEFAULT_PALETTE = "outremer";
     var PALETTE_MODE = "fixe";
     var VISIT_MINUTES = 30;
     // theme:end
